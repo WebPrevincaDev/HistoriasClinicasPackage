@@ -14,7 +14,7 @@ const CustomInput = ({value, setValue, placeholder, secureTextEntry}) => {
     </View>
   )
 }
-//SEGUIR VIENDO https://www.youtube.com/watch?v=ALnJLbjI7EY DESDE 14:49
+
 export default CustomInput
 
 const styles = StyleSheet.create({
