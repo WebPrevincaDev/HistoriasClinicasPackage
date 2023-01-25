@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import SingIn from './src/screens/SingIn';
+import SingUp from './src/screens/SingUp';
 
 export default function App() {
   return (

@@ -39,6 +39,6 @@ const styles = StyleSheet.create({
   },
 
   text_TERTIARY: {
-    color: 'grey',
+    color: 'gray',
   },
 })
