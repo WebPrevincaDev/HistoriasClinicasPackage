@@ -3,9 +3,8 @@ import React, { useState } from "react";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 
-const NewPasswordScreen = () => {
-  const [code, setCode] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+const ForgotPassword = () => {
+  const [username, setUsername] = useState("");
 
   const onSendPressed = () => {
     console.warn("Send...");
@@ -24,8 +23,7 @@ const NewPasswordScreen = () => {
       <View style={styles.root}>
         <Text style={styles.title}>Recupera tú contraseña</Text>
 
-        <CustomInput placeholder={"Código"} value={code} setValue={setCode} />
-        <CustomInput placeholder={"Ingrese la nueva contraseña"} value={newPassword} setValue={setNewPassword} />
+        <CustomInput placeholder={"Usuario"} value={username} setValue={setUsername} />
 
         <CustomButton text={"Enviar"} onPress={onSendPressed} />
 
@@ -39,8 +37,8 @@ const NewPasswordScreen = () => {
   );
 };
 
-export default NewPasswordScreen;
-
+export default ForgotPassword;
+//https://www.youtube.com/watch?v=_Fi86az2OV4 14:29
 const styles = StyleSheet.create({
   root: {
     alignItems: "center",
