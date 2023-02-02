@@ -2,20 +2,25 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 import React, { useState } from "react";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
+import { useNavigation } from "@react-navigation/native";
 
 const ConfirmEmail = () => {
   const [code, setCode] = useState("");
 
+  const navigation = useNavigation();
+
   const onConfirmPressed = () => {
     console.warn("Confirm Code");
+    navigation.navigate('Home');
   };
 
   const onSignInPressed = () => {
     console.warn("Sign In");
+    navigation.navigate('SignIn');
   };
 
   const onResendPressed = () => {
-    console.warn('TERMS OF USE')
+    console.warn('reenviando codigo')
   };
 
   return (

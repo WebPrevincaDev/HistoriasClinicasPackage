@@ -2,21 +2,22 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 import React, { useState } from "react";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
+import { useNavigation } from "@react-navigation/native";
 
 const NewPassword = () => {
   const [code, setCode] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  
+  const navigation = useNavigation();
 
   const onSendPressed = () => {
-    console.warn("Send...");
+    console.warn("Cambiando password");
+    navigation.navigate('Home');
   };
 
   const onSignInPressed = () => {
     console.warn("Sign In");
-  };
-
-  const onResendPressed = () => {
-    console.warn('TERMS OF USE')
+    navigation.navigate('SignIn');
   };
 
   return (

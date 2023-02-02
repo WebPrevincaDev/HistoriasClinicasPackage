@@ -10,23 +10,30 @@ import React, { useState } from "react";
 import PlaceHolderLogo from "../../../assets/images/testLogo.jpg";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
+import { useNavigation } from "@react-navigation/native";
 
 const SingIn = () => {
-  const { height } = useWindowDimensions();
-
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  
+  const { height } = useWindowDimensions();
+  const navigation = useNavigation();
   const onSingInPressed = () => {
     console.warn("Sign in");
+    //validate user
+    navigation.navigate('Home')
   };
 
   const onForgotPasswordPressed = () => {
     console.warn("Forgot Password");
+
+    navigation.navigate('ForgotPassword')
   };
 
   const onSignUpPressed = () => {
     console.warn("Sign up");
+    navigation.navigate('SignUp')
   };
 
   return (

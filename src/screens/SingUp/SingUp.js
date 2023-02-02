@@ -2,18 +2,23 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 import React, { useState } from "react";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
+import { useNavigation } from "@react-navigation/native";
 
 const SingUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
 
+  const navigation = useNavigation();
+
   const onRegisterPressed = () => {
     console.warn("Sign in");
+    navigation.navigate('ConfirmEmail')
   };
 
   const onSignInPressed = () => {
     console.warn("Sign In");
+    navigation.navigate('SignIn')
   };
 
   const onTermsOfUsePressed = () => {
@@ -63,7 +68,7 @@ const SingUp = () => {
 };
 
 export default SingUp;
-//https://www.youtube.com/watch?v=_Fi86az2OV4 14:29
+
 const styles = StyleSheet.create({
   root: {
     alignItems: "center",
