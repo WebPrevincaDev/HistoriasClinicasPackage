@@ -3,30 +3,31 @@ import React, { useState } from "react";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
+import { useForm } from "react-hook-form";
+
+const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
 const SingUp = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordRepeat, setPasswordRepeat] = useState("");
-
+  const { control, handleSubmit, watch } = useForm();
+  const pwd = watch('password');
   const navigation = useNavigation();
 
   const onRegisterPressed = () => {
     console.warn("Sign in");
-    navigation.navigate('ConfirmEmail')
+    navigation.navigate("ConfirmEmail");
   };
 
   const onSignInPressed = () => {
     console.warn("Sign In");
-    navigation.navigate('SignIn')
+    navigation.navigate("SignIn");
   };
 
   const onTermsOfUsePressed = () => {
-    console.warn('TERMS OF USE')
+    console.warn("TERMS OF USE");
   };
 
   const onPrivacyPolicyPressed = () => {
-    console.warn('Privacy Policy')
+    console.warn("Privacy Policy");
   };
 
   return (
@@ -34,28 +35,52 @@ const SingUp = () => {
       <View style={styles.root}>
         <Text style={styles.title}>Crea una cuenta</Text>
 
-        <CustomInput placeholder={"Email"} value={email} setValue={setEmail} />
         <CustomInput
+          placeholder={"Email"}
+          name={"email"}
+          control={control}
+          rules={{
+            require: "Se requiere el email",
+            pattern: { value: EMAIL_REGEX, message: "Email inválido" },
+          }}
+        />
+        <CustomInput
+          name={"password"}
+          control={control}
           placeholder={"Contraseña"}
-          value={password}
-          setValue={setPassword}
           secureTextEntry
+          rules={{
+            required: 'Ingrese una contraseña',
+            minLength: {
+              value: 8,
+              message: 'La contraseña debe contener 8 o más caracteres'
+            },
+          }}
         />
         <CustomInput
+          name={"password-repeat"}
+          control={control}
           placeholder={"Repita la contraseña"}
-          value={passwordRepeat}
-          setValue={setPasswordRepeat}
           secureTextEntry
+          rules={{
+            validate: value => value === pwd || 'Las contraseñas no coinciden'
+          }}
         />
-        <CustomButton text={"Registrarme"} onPress={onRegisterPressed} />
+        <CustomButton
+          text={"Registrarme"}
+          onPress={handleSubmit(onRegisterPressed)}
+        />
 
         <Text style={styles.text}>
-          Para registrarte, debes confirmar que aceptas nuestros{' '}
-          <Text style={styles.link} onPress={onTermsOfUsePressed}>Términos de Uso</Text>
-          {' '}y{' '}
-          nuestra{' '}
-          <Text style={styles.link} onPress={onPrivacyPolicyPressed}>Política de Privacidad</Text>
+          Para registrarte, debes confirmar que aceptas nuestros{" "}
+          <Text style={styles.link} onPress={onTermsOfUsePressed}>
+            Términos de Uso
+          </Text>{" "}
+          y nuestra{" "}
+          <Text style={styles.link} onPress={onPrivacyPolicyPressed}>
+            Política de Privacidad
           </Text>
+        </Text>
 
         <CustomButton
           text={"Ya tienes una cuenta? Ingresa"}
@@ -81,10 +106,10 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   text: {
-    color: 'gray',
+    color: "gray",
     marginVertical: 10,
   },
   link: {
-    color: '#FDB075',
+    color: "#FDB075",
   },
 });

@@ -1,28 +1,58 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, TextInput, View } from "react-native";
+import React from "react";
+import { Controller } from "react-hook-form";
 
-const CustomInput = ({value, setValue, placeholder, secureTextEntry}) => {
+const CustomInput = ({
+  placeholder,
+  name,
+  secureTextEntry,
+  control,
+  rules = {},
+}) => {
   return (
-    <View>
-      <TextInput
-        placeholder={placeholder}
-        style={styles.input}
-        value={value}
-        onChangeText={setValue}
-        secureTextEntry={secureTextEntry}
-        />
-    </View>
-  )
-}
+    <Controller
+      control={control}
+      name={name}
+      rules={rules}
+      render={({
+        field: { value, onChange, onBlur },
+        fieldState: { error },
+      }) => (
+        <>
+          <View
+            style={[
+              styles.container,
+              { borderColor: error ? "red" : "#e8e8e8" },
+            ]}
+          >
+            <TextInput
+              placeholder={placeholder}
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              secureTextEntry={secureTextEntry}
+              style={styles.input}
+            />
+          </View>
+          {error && (
+            <Text style={{ color: "red", alignSelf: "stretch" }}>
+              {error.message || 'XXXXXX'}
+            </Text>
+          )}
+        </>
+      )}
+    />
+  );
+};
 
-export default CustomInput
+export default CustomInput;
 
 const styles = StyleSheet.create({
-  container:{
-    backgroundColor: 'white',
-    width: '100%',
+  container: {
+    backgroundColor: "white",
+    width: "100%",
 
-    borderColor: '#e8e8e8',
+    borderColor: "#e8e8e8",
     borderWidth: 1,
     borderRadius: 5,
 
@@ -30,4 +60,4 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   input: {},
-})
+});

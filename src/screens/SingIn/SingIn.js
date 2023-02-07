@@ -5,35 +5,36 @@ import {
   View,
   useWindowDimensions,
   ScrollView,
+  TextInput,
 } from "react-native";
 import React, { useState } from "react";
 import PlaceHolderLogo from "../../../assets/images/testLogo.jpg";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
+import { useForm } from "react-hook-form";
 
 const SingIn = () => {
-  
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
+
+  const { control, handleSubmit, formState: {errors} } = useForm();
+
   const onSingInPressed = () => {
     console.warn("Sign in");
     //validate user
-    navigation.navigate('Home')
+    navigation.navigate("Home");
   };
 
   const onForgotPasswordPressed = () => {
     console.warn("Forgot Password");
 
-    navigation.navigate('ForgotPassword')
+    navigation.navigate("ForgotPassword");
   };
 
   const onSignUpPressed = () => {
     console.warn("Sign up");
-    navigation.navigate('SignUp')
+    navigation.navigate("SignUp");
   };
 
   return (
@@ -44,14 +45,29 @@ const SingIn = () => {
           style={[styles.logo, { height: height * 0.3 }]}
           resizeMode="contain"
         />
-        <CustomInput placeholder={"Email"} value={email} setValue={setEmail} />
+
         <CustomInput
-          placeholder={"Contraseña"}
-          value={password}
-          setValue={setPassword}
-          secureTextEntry
+          name={'email'}
+          placeholder={"Email"}
+          control={control}
+          rules={{required: 'Se requiere el email'}}
         />
-        <CustomButton text={"Ingresar"} onPress={onSingInPressed} />
+
+        <CustomInput
+          name={'password'}
+          placeholder={"Contraseña"}
+          control={control}
+          secureTextEntry
+          rules={{required: 'Se requiere la contraseña', minLength: {
+            value: 5,
+            message: 'La contraseña debe contener más de 5 caracteres'
+          }}}
+        />
+
+        <CustomButton
+          text={"Ingresar"}
+          onPress={handleSubmit(onSingInPressed)}
+        />
         <CustomButton
           text={"Olvidé mi Contraseña"}
           onPress={onForgotPasswordPressed}

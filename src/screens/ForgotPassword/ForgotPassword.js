@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View, ScrollView } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
+import { useForm } from "react-hook-form";
 
 const ForgotPassword = () => {
-  const [username, setUsername] = useState("");
+  const { control, handleSubmit } = useForm();
 
   const navigation = useNavigation();
   
@@ -24,9 +25,9 @@ const ForgotPassword = () => {
       <View style={styles.root}>
         <Text style={styles.title}>Recupera tú contraseña</Text>
 
-        <CustomInput placeholder={"Usuario"} value={username} setValue={setUsername} />
+        <CustomInput name={"email"} placeholder={"Email"} control={control} rules={{required: 'Ingrese su email por favor'}} />
 
-        <CustomButton text={"Enviar"} onPress={onSendPressed} />
+        <CustomButton text={"Enviar"} onPress={handleSubmit(onSendPressed)} />
 
         <CustomButton
           text={"Volver a Inicio"}
@@ -39,7 +40,7 @@ const ForgotPassword = () => {
 };
 
 export default ForgotPassword;
-//https://www.youtube.com/watch?v=_Fi86az2OV4 14:29
+
 const styles = StyleSheet.create({
   root: {
     alignItems: "center",

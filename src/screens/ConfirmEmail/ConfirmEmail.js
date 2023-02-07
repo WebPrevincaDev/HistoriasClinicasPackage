@@ -1,36 +1,45 @@
 import { StyleSheet, Text, View, ScrollView } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
+import { useForm } from "react-hook-form";
 
 const ConfirmEmail = () => {
-  const [code, setCode] = useState("");
+  const { control, handleSubmit } = useForm();
 
   const navigation = useNavigation();
 
   const onConfirmPressed = () => {
     console.warn("Confirm Code");
-    navigation.navigate('Home');
+    navigation.navigate("Home");
   };
 
   const onSignInPressed = () => {
     console.warn("Sign In");
-    navigation.navigate('SignIn');
+    navigation.navigate("SignIn");
   };
 
   const onResendPressed = () => {
-    console.warn('reenviando codigo')
+    console.warn("reenviando codigo");
   };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>
-        <Text style={styles.title}>Confirmar el Email</Text>
+        <Text style={styles.title}>Confirmar Email</Text>
 
-        <CustomInput placeholder={"Código"} value={code} setValue={setCode} />
+        <CustomInput
+          name={"code"}
+          placeholder={"Código"}
+          control={control}
+          rules={{ required: "Ingrese el código por favor" }}
+        />
 
-        <CustomButton text={"Confirmar"} onPress={onConfirmPressed} />
+        <CustomButton
+          text={"Confirmar"}
+          onPress={handleSubmit(onConfirmPressed)}
+        />
 
         <CustomButton
           text={"Reenviar el Código"}
@@ -61,10 +70,10 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   text: {
-    color: 'gray',
+    color: "gray",
     marginVertical: 10,
   },
   link: {
-    color: '#FDB075',
+    color: "#FDB075",
   },
 });

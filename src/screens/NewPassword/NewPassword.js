@@ -1,23 +1,23 @@
 import { StyleSheet, Text, View, ScrollView } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
+import { useForm } from "react-hook-form";
 
 const NewPassword = () => {
-  const [code, setCode] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  
+  const { control, handleSubmit } = useForm();
+
   const navigation = useNavigation();
 
   const onSendPressed = () => {
     console.warn("Cambiando password");
-    navigation.navigate('Home');
+    navigation.navigate("Home");
   };
 
   const onSignInPressed = () => {
     console.warn("Sign In");
-    navigation.navigate('SignIn');
+    navigation.navigate("SignIn");
   };
 
   return (
@@ -25,10 +25,27 @@ const NewPassword = () => {
       <View style={styles.root}>
         <Text style={styles.title}>Recupera tú contraseña</Text>
 
-        <CustomInput placeholder={"Código"} value={code} setValue={setCode} />
-        <CustomInput placeholder={"Ingrese la nueva contraseña"} value={newPassword} setValue={setNewPassword} />
+        <CustomInput
+          name={"code"}
+          placeholder={"Código"}
+          control={control}
+          rules={{ required: "Ingrese el código por favor" }}
+        />
+        <CustomInput
+          name={"newPassword"}
+          placeholder={"Ingrese la nueva contraseña"}
+          control={control}
+          secureTextEntry
+          rules={{
+            required: "Ingrese una contraseña",
+            minLength: {
+              value: 8,
+              message: "La contraseña debe contener 8 o más caracteres",
+            },
+          }}
+        />
 
-        <CustomButton text={"Enviar"} onPress={onSendPressed} />
+        <CustomButton text={"Enviar"} onPress={handleSubmit(onSendPressed)} />
 
         <CustomButton
           text={"Volver a Inicio"}
@@ -54,10 +71,10 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   text: {
-    color: 'gray',
+    color: "gray",
     marginVertical: 10,
   },
   link: {
-    color: '#FDB075',
+    color: "#FDB075",
   },
 });
