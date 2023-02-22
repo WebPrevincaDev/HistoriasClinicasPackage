@@ -1,19 +1,28 @@
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView, Alert } from "react-native";
 import React, { useState } from "react";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { checkIfEmailExistsInFirebase, createNewFirebaseUser } from "../../store/slices/auth/thunks";
 
 const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
-const SingUp = () => {
+const SignUp = () => {
   const { control, handleSubmit, watch } = useForm();
+  const dispatch = useDispatch();
   const pwd = watch('password');
   const navigation = useNavigation();
 
-  const onRegisterPressed = () => {
+  const onRegisterPressed = async (data) => {
     console.warn("Sign in");
+    //DEBERIA MOSTRAR EL OBJETO CON LOS DATOS DE LOS INPUTS
+    const response = await dispatch(createNewFirebaseUser(data));
+    if(response.payload.code && response.payload.code.includes('auth/email-already-in-use')){
+      return Alert.alert('YA EXISTE UN USUARIO CON ESE EMAIL');
+    }
+
     navigation.navigate("ConfirmEmail");
   };
 
@@ -92,7 +101,7 @@ const SingUp = () => {
   );
 };
 
-export default SingUp;
+export default SignUp;
 
 const styles = StyleSheet.create({
   root: {

@@ -6,6 +6,7 @@ import {
   useWindowDimensions,
   ScrollView,
   TextInput,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import PlaceHolderLogo from "../../../assets/images/testLogo.jpg";
@@ -13,17 +14,19 @@ import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { loginWithFirebase } from "../../store/slices/auth/thunks";
 
-const SingIn = () => {
+const SignIn = () => {
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const { control, handleSubmit, formState: {errors} } = useForm();
 
-  const onSingInPressed = () => {
-    console.warn("Sign in");
-    //validate user
-    navigation.navigate("Home");
+  const onSignInPressed = async (data) => {
+    const response = await dispatch(loginWithFirebase(data));
+    authFirebaseUser(response);
   };
 
   const onForgotPasswordPressed = () => {
@@ -33,8 +36,14 @@ const SingIn = () => {
   };
 
   const onSignUpPressed = () => {
-    console.warn("Sign up");
     navigation.navigate("SignUp");
+  };
+
+  const authFirebaseUser = ({type}) => {
+    if (type === "auth/loginWithFirebase/rejected"){
+      return Alert.alert('Credenciales Incorrectas')
+    }
+    navigation.navigate("Home");
   };
 
   return (
@@ -66,7 +75,7 @@ const SingIn = () => {
 
         <CustomButton
           text={"Ingresar"}
-          onPress={handleSubmit(onSingInPressed)}
+          onPress={handleSubmit(onSignInPressed)}
         />
         <CustomButton
           text={"Olvidé mi Contraseña"}
@@ -84,7 +93,7 @@ const SingIn = () => {
   );
 };
 
-export default SingIn;
+export default SignIn;
 
 const styles = StyleSheet.create({
   root: {
