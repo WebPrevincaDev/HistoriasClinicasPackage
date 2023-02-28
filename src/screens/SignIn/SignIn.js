@@ -7,6 +7,7 @@ import {
   ScrollView,
   TextInput,
   Alert,
+  Button,
 } from "react-native";
 import React, { useState } from "react";
 import PlaceHolderLogo from "../../../assets/images/testLogo.jpg";
@@ -77,6 +78,8 @@ const SignIn = () => {
           text={"Ingresar"}
           onPress={handleSubmit(onSignInPressed)}
         />
+      <Button onPress={()=>navigation.navigate('Signature')} title="IR A SIGNATURE"/>
+
         <CustomButton
           text={"Olvidé mi Contraseña"}
           onPress={onForgotPasswordPressed}
