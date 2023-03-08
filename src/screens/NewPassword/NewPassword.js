@@ -12,7 +12,7 @@ const NewPassword = () => {
 
   const onSendPressed = () => {
     console.warn("Cambiando password");
-    navigation.navigate("Home");
+    navigation.navigate("HomeTab");
   };
 
   const onSignInPressed = () => {

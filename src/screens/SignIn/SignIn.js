@@ -44,7 +44,7 @@ const SignIn = () => {
     if (type === "auth/loginWithFirebase/rejected"){
       return Alert.alert('Credenciales Incorrectas')
     }
-    navigation.navigate("Home");
+    navigation.navigate("HomeTab");
   };
 
   return (

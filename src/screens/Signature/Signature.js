@@ -3,6 +3,7 @@ import React from "react";
 import SignatureScreen from "react-native-signature-canvas";
 import { useRef } from "react";
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 const Signature = ({ onOK }) => {
   const ref = useRef();
@@ -20,7 +21,7 @@ const Signature = ({ onOK }) => {
   const handleOK = (signature) => {
     console.log(signature);
     // onOK(signature); // Callback from Component props
-    navigation.navigate("Home");
+    navigation.navigate("HomeTab");
 
   };
 
