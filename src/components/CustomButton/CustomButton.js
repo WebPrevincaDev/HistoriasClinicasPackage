@@ -35,6 +35,11 @@ const styles = StyleSheet.create({
 
   },
 
+  container_SIMPLE: {
+    margin: 16,
+    backgroundColor: 'transparent',
+  },
+
   text: {
     fontWeight: 'bold',
   },
@@ -49,5 +54,10 @@ const styles = StyleSheet.create({
 
   text_TERTIARY: {
     color: 'gray',
+  },
+
+  text_SIMPLE: {
+    color: '#004dff',
+    fontSize: 20,
   },
 })

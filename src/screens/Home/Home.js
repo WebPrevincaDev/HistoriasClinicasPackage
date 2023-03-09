@@ -8,7 +8,10 @@ const Home = () => {
 
   return (
     <View>
-      <Text>Home</Text>
+      <Text>
+        -Home-
+        Añadir la configuración de ambulancias, enfermeros y chofer
+      </Text>
     </View>
   )
 }

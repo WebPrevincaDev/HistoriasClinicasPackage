@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loginWithFirebase } from './thunks';
 
 export const initialState = {
     isFetching: false,
     hcd: {},
+    hcd_config: {},
 };
 
 export const sharedSlice = createSlice({
