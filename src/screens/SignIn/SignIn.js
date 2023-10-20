@@ -36,10 +36,6 @@ const SignIn = () => {
     navigation.navigate("ForgotPassword");
   };
 
-  const onSignUpPressed = () => {
-    navigation.navigate("SignUp");
-  };
-
   const authFirebaseUser = ({type}) => {
     if (type === "auth/loginWithFirebase/rejected"){
       return Alert.alert('Credenciales Incorrectas')
@@ -86,11 +82,6 @@ const SignIn = () => {
           type="TERTIARY"
         />
 
-        <CustomButton
-          text={"No tienes una cuenta? Crea una"}
-          onPress={onSignUpPressed}
-          type="TERTIARY"
-        />
       </View>
     </ScrollView>
   );
