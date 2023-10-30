@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native'
 import React from 'react'
 
-const CustomButton = ({ onPress, text, type = "PRIMARY" }) => {
+const CustomButton = ({ onPress, text, disabled, type = "PRIMARY" }) => {
   return (
-    <Pressable onPress={onPress} style={[styles.container, styles[`container_${type}`]]}>
+    <Pressable disabled={disabled} onPress={onPress} style={[styles.container, styles[`container_${type}`], disabled && styles.containerDisabled]}>
       <Text style={[styles.text, styles[`text_${type}`]]}>{text}</Text>
     </Pressable>
   )
@@ -20,6 +20,10 @@ const styles = StyleSheet.create({
 
     alignItems: 'center',
     borderRadius: 5,
+  },
+
+  containerDisabled: {
+    opacity: 0.6
   },
 
   container_PRIMARY: {

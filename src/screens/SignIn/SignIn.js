@@ -9,14 +9,13 @@ import {
   Alert,
   Button,
 } from "react-native";
-import React, { useState } from "react";
 import PlaceHolderLogo from "../../../assets/images/testLogo.jpg";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { loginWithFirebase } from "../../store/slices/auth/thunks";
+import { useSignIn } from "../../hooks/useSignIn";
 
 const SignIn = () => {
   const { height } = useWindowDimensions();
@@ -25,22 +24,16 @@ const SignIn = () => {
 
   const { control, handleSubmit, formState: {errors} } = useForm();
 
+  const { isLoading, login } = useSignIn();
+
   const onSignInPressed = async (data) => {
-    const response = await dispatch(loginWithFirebase(data));
-    authFirebaseUser(response);
+    await login(data);
   };
 
   const onForgotPasswordPressed = () => {
     console.warn("Forgot Password");
 
     navigation.navigate("ForgotPassword");
-  };
-
-  const authFirebaseUser = ({type}) => {
-    if (type === "auth/loginWithFirebase/rejected"){
-      return Alert.alert('Credenciales Incorrectas')
-    }
-    navigation.navigate("HomeTab");
   };
 
   return (
@@ -53,10 +46,10 @@ const SignIn = () => {
         />
 
         <CustomInput
-          name={'email'}
-          placeholder={"Email"}
+          name={'matricula'}
+          placeholder={"Matrícula"}
           control={control}
-          rules={{required: 'Se requiere el email'}}
+          rules={{required: 'Se requiere la matrícula'}}
         />
 
         <CustomInput
@@ -71,7 +64,8 @@ const SignIn = () => {
         />
 
         <CustomButton
-          text={"Ingresar"}
+          text={isLoading ? "Cargando..." : "Ingresar"}
+          disabled={isLoading}
           onPress={handleSubmit(onSignInPressed)}
         />
       <Button onPress={()=>navigation.navigate('Signature')} title="IR A SIGNATURE"/>
