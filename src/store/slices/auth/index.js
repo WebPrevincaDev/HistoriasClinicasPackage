@@ -1,31 +1,35 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { loginWithFirebase } from './thunks';
+import { createSlice } from "@reduxjs/toolkit";
+import { login } from "./thunks";
 
 export const initialState = {
-    auth: false,
-    isFetching: false,
-    error: '',
+  isAuthenticated: false,
+  isLoading: false,
+  error: "",
+  user: null,
 };
 
 export const sharedSlice = createSlice({
-    name: 'auth',
-    initialState,
-    reducers: {
+  name: "auth",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(login.pending, (state) => {
+        state.isAuthenticated = false;
+        state.isLoading = true;
+        state.error = "";
+        state.user = null;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.isAuthenticated = true;
+        state.isLoading = false;
+        state.user = action.payload;
+      });
+  },
+});
 
-    },
-    extraReducers: (builder) => {
-        builder.addCase(loginWithFirebase.pending, (state) => {
-            state.isFetching = true;
-        }),
-        builder.addCase(loginWithFirebase.rejected, (state, action) => {
-            state.isFetching = false;
-            state.error = action.error.message;
-        }),
-        builder.addCase(loginWithFirebase.fulfilled, (state, action) => {
-            state.auth = true;
-            state.isFetching = false;
-        });
-    }
-})
-
-export default sharedSlice.reducer
+export default sharedSlice.reducer;

@@ -14,8 +14,8 @@ import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { useSignIn } from "../../hooks/useSignIn";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../store/slices/auth/thunks";
 
 const SignIn = () => {
   const { height } = useWindowDimensions();
@@ -24,10 +24,15 @@ const SignIn = () => {
 
   const { control, handleSubmit, formState: {errors} } = useForm();
 
-  const { isLoading, login } = useSignIn();
+  const { isLoading } = useSelector((state) => state.auth);
 
   const onSignInPressed = async (data) => {
-    await login(data);
+    try {
+      await dispatch(login(data)).unwrap();
+      navigation.navigate("HomeTab");
+    } catch (error) {
+      Alert.alert(error.message);
+    }
   };
 
   const onForgotPasswordPressed = () => {
