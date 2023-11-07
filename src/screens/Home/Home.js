@@ -1,18 +1,17 @@
 import { ActivityIndicator, Alert, StyleSheet, Text, View } from "react-native";
 import { useEffect, useState, useCallback } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import mobileOptions from "../../placeholder/mobiles.json";
 import CustomButton from "../../components/CustomButton";
-import {
-  filterProfessionalsByGroup,
-  saveAsyncStorage,
-} from "../../helpers/data";
+import { filterProfessionalsByGroup } from "../../helpers/data";
+import { setHcdConfig } from "../../store/slices/hcd/thunks";
 
 const ninguno = { label: "Ninguno", value: "Ninguno" };
 
 const Home = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const { user } = useSelector((state) => state.auth);
   const [isLoading, setIsLoading] = useState(false);
@@ -45,23 +44,30 @@ const Home = () => {
   }, []);
 
   const guardarConfiguracion = async () => {
-    if (!nurseValue || !driverValue || !mobileValue) {
-      Alert.alert("Complete todos los campos necesarios");
-      return;
-    }
-    if (mobileValue.includes("1") || mobileValue.includes("2")) {
-      if (nurseValue === ninguno.value) {
-        Alert.alert("Los móviles 1 y 2 deben tener un enfermero asignado");
-        return;
+    try {
+      if (!nurseValue || !driverValue || !mobileValue) {
+        throw new Error("Complete todos los campos necesarios");
       }
+      if (mobileValue.includes("1") || mobileValue.includes("2")) {
+        if (nurseValue === ninguno.value) {
+          throw new Error(
+            "Los móviles 1 y 2 deben tener un enfermero asignado"
+          );
+        }
+      }
+      // setData
+      const configData = {
+        movil: mobileValue,
+        chofer: driverValue,
+        enfermero: nurseValue,
+        medico: user.app_nombre,
+      };
+      await dispatch(setHcdConfig(configData)).unwrap();
+      Alert.alert("Datos guardados con éxito");
+      navigation.navigate("CrearHCD");
+    } catch (error) {
+      Alert.alert(error.message);
     }
-    // setData
-    await saveAsyncStorage(mobileValue, "movil");
-    await saveAsyncStorage(driverValue, "chofer");
-    await saveAsyncStorage(nurseValue, "enfermero");
-    await saveAsyncStorage(user.app_nombre, "medico");
-    Alert.alert("Datos guardados con éxito");
-    navigation.navigate("CrearHCD");
   };
 
   useEffect(() => {
