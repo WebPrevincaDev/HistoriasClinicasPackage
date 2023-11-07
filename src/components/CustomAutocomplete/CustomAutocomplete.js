@@ -1,30 +1,25 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
-
 import DropDownPicker from "react-native-dropdown-picker";
 
-const CustomAutocomplete = ({ value, options, setValue, setOptions, isSerchable, handleOnChange }) => {
-  const [open, setOpen] = useState(false);
-//   const [value, setValue] = useState(null);
-//   const [items, setItems] = useState([
-//     { label: "Apple", value: "apple" },
-//     { label: "Banana", value: "banana" },
-//   ]);
-
+const CustomAutocomplete = ({ label, ...dropDownProps }) => {
   return (
-    <DropDownPicker
-      open={open}
-      value={value}
-      items={options}
-      setOpen={setOpen}
-      setValue={setValue}
-      setItems={setOptions}
-      searchable={isSerchable}
-      onChangeSearchText={handleOnChange}
-    />
+    <View style={styles.container}>
+      <Text>{label}</Text>
+      <DropDownPicker
+        {...dropDownProps}
+        searchable={true}
+        searchWithRegionalAccents={true}
+        searchPlaceholder="Buscar..."
+        placeholder="Seleccione un elemento"
+      />
+    </View>
   );
 };
 
 export default CustomAutocomplete;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: 8,
+  },
+});
