@@ -14,6 +14,8 @@ const Home = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const { user } = useSelector((state) => state.auth);
+  const { hcdConfig } = useSelector((state) => state.hcd);
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [nurseOpen, setNurseOpen] = useState(false);
@@ -93,6 +95,14 @@ const Home = () => {
     };
     cargar_datos();
   }, []);
+
+  useEffect(() => {
+    if (hcdConfig) {
+      setNurseValue(hcdConfig.enfermero);
+      setDriverValue(hcdConfig.chofer);
+      setMobileValue(hcdConfig.movil);
+    }
+  }, [hcdConfig]);
 
   return (
     <View style={styles.container}>
