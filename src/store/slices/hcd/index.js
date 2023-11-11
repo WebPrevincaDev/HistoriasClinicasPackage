@@ -24,6 +24,9 @@ export const sharedSlice = createSlice({
       state.hcd.llamadaMotivo = motivo;
       state.hcd.llamadaColor = color;
     },
+    setTipoHistoria: (state, action) => {
+      state.hcd.ubicacion_atencion = action.payload;
+    },
     setHcdScreen: (state, action) => {
       state.pantallaHCD = action.payload;
     },
@@ -46,6 +49,6 @@ export const sharedSlice = createSlice({
   },
 });
 
-export const { setHcdScreen, setLlamado } = sharedSlice.actions;
+export const { setHcdScreen, setLlamado, setTipoHistoria } = sharedSlice.actions;
 
 export default sharedSlice.reducer;
