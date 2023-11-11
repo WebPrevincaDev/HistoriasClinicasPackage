@@ -7,6 +7,7 @@ import mobileOptions from "../../placeholder/mobiles.json";
 import CustomButton from "../../components/CustomButton";
 import { filterProfessionalsByGroup } from "../../helpers/data";
 import { setHcdConfig } from "../../store/slices/hcd/thunks";
+import { getFormattedArray } from "../../helpers/CustomAutocomplete";
 
 const ninguno = { label: "Ninguno", value: "Ninguno" };
 
@@ -60,19 +61,13 @@ const Home = () => {
       setIsLoading(true);
       // getEnfermeros
       const enfermeros = await filterProfessionalsByGroup("ENF");
-      const enfermerosFormated = enfermeros.map((enfermero) => ({
-        label: enfermero.name,
-        value: enfermero.name,
-      }));
-      setNurseItems([ninguno, ...enfermerosFormated]);
+      const enfermerosFormatted = getFormattedArray(enfermeros, "name");
+      setNurseItems([ninguno, ...enfermerosFormatted]);
       // getChoferes
       const choferes = await filterProfessionalsByGroup("CHOF");
-      const choferesFormated = choferes.map((chofer) => ({
-        label: chofer.name,
-        value: chofer.name,
-      }));
+      const choferesFormatted = getFormattedArray(choferes, "name");
       // Los choferes pueden ser enfermeros en algunos casos
-      setDriverItems([...choferesFormated, ...enfermerosFormated]);
+      setDriverItems([...choferesFormatted, ...enfermerosFormatted]);
       setIsLoading(false);
     };
     cargar_datos();

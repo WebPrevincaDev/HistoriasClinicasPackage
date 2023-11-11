@@ -1,17 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { setHcdConfig } from "./thunks";
 
+// a medida que agregue propiedades a hcd las anoto acá para tenerlo de machete
+/* {
+  llamadaMotivo: string
+  llamadaColor: string
+} */
+
 export const initialState = {
   isLoading: false,
   error: "",
   hcdConfig: null,
-  hcd: null,
+  hcd: {},
+  pantallaHCD: "",
 };
 
 export const sharedSlice = createSlice({
   name: "hcd",
   initialState,
-  reducers: {},
+  reducers: {
+    setLlamado: (state, action) => {
+      const { motivo, color } = action.payload;
+      state.hcd.llamadaMotivo = motivo;
+      state.hcd.llamadaColor = color;
+    },
+    setHcdScreen: (state, action) => {
+      state.pantallaHCD = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(setHcdConfig.pending, (state) => {
@@ -29,5 +45,7 @@ export const sharedSlice = createSlice({
       });
   },
 });
+
+export const { setHcdScreen, setLlamado } = sharedSlice.actions;
 
 export default sharedSlice.reducer;
