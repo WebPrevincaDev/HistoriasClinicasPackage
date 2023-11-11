@@ -1,4 +1,4 @@
-import { ActivityIndicator, Alert, StyleSheet, View, Text } from "react-native";
+import { ActivityIndicator, Alert, StyleSheet, View } from "react-native";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
@@ -46,7 +46,6 @@ export default function MotivoDelLlamado() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Motivo del llamado</Text>
       {isLoading ? (
         <ActivityIndicator size="large" color="#000" />
       ) : (
@@ -67,7 +66,7 @@ export default function MotivoDelLlamado() {
             setItems={setColorItems}
             addCustomItem={true}
           />
-          <CustomButton text="GUARDAR" onPress={onPressSiguiente} />
+          <CustomButton text="SIGUIENTE" onPress={onPressSiguiente} />
         </>
       )}
     </View>
@@ -78,10 +77,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
   },
 });
