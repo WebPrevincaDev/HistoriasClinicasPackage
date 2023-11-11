@@ -2,12 +2,15 @@ import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
-const CustomAutocomplete = ({ label, ...dropDownProps }) => {
+const CustomAutocomplete = ({ label, required, ...dropDownProps }) => {
   const [open, setOpen] = useState(false);
 
   return (
     <View style={styles.container}>
-      <Text>{label}</Text>
+      <Text>
+        {label}
+        {required && <Text style={{ color: "red" }}> *</Text>}
+      </Text>
       <DropDownPicker
         {...dropDownProps}
         open={open}

@@ -57,6 +57,7 @@ export default function MotivoDelLlamado() {
             setValue={setMotivoValue}
             setItems={setMotivoItems}
             addCustomItem={true}
+            required
           />
           <CustomAutocomplete
             label="Color"
@@ -65,6 +66,7 @@ export default function MotivoDelLlamado() {
             setValue={setColorValue}
             setItems={setColorItems}
             addCustomItem={true}
+            required
           />
           <CustomButton text="SIGUIENTE" onPress={onPressSiguiente} />
         </>

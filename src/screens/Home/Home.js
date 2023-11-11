@@ -94,6 +94,7 @@ const Home = () => {
             value={mobileValue}
             items={mobileItems}
             setValue={setMobileValue}
+            required
           />
           <CustomAutocomplete
             label="Chofer"
@@ -102,6 +103,7 @@ const Home = () => {
             setValue={setDriverValue}
             setItems={setDriverItems}
             addCustomItem={true}
+            required
           />
           <CustomAutocomplete
             label="Enfermero"
@@ -110,6 +112,7 @@ const Home = () => {
             setValue={setNurseValue}
             setItems={setNurseItems}
             addCustomItem={true}
+            required
           />
 
           <Text>Los móviles 1 y 2 deben tener un enfermero asignado</Text>
