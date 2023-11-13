@@ -5,6 +5,21 @@ import { setHcdConfig } from "./thunks";
 /* {
   llamadaMotivo: string
   llamadaColor: string
+  ubicacion_atencion: string
+  paciente_ausente: undefined | boolean
+  pac_dni
+  pac_cobertura
+  pac_plan
+  pac_nro_socio
+  pac_apellido
+  pac_nombre
+  pac_edad
+  pac_localidad
+  pac_calle
+  pac_interseccion
+  pac_nro
+  pac_piso
+  pac_dto
 } */
 
 export const initialState = {
@@ -26,6 +41,9 @@ export const sharedSlice = createSlice({
     },
     setTipoHistoria: (state, action) => {
       state.hcd.ubicacion_atencion = action.payload;
+    },
+    setDatosPaciente: (state, action) => {
+      state.hcd = { ...state.hcd, ...action.payload };
     },
     setHcdScreen: (state, action) => {
       state.pantallaHCD = action.payload;
@@ -49,6 +67,7 @@ export const sharedSlice = createSlice({
   },
 });
 
-export const { setHcdScreen, setLlamado, setTipoHistoria } = sharedSlice.actions;
+export const { setHcdScreen, setLlamado, setTipoHistoria, setDatosPaciente } =
+  sharedSlice.actions;
 
 export default sharedSlice.reducer;
