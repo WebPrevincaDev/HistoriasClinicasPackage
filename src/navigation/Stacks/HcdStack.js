@@ -6,6 +6,7 @@ import MotivoDelLlamado from "../../screens/HcdScreens/MotivoDelLlamado";
 import TipoHistoria from "../../screens/HcdScreens/TipoHistoria";
 import Paciente from "../../screens/HcdScreens/Paciente";
 import DatosIniciales from "../../screens/HcdScreens/DatosIniciales";
+import Opcionales from "../../screens/HcdScreens/Opcionales";
 
 const HCDStack = createNativeStackNavigator();
 
@@ -36,6 +37,11 @@ const HcdStack = () => {
         name="DatosIniciales"
         component={DatosIniciales}
         options={{ title: "Datos Iniciales" }}
+      />
+      <HCDStack.Screen
+        name="Opcionales"
+        component={Opcionales}
+        options={{ title: "Opcionales" }}
       />
     </HCDStack.Navigator>
   );

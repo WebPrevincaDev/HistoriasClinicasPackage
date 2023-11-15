@@ -20,6 +20,19 @@ import { setHcdConfig } from "./thunks";
   pac_nro
   pac_piso
   pac_dto
+  antecedentes: string
+  dias
+  fc
+  frres
+  glucemia
+  hora
+  horas
+  llcap
+  minutos
+  sat_oxigeno
+  tad
+  tas
+  temperatura
 } */
 
 export const initialState = {
@@ -45,6 +58,9 @@ export const sharedSlice = createSlice({
     setDatosPaciente: (state, action) => {
       state.hcd = { ...state.hcd, ...action.payload };
     },
+    setDatosIniciales: (state, action) => {
+      state.hcd = { ...state.hcd, ...action.payload };
+    },
     setHcdScreen: (state, action) => {
       state.pantallaHCD = action.payload;
     },
@@ -67,7 +83,12 @@ export const sharedSlice = createSlice({
   },
 });
 
-export const { setHcdScreen, setLlamado, setTipoHistoria, setDatosPaciente } =
-  sharedSlice.actions;
+export const {
+  setHcdScreen,
+  setLlamado,
+  setTipoHistoria,
+  setDatosPaciente,
+  setDatosIniciales,
+} = sharedSlice.actions;
 
 export default sharedSlice.reducer;
