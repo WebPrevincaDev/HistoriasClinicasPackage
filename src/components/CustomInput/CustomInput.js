@@ -8,6 +8,7 @@ const CustomInput = ({
   name,
   secureTextEntry,
   control,
+  defaultValue = "",
   rules = {},
 }) => {
   return (
@@ -15,6 +16,7 @@ const CustomInput = ({
       control={control}
       name={name}
       rules={rules}
+      defaultValue={defaultValue}
       render={({
         field: { value, onChange, onBlur },
         fieldState: { error },
