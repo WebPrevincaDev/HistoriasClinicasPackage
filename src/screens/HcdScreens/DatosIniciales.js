@@ -13,9 +13,8 @@ import { useForm } from "react-hook-form";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-import CustomAutocomplete from "../../components/CustomAutocomplete";
+import ListaCheckbox from "../../components/ListaCheckbox";
 import { getAllByKey } from "../../helpers/data";
-import { getFormattedArray } from "../../helpers/CustomAutocomplete";
 import { setDatosIniciales } from "../../store/slices/hcd";
 
 const obtener_hora = () => {
@@ -31,7 +30,7 @@ const obtener_hora = () => {
 export default function DatosIniciales() {
   const dispatch = useDispatch();
   const { navigateAndSetHcdScreen } = useHcdNavigation();
-  const { control, handleSubmit, getValues, watch } = useForm();
+  const { control, handleSubmit, getValues } = useForm();
 
   const [isLoading, setIsLoading] = useState(false);
   const [antecedentesValue, setAntecedentesValue] = useState([]);
@@ -84,7 +83,9 @@ export default function DatosIniciales() {
       setIsLoading(true);
       // getAntecedentes_Llamada
       const antecedentes = await getAllByKey("asw.antecedente");
-      const antecedentesFormatted = getFormattedArray(antecedentes, "nombre");
+      const antecedentesFormatted = antecedentes.map(
+        (antecedente) => antecedente.nombre
+      );
       setAntecedentesItems(antecedentesFormatted);
       setIsLoading(false);
     };
@@ -173,17 +174,12 @@ export default function DatosIniciales() {
             onRequestClose={closeModal}
             animationType="fade"
           >
-            <View style={styles.modalView}>
+            <ScrollView style={styles.modalView}>
               <Text style={styles.title}>Lista de antecedentes</Text>
-              <CustomAutocomplete
-                label="Antecedentes (puede seleccionar más de uno)"
-                value={antecedentesValue}
+              <ListaCheckbox
                 items={antecedentesItems}
-                setValue={setAntecedentesValue}
-                multiple={true}
-                mode="BADGE"
-                showBadgeDot={false}
-                extendableBadgeContainer={true}
+                initialValues={antecedentesValue}
+                onItemSelect={setAntecedentesValue}
               />
               <CustomInput
                 name="antecedentes.otros"
@@ -204,7 +200,7 @@ export default function DatosIniciales() {
                 control={control}
               />
               <CustomButton text="Confirmar" onPress={closeModal} />
-            </View>
+            </ScrollView>
           </Modal>
         )}
       </View>
