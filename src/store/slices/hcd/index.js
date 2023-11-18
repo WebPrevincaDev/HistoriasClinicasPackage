@@ -37,6 +37,20 @@ import { setHcdConfig } from "./thunks";
   tad
   tas
   temperatura
+  // Opcionales
+  score_de_glasgow
+  historia_piel_mucosa
+  historia_neuro
+  historia_ap_respiratorio
+  historia_cyc
+  historia_cardio
+  historia_ecg_desc
+  historia_sist_oseoart_muscular
+  historia_abdomen
+  historia_urogen
+  historia_gco
+  historia_psiquiatrico
+  trauma
 } */
 
 export const initialState = {
@@ -75,6 +89,103 @@ export const sharedSlice = createSlice({
       });
   },
 });
+
+export const getOpcionales = (state) => {
+  const hcd = state.hcd.hcd;
+
+  const getTextoPielMucosa = () => {
+    const datos = [];
+    if (hcd.historia_piel_mucosa) datos.push(hcd.historia_piel_mucosa);
+    if (hcd.historia_edemas) datos.push(hcd.historia_edemas);
+    return datos.join(" / ");
+  };
+
+  const ds = [
+    {
+      label: "SCORE DE GLASGOW",
+      name: "score_de_glasgow",
+      screen: "ScoreGlasgow",
+      value: "",
+      shouldRenderNormalBtn: false,
+    },
+    {
+      label: "PIEL Y MUCOSA / EDEMAS",
+      name: "historia_piel_mucosa",
+      screen: "PielMucosa",
+      value: getTextoPielMucosa(),
+    },
+    {
+      label: "EXAMEN NEUROLÓGICO",
+      name: "historia_neuro",
+      screen: "ExamenNeurologico",
+      value: hcd.historia_neuro,
+    },
+    {
+      label: "AP. RESPIRATORIO",
+      name: "historia_ap_respiratorio",
+      screen: "ApRespiratorio",
+      value: hcd.historia_ap_respiratorio,
+    },
+    {
+      label: "CABEZA Y CUELLO",
+      name: "historia_cyc",
+      screen: "CabezaCuello",
+      value: hcd.historia_cyc,
+    },
+    {
+      label: "APARATO CARDIOVASCULAR",
+      name: "historia_cardio",
+      screen: "aparatoCardiovascular",
+      value: hcd.historia_cardio,
+    },
+    {
+      label: "INFORME ECG",
+      name: "historia_ecg_desc",
+      screen: "informeEcg",
+      value: hcd.historia_ecg_desc,
+      shouldRenderNormalBtn: false,
+    },
+    {
+      label: "SIST. OSEOARTC. Y MUSCULAR",
+      name: "historia_sist_oseoart_muscular",
+      screen: "SistOseoartMuscular",
+      value: hcd.historia_sist_oseoart_muscular,
+    },
+    {
+      label: "ABDOMEN",
+      name: "historia_abdomen",
+      screen: "Abdomen",
+      value: hcd.historia_abdomen,
+    },
+    {
+      label: "UROGENITAL",
+      name: "historia_urogen",
+      screen: "Urogenital",
+      value: hcd.historia_urogen,
+    },
+    {
+      label: "GINECOBSTETRICO",
+      name: "historia_gco",
+      screen: "Ginecobstetrico",
+      value: hcd.historia_gco,
+    },
+    {
+      label: "PSIQUIATRICO",
+      name: "historia_psiquiatrico",
+      screen: "Psiquiatrico",
+      value: hcd.historia_psiquiatrico,
+    },
+    {
+      label: "TRAUMA",
+      name: "trauma",
+      screen: "Trauma",
+      value: hcd.trauma,
+      textoNormalBtn: "Sin Trauma Aparente",
+    },
+  ];
+
+  return ds;
+};
 
 export const { setHcdScreen, updateHcd } = sharedSlice.actions;
 
