@@ -10,7 +10,7 @@ import { getAllByKey } from "../../helpers/data";
 import { getFormattedArray } from "../../helpers/CustomAutocomplete";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
 import { invalidInput } from "../../constants";
-import { setDatosPaciente, setHcdScreen } from "../../store/slices/hcd";
+import { updateHcd, setHcdScreen } from "../../store/slices/hcd";
 
 const initialRequiredOptions = {
   pac_dni: false,
@@ -60,7 +60,7 @@ export default function Paciente() {
       pac_cobertura: coberturaValue,
       pac_localidad: localidadValue,
     };
-    dispatch(setDatosPaciente(datos));
+    dispatch(updateHcd(datos));
     navigateAndSetHcdScreen("DatosIniciales");
   };
 
@@ -78,7 +78,7 @@ export default function Paciente() {
               pac_localidad: localidadValue,
               paciente_ausente: true,
             };
-            dispatch(setDatosPaciente(datos));
+            dispatch(updateHcd(datos));
             dispatch(setHcdScreen(""));
             navigation.navigate("HomeHCD");
           },

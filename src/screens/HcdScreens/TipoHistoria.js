@@ -2,7 +2,7 @@ import { Alert, StyleSheet, View } from "react-native";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
-import { setTipoHistoria } from "../../store/slices/hcd";
+import { updateHcd } from "../../store/slices/hcd";
 import { invalidInput } from "../../constants";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import CustomButton from "../../components/CustomButton";
@@ -20,7 +20,8 @@ export default function TipoHistoria() {
       Alert.alert(invalidInput);
       return;
     }
-    dispatch(setTipoHistoria(tipoHistoriaValue));
+    const payload = { ubicacion_atencion: tipoHistoriaValue };
+    dispatch(updateHcd(payload));
     navigateAndSetHcdScreen("Paciente");
   };
 

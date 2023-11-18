@@ -6,7 +6,7 @@ import CustomButton from "../../components/CustomButton";
 import { getAllByKey } from "../../helpers/data";
 import { getFormattedArray } from "../../helpers/CustomAutocomplete";
 import colors from "../../placeholder/colors.json";
-import { setLlamado } from "../../store/slices/hcd";
+import { updateHcd } from "../../store/slices/hcd";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
 import { invalidInput } from "../../constants";
 
@@ -26,8 +26,8 @@ export default function MotivoDelLlamado() {
       Alert.alert(invalidInput);
       return;
     }
-    const data = { motivo: motivoValue, color: colorValue };
-    dispatch(setLlamado(data));
+    const data = { llamadaMotivo: motivoValue, llamadaColor: colorValue };
+    dispatch(updateHcd(data));
     navigateAndSetHcdScreen("TipoHistoria");
   };
 

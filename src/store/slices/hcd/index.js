@@ -3,10 +3,13 @@ import { setHcdConfig } from "./thunks";
 
 // a medida que agregue propiedades a hcd las anoto acá para tenerlo de machete
 /* {
+  // Motivo del llamado
   llamadaMotivo: string
   llamadaColor: string
+  // Tipo de historia
   ubicacion_atencion: string
-  paciente_ausente: undefined | boolean
+  // Paciente
+  paciente_ausente?: undefined | boolean
   pac_dni
   pac_cobertura
   pac_plan
@@ -20,6 +23,7 @@ import { setHcdConfig } from "./thunks";
   pac_nro
   pac_piso
   pac_dto
+  // Datos iniciales
   antecedentes: string
   dias
   fc
@@ -47,18 +51,7 @@ export const sharedSlice = createSlice({
   name: "hcd",
   initialState,
   reducers: {
-    setLlamado: (state, action) => {
-      const { motivo, color } = action.payload;
-      state.hcd.llamadaMotivo = motivo;
-      state.hcd.llamadaColor = color;
-    },
-    setTipoHistoria: (state, action) => {
-      state.hcd.ubicacion_atencion = action.payload;
-    },
-    setDatosPaciente: (state, action) => {
-      state.hcd = { ...state.hcd, ...action.payload };
-    },
-    setDatosIniciales: (state, action) => {
+    updateHcd: (state, action) => {
       state.hcd = { ...state.hcd, ...action.payload };
     },
     setHcdScreen: (state, action) => {
@@ -83,12 +76,6 @@ export const sharedSlice = createSlice({
   },
 });
 
-export const {
-  setHcdScreen,
-  setLlamado,
-  setTipoHistoria,
-  setDatosPaciente,
-  setDatosIniciales,
-} = sharedSlice.actions;
+export const { setHcdScreen, updateHcd } = sharedSlice.actions;
 
 export default sharedSlice.reducer;

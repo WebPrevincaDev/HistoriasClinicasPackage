@@ -15,7 +15,7 @@ import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import ListaCheckbox from "../../components/ListaCheckbox";
 import { getAllByKey } from "../../helpers/data";
-import { setDatosIniciales } from "../../store/slices/hcd";
+import { updateHcd } from "../../store/slices/hcd";
 
 const obtener_hora = () => {
   const fecha = new Date();
@@ -72,7 +72,7 @@ export default function DatosIniciales() {
       // piso la propiedad antecedentes. antes era un obj, ahora un string
       antecedentes: resumenAntecedentes,
     };
-    dispatch(setDatosIniciales(datos));
+    dispatch(updateHcd(datos));
     navigateAndSetHcdScreen("Opcionales");
   };
 
