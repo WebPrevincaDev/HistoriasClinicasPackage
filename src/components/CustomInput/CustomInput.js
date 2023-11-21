@@ -10,6 +10,8 @@ const CustomInput = ({
   control,
   defaultValue = "",
   rules = {},
+  multiline,
+  numberOfLines,
 }) => {
   return (
     <Controller
@@ -34,6 +36,8 @@ const CustomInput = ({
             onChangeText={onChange}
             onBlur={onBlur}
             secureTextEntry={secureTextEntry}
+            multiline={multiline}
+            numberOfLines={numberOfLines}
             style={styles.input(error)}
           />
           {error?.message && <Text style={styles.error}>{error.message}</Text>}
