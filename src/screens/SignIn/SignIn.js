@@ -62,10 +62,7 @@ const SignIn = () => {
           placeholder={"Contraseña"}
           control={control}
           secureTextEntry
-          rules={{required: 'Se requiere la contraseña', minLength: {
-            value: 5,
-            message: 'La contraseña debe contener más de 5 caracteres'
-          }}}
+          rules={{required: 'Por favor ingrese una contraseña'}}
         />
 
         <CustomButton
@@ -75,11 +72,11 @@ const SignIn = () => {
         />
       <Button onPress={()=>navigation.navigate('Signature')} title="IR A SIGNATURE"/>
 
-        <CustomButton
+        {/* <CustomButton
           text={"Olvidé mi Contraseña"}
           onPress={onForgotPasswordPressed}
           type="TERTIARY"
-        />
+        /> */}
 
       </View>
     </ScrollView>

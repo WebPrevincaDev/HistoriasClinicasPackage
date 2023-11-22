@@ -12,9 +12,11 @@ import DrProfileIcon from "../../../assets/images/DoctorUserIcon.png";
 
 // Components
 import CustomButton from "../../components/CustomButton";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
   const { height } = useWindowDimensions();
+  const { user } = useSelector((state) => state.auth);
   return (
     <View style={styles.container}>
       <Image
@@ -23,15 +25,19 @@ const Profile = () => {
         resizeMode="contain"
       />
       <View style={styles.infoContainer}>
-        <Text style={styles.title}>Email</Text>
-        <Text style={styles.data}>EMAIL DEL USUARIO</Text>
+        <Text style={styles.title}>Nombre</Text>
+        <Text style={styles.data}>{user.app_nombre}</Text>
+      </View>
+      <View style={styles.infoContainer}>
+        <Text style={styles.title}>Matricula</Text>
+        <Text style={styles.data}>{user.app_matricula}</Text>
       </View>
 
-      <CustomButton
+      {/* <CustomButton
         onPress={() => console.warn("SE QUIERE CAMBIAR LA PASS")}
         text="CAMBIAR CONTRASEÑA"
         type="SIMPLE"
-      />
+      /> */}
 
       <CustomButton
         onPress={() => console.warn("SE ESTÁ CERRANDO LA SESIÓN")}

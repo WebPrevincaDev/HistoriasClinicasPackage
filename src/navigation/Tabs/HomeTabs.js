@@ -6,8 +6,8 @@ import { MaterialCommunityIcons, Ionicons, FontAwesome5 } from '@expo/vector-ico
 
 // Screens
 import Home from "../../screens/Home";
-import HcdStack from "../Stacks/HcdStack";
 import ProfileStack from "../Stacks/ProfileStack";
+import HomeHCD from "../../screens/HcdScreens/HomeHCD";
 
 const Tab = createBottomTabNavigator();
 
@@ -25,7 +25,7 @@ const HomeTabs = () => {
           },
         }}
       />
-      <Tab.Screen name="CrearHCD" component={HcdStack} options={{
+      <Tab.Screen name="CrearHCD" component={HomeHCD} options={{
         tabBarIcon: ({ focused, color, size}) => {
           let iconName;
           iconName = focused ? "add-circle-outline" : "add-circle";

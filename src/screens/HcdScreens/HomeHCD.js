@@ -2,6 +2,7 @@ import { Alert, StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import CustomButton from "../../components/CustomButton";
+import HcdStack from "../../navigation/Stacks/HcdStack";
 
 const HomeHCD = () => {
   const navigation = useNavigation();
@@ -14,7 +15,7 @@ const HomeHCD = () => {
       navigation.navigate("Home");
       return;
     }
-    navigation.navigate("MotivoDelLlamado");
+    navigation.navigate("HcdStack");
   };
 
   return (
