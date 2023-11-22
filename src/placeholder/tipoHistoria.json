@@ -1,0 +1,18 @@
+[
+  {
+    "value": "DOMICILIO",
+    "label": "DOMICILIO"
+  },
+  {
+    "value": "AREA PROTEGIDA",
+    "label": "AREA PROTEGIDA"
+  },
+  {
+    "value": "VIA PUBLICA",
+    "label": "VIA PUBLICA"
+  },
+  {
+    "value": "OTRO",
+    "label": "OTRO"
+  }
+]

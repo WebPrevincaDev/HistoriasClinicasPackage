@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import DropDownPicker from "react-native-dropdown-picker";
 import Navigation from "./src/navigation";
 
 //Redux
@@ -9,6 +10,8 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 
 let persistor = persistStore(store);
+
+DropDownPicker.setListMode("MODAL");
 
 export default function App() {
   return (

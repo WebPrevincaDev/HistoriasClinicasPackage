@@ -9,14 +9,13 @@ import {
   Alert,
   Button,
 } from "react-native";
-import React, { useState } from "react";
 import PlaceHolderLogo from "../../../assets/images/testLogo.jpg";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { loginWithFirebase } from "../../store/slices/auth/thunks";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../store/slices/auth/thunks";
 
 const SignIn = () => {
   const { height } = useWindowDimensions();
@@ -25,26 +24,21 @@ const SignIn = () => {
 
   const { control, handleSubmit, formState: {errors} } = useForm();
 
+  const { isLoading } = useSelector((state) => state.auth);
+
   const onSignInPressed = async (data) => {
-    const response = await dispatch(loginWithFirebase(data));
-    authFirebaseUser(response);
+    try {
+      await dispatch(login(data)).unwrap();
+      navigation.navigate("HomeTab");
+    } catch (error) {
+      Alert.alert(error.message);
+    }
   };
 
   const onForgotPasswordPressed = () => {
     console.warn("Forgot Password");
 
     navigation.navigate("ForgotPassword");
-  };
-
-  const onSignUpPressed = () => {
-    navigation.navigate("SignUp");
-  };
-
-  const authFirebaseUser = ({type}) => {
-    if (type === "auth/loginWithFirebase/rejected"){
-      return Alert.alert('Credenciales Incorrectas')
-    }
-    navigation.navigate("HomeTab");
   };
 
   return (
@@ -57,10 +51,10 @@ const SignIn = () => {
         />
 
         <CustomInput
-          name={'email'}
-          placeholder={"Email"}
+          name={'matricula'}
+          placeholder={"Matrícula"}
           control={control}
-          rules={{required: 'Se requiere el email'}}
+          rules={{required: 'Se requiere la matrícula'}}
         />
 
         <CustomInput
@@ -68,29 +62,22 @@ const SignIn = () => {
           placeholder={"Contraseña"}
           control={control}
           secureTextEntry
-          rules={{required: 'Se requiere la contraseña', minLength: {
-            value: 5,
-            message: 'La contraseña debe contener más de 5 caracteres'
-          }}}
+          rules={{required: 'Por favor ingrese una contraseña'}}
         />
 
         <CustomButton
-          text={"Ingresar"}
+          text={isLoading ? "Cargando..." : "Ingresar"}
+          disabled={isLoading}
           onPress={handleSubmit(onSignInPressed)}
         />
       <Button onPress={()=>navigation.navigate('Signature')} title="IR A SIGNATURE"/>
 
-        <CustomButton
+        {/* <CustomButton
           text={"Olvidé mi Contraseña"}
           onPress={onForgotPasswordPressed}
           type="TERTIARY"
-        />
+        /> */}
 
-        <CustomButton
-          text={"No tienes una cuenta? Crea una"}
-          onPress={onSignUpPressed}
-          type="TERTIARY"
-        />
       </View>
     </ScrollView>
   );

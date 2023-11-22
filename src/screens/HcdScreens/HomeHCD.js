@@ -1,16 +1,41 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import CustomButton from '../../components/CustomButton'
+import { Alert, StyleSheet, Text, View } from "react-native";
+import { useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import CustomButton from "../../components/CustomButton";
+import HcdStack from "../../navigation/Stacks/HcdStack";
 
 const HomeHCD = () => {
+  const navigation = useNavigation();
+  const { user } = useSelector((state) => state.auth);
+  const { hcdConfig } = useSelector((state) => state.hcd);
+
+  const addNewHistoriaClinica = () => {
+    if (!hcdConfig) {
+      Alert.alert("Falta completar configuración");
+      navigation.navigate("Home");
+      return;
+    }
+    navigation.navigate("HcdStack");
+  };
+
   return (
-    <View>
-      <Text>Médico: NOMBRE_DEL_MÉDICO</Text>
-      <CustomButton text={"AGREGAR"} onPress={()=>console.warn("SE INTENTA CREAR UNA HCD...")} />
+    <View style={styles.container}>
+      <Text style={styles.title}>Médico: {user.app_nombre}</Text>
+      <CustomButton text="AGREGAR" onPress={addNewHistoriaClinica} />
     </View>
-  )
-}
+  );
+};
 
-export default HomeHCD
+export default HomeHCD;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 8,
+  },
+});
