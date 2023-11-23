@@ -41,6 +41,17 @@ export default function Desenlace() {
   const [institucionesItems, setInstitucionesItems] = useState([]);
 
   const [isInternationVisible, setIsInternationVisible] = useState(true);
+  const [signature, setSignature] = useState(null);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const handleOK = (signature) => {
+    setSignature(signature);
+    closeModal();
+  };
 
   const onPressSiguiente = (data) => {
     if (
@@ -96,6 +107,7 @@ export default function Desenlace() {
     cargar_datos();
   }, []);
 
+  // get_internacion_IsVisible
   useEffect(() => {
     const shouldInternationBeVisible =
       desenlaceValue.includes("Inter. sala gral.") ||
@@ -104,17 +116,6 @@ export default function Desenlace() {
       desenlaceValue.includes("UTI");
     setIsInternationVisible(shouldInternationBeVisible);
   }, [desenlaceValue]);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-
-  const [signature, setSignature] = useState(null);
-
-  const handleOK = (signature) => {
-    setSignature(signature);
-    closeModal();
-  };
 
   return (
     <ScrollView style={styles.container}>
