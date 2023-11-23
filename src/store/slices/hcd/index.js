@@ -51,6 +51,19 @@ import { setHcdConfig } from "./thunks";
   historia_gco
   historia_psiquiatrico
   trauma
+  // Diagnostico
+  diagnostico
+  procedimiento
+  epicrisis
+  medicamentos
+  // Desenlace
+  alLlegar
+  desenlace
+  evolucion
+  instituto
+  firma_med_derivante
+  matricula_medico_derivante
+  nombre_medico_derivante
 } */
 
 export const initialState = {
