@@ -10,6 +10,7 @@ import Opcionales from "../../screens/HcdScreens/Opcionales";
 import Diagnostico from "../../screens/HcdScreens/Diagnostico";
 import Desenlace from "../../screens/HcdScreens/Desenlace";
 import Finalizacion from "../../screens/HcdScreens/Finalizacion";
+import Previsualizacion from "../../screens/HcdScreens/Previsualizacion";
 
 const HCDStack = createNativeStackNavigator();
 
@@ -54,7 +55,12 @@ const HcdStack = () => {
       <HCDStack.Screen
         name="Finalizacion"
         component={Finalizacion}
-        options={{ title: "Finalizacion" }}
+        options={{ title: "Finalización" }}
+      />
+      <HCDStack.Screen
+        name="Previsualizacion"
+        component={Previsualizacion}
+        options={{ title: "Previsualización" }}
       />
     </HCDStack.Navigator>
   );

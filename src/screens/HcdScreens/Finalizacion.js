@@ -65,6 +65,12 @@ export default function Finalizacion() {
     navigation.navigate("HomeTab");
   };
 
+  const onPressPrevisualizar = (inputData) => {
+    const datos = guardarDatos(inputData);
+    if (!datos) return;
+    navigation.navigate("Previsualizacion");
+  };
+
   return (
     <ScrollView style={styles.container}>
       <CustomAutocomplete
@@ -104,11 +110,11 @@ export default function Finalizacion() {
         control={control}
       />
 
-      {/* <CustomButton
+      <CustomButton
         text="PREVISUALIZAR"
         onPress={handleSubmit(onPressPrevisualizar)}
       />
-      <CustomButton text="IMPRIMIR" onPress={handleSubmit(onPressImprimir)} /> */}
+      {/* <CustomButton text="IMPRIMIR" onPress={handleSubmit(onPressImprimir)} /> */}
       <CustomButton text="FINALIZAR" onPress={handleSubmit(onPressFinalizar)} />
     </ScrollView>
   );
