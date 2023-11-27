@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { setHcdConfig } from "./thunks";
+import { addHcd, setHcdConfig } from "./thunks";
 
 // a medida que agregue propiedades a hcd las anoto acá para tenerlo de machete
 /* {
@@ -64,12 +64,18 @@ import { setHcdConfig } from "./thunks";
   firma_med_derivante
   matricula_medico_derivante
   nombre_medico_derivante
+  // Finalizacion
+  abona_copago: boolean
+  aclaracion_pac_acompanante
+  dni_pac_acompanante
+  firma_pac_acompanante
 } */
 
 export const initialState = {
   isLoading: false,
   error: "",
   hcdConfig: null,
+  arr_hcd: [],
   hcd: {},
   pantallaHCD: "",
 };
@@ -87,6 +93,7 @@ export const sharedSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // setHcdConfig
       .addCase(setHcdConfig.pending, (state) => {
         state.isLoading = true;
         state.error = "";
@@ -99,6 +106,12 @@ export const sharedSlice = createSlice({
       .addCase(setHcdConfig.fulfilled, (state, action) => {
         state.isLoading = false;
         state.hcdConfig = action.payload;
+      })
+
+      // addHcd
+      .addCase(addHcd.fulfilled, (state, action) => {
+        state.arr_hcd = action.payload;
+        state.hcd = {};
       });
   },
 });

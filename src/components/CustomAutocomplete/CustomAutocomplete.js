@@ -12,13 +12,13 @@ const CustomAutocomplete = ({ label, required, ...dropDownProps }) => {
         {required && <Text style={{ color: "red" }}> *</Text>}
       </Text>
       <DropDownPicker
-        {...dropDownProps}
         open={open}
         setOpen={setOpen}
         searchable={true}
         searchWithRegionalAccents={true}
         searchPlaceholder="Buscar..."
         placeholder="Seleccione un elemento"
+        {...dropDownProps}
       />
     </View>
   );
