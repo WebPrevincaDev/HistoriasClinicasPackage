@@ -1,7 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // Screens
-// import HomeHCD from "../../screens/HcdScreens/HomeHCD";
 import MotivoDelLlamado from "../../screens/HcdScreens/MotivoDelLlamado";
 import TipoHistoria from "../../screens/HcdScreens/TipoHistoria";
 import Paciente from "../../screens/HcdScreens/Paciente";
@@ -11,6 +10,20 @@ import Diagnostico from "../../screens/HcdScreens/Diagnostico";
 import Desenlace from "../../screens/HcdScreens/Desenlace";
 import Finalizacion from "../../screens/HcdScreens/Finalizacion";
 import Previsualizacion from "../../screens/HcdScreens/Previsualizacion";
+// Opcionales screens
+import ScoreGlasgow from "../../screens/HcdScreens/Opcionales/ScoreGlasgow";
+import PielMucosa from "../../screens/HcdScreens/Opcionales/PielMucosa";
+import ExamenNeurologico from "../../screens/HcdScreens/Opcionales/ExamenNeurologico";
+import ApRespiratorio from "../../screens/HcdScreens/Opcionales/ApRespiratorio";
+import CabezaCuello from "../../screens/HcdScreens/Opcionales/CabezaCuello";
+import AparatoCardiovascular from "../../screens/HcdScreens/Opcionales/AparatoCardiovascular";
+import InformeEcg from "../../screens/HcdScreens/Opcionales/InformeEcg";
+import SistOseoartMuscular from "../../screens/HcdScreens/Opcionales/SistOseoartMuscular";
+import Abdomen from "../../screens/HcdScreens/Opcionales/Abdomen";
+import Urogenital from "../../screens/HcdScreens/Opcionales/Urogenital";
+import Ginecobstetrico from "../../screens/HcdScreens/Opcionales/Ginecobstetrico";
+import Psiquiatrico from "../../screens/HcdScreens/Opcionales/Psiquiatrico";
+import Trauma from "../../screens/HcdScreens/Opcionales/Trauma";
 
 const HCDStack = createNativeStackNavigator();
 
@@ -56,6 +69,71 @@ const HcdStack = () => {
         name="Finalizacion"
         component={Finalizacion}
         options={{ title: "Finalización" }}
+      />
+      <HCDStack.Screen
+        name="ScoreGlasgow"
+        component={ScoreGlasgow}
+        options={{ title: "Score de Glasgow" }}
+      />
+      <HCDStack.Screen
+        name="PielMucosa"
+        component={PielMucosa}
+        options={{ title: "Piel y mucosa / edemas" }}
+      />
+      <HCDStack.Screen
+        name="ExamenNeurologico"
+        component={ExamenNeurologico}
+        options={{ title: "Examen neurológico" }}
+      />
+      <HCDStack.Screen
+        name="ApRespiratorio"
+        component={ApRespiratorio}
+        options={{ title: "Ap. respiratorio" }}
+      />
+      <HCDStack.Screen
+        name="CabezaCuello"
+        component={CabezaCuello}
+        options={{ title: "Cabeza y cuello" }}
+      />
+      <HCDStack.Screen
+        name="AparatoCardiovascular"
+        component={AparatoCardiovascular}
+        options={{ title: "Aparato cardiovascular" }}
+      />
+      <HCDStack.Screen
+        name="InformeEcg"
+        component={InformeEcg}
+        options={{ title: "Informe ECG" }}
+      />
+      <HCDStack.Screen
+        name="SistOseoartMuscular"
+        component={SistOseoartMuscular}
+        options={{ title: "Sist. Oseoart. y Muscular" }}
+      />
+      <HCDStack.Screen
+        name="Abdomen"
+        component={Abdomen}
+        options={{ title: "Abdomen" }}
+      />
+      <HCDStack.Screen
+        name="Urogenital"
+        component={Urogenital}
+        options={{ title: "Urogenital" }}
+      />
+      <HCDStack.Screen
+        name="Ginecobstetrico"
+        component={Ginecobstetrico}
+        options={{ title: "Ginecobstétrico" }}
+      />
+      <HCDStack.Screen
+        name="Psiquiatrico"
+        component={Psiquiatrico}
+        options={{ title: "Psiquiátrico" }}
+      />
+      <HCDStack.Screen
+        name="Trauma"
+        component={Trauma}
+        options={{ title: "Trauma" }}
       />
       <HCDStack.Screen
         name="Previsualizacion"

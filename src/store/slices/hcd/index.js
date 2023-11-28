@@ -161,13 +161,13 @@ export const getOpcionales = (state) => {
     {
       label: "APARATO CARDIOVASCULAR",
       name: "historia_cardio",
-      screen: "aparatoCardiovascular",
+      screen: "AparatoCardiovascular",
       value: hcd.historia_cardio,
     },
     {
       label: "INFORME ECG",
       name: "historia_ecg_desc",
-      screen: "informeEcg",
+      screen: "InformeEcg",
       value: hcd.historia_ecg_desc,
       shouldRenderNormalBtn: false,
     },
