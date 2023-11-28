@@ -16,16 +16,7 @@ import CustomButton from "../../components/CustomButton";
 import ListaCheckbox from "../../components/ListaCheckbox";
 import { getAllByKey } from "../../helpers/data";
 import { updateHcd } from "../../store/slices/hcd";
-
-const obtener_hora = () => {
-  const fecha = new Date();
-  const hora = fecha.getHours();
-  const minutos = fecha.getMinutes();
-  let relleno_min = "";
-  if (minutos <= 9) relleno_min = "0";
-  const horaFinal = hora + ":" + relleno_min + minutos;
-  return horaFinal;
-};
+import { obtener_hora } from "../../helpers/common";
 
 export default function DatosIniciales() {
   const dispatch = useDispatch();
