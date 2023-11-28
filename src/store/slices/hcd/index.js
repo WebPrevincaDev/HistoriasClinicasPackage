@@ -69,6 +69,8 @@ import { addHcd, setHcdConfig } from "./thunks";
   aclaracion_pac_acompanante
   dni_pac_acompanante
   firma_pac_acompanante
+  // ScoreGlasgow
+  medicionesScoreGlasgow: [{ hora, ocular, verbal, motora, total }]
 } */
 
 export const initialState = {
@@ -86,6 +88,11 @@ export const sharedSlice = createSlice({
   reducers: {
     updateHcd: (state, action) => {
       state.hcd = { ...state.hcd, ...action.payload };
+    },
+    addScoreGlasgowToHcd: (state, action) => {
+      state.hcd.medicionesScoreGlasgow
+        ? state.hcd.medicionesScoreGlasgow.push(action.payload)
+        : (state.hcd.medicionesScoreGlasgow = [action.payload]);
     },
     setHcdScreen: (state, action) => {
       state.pantallaHCD = action.payload;
@@ -213,6 +220,7 @@ export const getOpcionales = (state) => {
   return ds;
 };
 
-export const { setHcdScreen, updateHcd } = sharedSlice.actions;
+export const { setHcdScreen, updateHcd, addScoreGlasgowToHcd } =
+  sharedSlice.actions;
 
 export default sharedSlice.reducer;
