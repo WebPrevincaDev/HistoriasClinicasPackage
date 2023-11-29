@@ -40,7 +40,7 @@ import { addHcd, setHcdConfig } from "./thunks";
   // Opcionales
   edemas
   piel_mucosa
-  historia_neuro
+  examen_neuro
   historia_ap_respiratorio
   historia_cyc
   historia_cardio
@@ -149,9 +149,9 @@ export const getOpcionales = (state) => {
     },
     {
       label: "EXAMEN NEUROLÓGICO",
-      name: "historia_neuro",
+      name: "examen_neuro",
       screen: "ExamenNeurologico",
-      value: hcd.historia_neuro,
+      value: hcd.examen_neuro,
     },
     {
       label: "AP. RESPIRATORIO",
