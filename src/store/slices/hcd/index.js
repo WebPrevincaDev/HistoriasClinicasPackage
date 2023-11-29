@@ -38,8 +38,8 @@ import { addHcd, setHcdConfig } from "./thunks";
   tas
   temperatura
   // Opcionales
-  score_de_glasgow
-  historia_piel_mucosa
+  edemas
+  piel_mucosa
   historia_neuro
   historia_ap_respiratorio
   historia_cyc
@@ -128,8 +128,8 @@ export const getOpcionales = (state) => {
 
   const getTextoPielMucosa = () => {
     const datos = [];
-    if (hcd.historia_piel_mucosa) datos.push(hcd.historia_piel_mucosa);
-    if (hcd.historia_edemas) datos.push(hcd.historia_edemas);
+    if (hcd.piel_mucosa) datos.push(hcd.piel_mucosa);
+    if (hcd.edemas) datos.push(hcd.edemas);
     return datos.join(" / ");
   };
 
@@ -143,7 +143,7 @@ export const getOpcionales = (state) => {
     },
     {
       label: "PIEL Y MUCOSA / EDEMAS",
-      name: "historia_piel_mucosa",
+      name: "piel_mucosa",
       screen: "PielMucosa",
       value: getTextoPielMucosa(),
     },
