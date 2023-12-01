@@ -41,7 +41,7 @@ import { addHcd, setHcdConfig } from "./thunks";
   edemas
   piel_mucosa
   examen_neuro
-  historia_ap_respiratorio
+  ap_respiratorio
   historia_cyc
   historia_cardio
   historia_ecg_desc
@@ -155,9 +155,9 @@ export const getOpcionales = (state) => {
     },
     {
       label: "AP. RESPIRATORIO",
-      name: "historia_ap_respiratorio",
+      name: "ap_respiratorio",
       screen: "ApRespiratorio",
-      value: hcd.historia_ap_respiratorio,
+      value: hcd.ap_respiratorio,
     },
     {
       label: "CABEZA Y CUELLO",
