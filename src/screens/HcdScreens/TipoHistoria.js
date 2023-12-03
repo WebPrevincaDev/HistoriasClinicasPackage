@@ -1,7 +1,7 @@
 import { Alert, StyleSheet, View } from "react-native";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
+import { useDropdown } from "../../hooks/useDropdown";
 import { updateHcd } from "../../store/slices/hcd";
 import { invalidInput } from "../../constants";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
@@ -12,8 +12,11 @@ export default function TipoHistoria() {
   const dispatch = useDispatch();
   const { navigateAndSetHcdScreen } = useHcdNavigation();
 
-  const [tipoHistoriaValue, setTipoHistoriaValue] = useState(null);
-  const [tipoHistoriaItems, setTipoHistoriaItems] = useState(tipoHistoria);
+  const {
+    value: tipoHistoriaValue,
+    setValue: setTipoHistoriaValue,
+    items: tipoHistoriaItems,
+  } = useDropdown({ initialItems: tipoHistoria });
 
   const onPressSiguiente = () => {
     if (!tipoHistoriaValue) {

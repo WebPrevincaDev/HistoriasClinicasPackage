@@ -7,7 +7,7 @@ import CustomAutocomplete from "../../components/CustomAutocomplete";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 import { getAllByKey } from "../../helpers/data";
-import { getFormattedArray } from "../../helpers/CustomAutocomplete";
+import { useDropdown } from "../../hooks/useDropdown";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
 import { invalidInput } from "../../constants";
 import { updateHcd, setHcdScreen } from "../../store/slices/hcd";
@@ -33,19 +33,28 @@ export default function Paciente() {
   const navigation = useNavigation();
   const { navigateAndSetHcdScreen } = useHcdNavigation();
   const { control, handleSubmit, getValues, setValue, watch } = useForm();
-
   const { ubicacion_atencion } = useSelector((state) => state.hcd.hcd);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [coberturaValue, setCoberturaValue] = useState(null);
-  const [coberturaItems, setCoberturaItems] = useState([]);
-
-  const [localidadValue, setLocalidadValue] = useState(null);
-  const [localidadItems, setLocalidadItems] = useState([]);
-
   const [requiredOptions, setRequiredOptions] = useState(
     initialRequiredOptions
   );
+
+  const {
+    isLoading: isCoberturaLoading,
+    value: coberturaValue,
+    setValue: setCoberturaValue,
+    items: coberturaItems,
+    setItems: setCoberturaItems,
+  } = useDropdown({ table: "asw.cobertura" });
+
+  const {
+    isLoading: isLocalidadLoading,
+    value: localidadValue,
+    setValue: setLocalidadValue,
+    items: localidadItems,
+    setItems: setLocalidadItems,
+  } = useDropdown({ table: "asw.localidad" });
+
+  const isLoading = isCoberturaLoading || isLocalidadLoading;
 
   const onPressSiguiente = (data) => {
     if (
@@ -89,25 +98,6 @@ export default function Paciente() {
       ]
     );
   };
-
-  // cargar_datos
-  useEffect(() => {
-    const cargar_datos = async () => {
-      if (coberturaItems.length && localidadItems.length) return;
-      setIsLoading(true);
-      // cargarCombos
-      // getCoberturas
-      const coberturas = await getAllByKey("asw.cobertura");
-      const coberturasFormatted = getFormattedArray(coberturas, "nombre");
-      setCoberturaItems(coberturasFormatted);
-      // getLocalidades
-      const localidades = await getAllByKey("asw.localidad");
-      const localidadesFormatted = getFormattedArray(localidades, "nombre");
-      setLocalidadItems(localidadesFormatted);
-      setIsLoading(false);
-    };
-    cargar_datos();
-  }, []);
 
   // onChangeForm
   const pac_dni_value = watch("pac_dni");

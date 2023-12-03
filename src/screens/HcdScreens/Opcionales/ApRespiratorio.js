@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   ScrollView,
@@ -10,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { updateHcd } from "../../../store/slices/hcd";
-import { getAllByKey } from "../../../helpers/data";
+import { useCheckbox } from "../../../hooks/useCheckbox";
 import CustomButton from "../../../components/CustomButton";
 import ListaCheckbox from "../../../components/ListaCheckbox";
 import CustomInput from "../../../components/CustomInput";
@@ -20,10 +19,12 @@ export default function ApRespiratorio() {
   const navigation = useNavigation();
   const { control, handleSubmit } = useForm();
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [apRespiratorioValue, setApRespiratorioValue] = useState([]);
-  const [apRespiratorioItems, setApRespiratorioItems] = useState([]);
+  const {
+    isLoading,
+    value: apRespiratorioValue,
+    setValue: setApRespiratorioValue,
+    items: apRespiratorioItems,
+  } = useCheckbox({ table: "asw.ap_respiratorio" });
 
   const onPressGuardar = (data) => {
     const otroValue = data.otro ? `, ${data.otro}` : "";
@@ -31,19 +32,6 @@ export default function ApRespiratorio() {
     dispatch(updateHcd({ ap_respiratorio }));
     navigation.goBack();
   };
-
-  useEffect(() => {
-    const cargar_datos = async () => {
-      if (apRespiratorioItems.length) return;
-      setIsLoading(true);
-      // getApRespiratorio
-      const apRespiratorio = await getAllByKey("asw.ap_respiratorio");
-      const apRespiratorioFormatted = apRespiratorio.map((ap) => ap.nombre);
-      setApRespiratorioItems(apRespiratorioFormatted);
-      setIsLoading(false);
-    };
-    cargar_datos();
-  }, []);
 
   return (
     <ScrollView style={styles.container}>

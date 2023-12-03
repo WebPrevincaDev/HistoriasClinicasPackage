@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   ScrollView,
@@ -9,7 +8,7 @@ import {
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { updateHcd } from "../../../store/slices/hcd";
-import { getAllByKey } from "../../../helpers/data";
+import { useCheckbox } from "../../../hooks/useCheckbox";
 import CustomButton from "../../../components/CustomButton";
 import ListaCheckbox from "../../../components/ListaCheckbox";
 
@@ -17,13 +16,21 @@ export default function PielMucosa() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const {
+    isLoading: isPielMucosaLoading,
+    value: pielMucosaValue,
+    setValue: setPielMucosaValue,
+    items: pielMucosaItems,
+  } = useCheckbox({ table: "asw.piel_mucosa", itemKey: "piel_mucosa_nombre" });
 
-  const [pielMucosaValue, setPielMucosaValue] = useState([]);
-  const [pielMucosaItems, setPielMucosaItems] = useState([]);
+  const {
+    isLoading: isEdemasLoading,
+    value: edemasValue,
+    setValue: setEdemasValue,
+    items: edemasItems,
+  } = useCheckbox({ table: "asw.edema", itemKey: "edema_nombre" });
 
-  const [edemasValue, setEdemasValue] = useState([]);
-  const [edemasItems, setEdemasItems] = useState([]);
+  const isLoading = isPielMucosaLoading || isEdemasLoading;
 
   const onPressGuardar = () => {
     const datos = {
@@ -33,25 +40,6 @@ export default function PielMucosa() {
     dispatch(updateHcd(datos));
     navigation.goBack();
   };
-
-  useEffect(() => {
-    const cargar_datos = async () => {
-      if (pielMucosaItems.length && edemasItems.length) return;
-      setIsLoading(true);
-      // getPielMucosa
-      const pielMucosa = await getAllByKey("asw.piel_mucosa");
-      const pielMucosaFormatted = pielMucosa.map(
-        (piel) => piel.piel_mucosa_nombre
-      );
-      setPielMucosaItems(pielMucosaFormatted);
-      // getEdemas
-      const edemas = await getAllByKey("asw.edema");
-      const edemasFormatted = edemas.map((edema) => edema.edema_nombre);
-      setEdemasItems(edemasFormatted);
-      setIsLoading(false);
-    };
-    cargar_datos();
-  }, []);
 
   return (
     <ScrollView style={styles.container}>

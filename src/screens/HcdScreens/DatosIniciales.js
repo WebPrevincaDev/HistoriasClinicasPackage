@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   ActivityIndicator,
   Modal,
@@ -14,7 +14,7 @@ import { useHcdNavigation } from "../../hooks/useHcdNavigation";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import ListaCheckbox from "../../components/ListaCheckbox";
-import { getAllByKey } from "../../helpers/data";
+import { useCheckbox } from "../../hooks/useCheckbox";
 import { updateHcd } from "../../store/slices/hcd";
 import { obtener_hora } from "../../helpers/common";
 
@@ -23,9 +23,12 @@ export default function DatosIniciales() {
   const { navigateAndSetHcdScreen } = useHcdNavigation();
   const { control, handleSubmit, getValues } = useForm();
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [antecedentesValue, setAntecedentesValue] = useState([]);
-  const [antecedentesItems, setAntecedentesItems] = useState([]);
+  const {
+    isLoading,
+    value: antecedentesValue,
+    setValue: setAntecedentesValue,
+    items: antecedentesItems,
+  } = useCheckbox({ table: "asw.antecedente", itemKey: "antecedente_nombre" });
 
   const [resumenAntecedentes, setResumenAntecedentes] = useState("");
 
@@ -66,22 +69,6 @@ export default function DatosIniciales() {
     dispatch(updateHcd(datos));
     navigateAndSetHcdScreen("Opcionales");
   };
-
-  // cargar_datos
-  useEffect(() => {
-    const cargar_datos = async () => {
-      if (antecedentesItems.length) return;
-      setIsLoading(true);
-      // getAntecedentes_Llamada
-      const antecedentes = await getAllByKey("asw.antecedente");
-      const antecedentesFormatted = antecedentes.map(
-        (antecedente) => antecedente.nombre
-      );
-      setAntecedentesItems(antecedentesFormatted);
-      setIsLoading(false);
-    };
-    cargar_datos();
-  }, []);
 
   return (
     <ScrollView style={styles.container}>

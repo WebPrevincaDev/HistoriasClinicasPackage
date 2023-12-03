@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import * as Application from "expo-application";
+import { useDropdown } from "../../hooks/useDropdown";
 import { setHcdScreen, updateHcd } from "../../store/slices/hcd";
 import { addHcd, agregarPaciente } from "../../store/slices/hcd/thunks";
 import { invalidInput } from "../../constants";
@@ -20,13 +21,14 @@ export default function Finalizacion() {
   const navigation = useNavigation();
   const { control, handleSubmit } = useForm();
   const { hcd, arr_hcd } = useSelector((state) => state.hcd);
-
-  const [abonaCopagoValue, setAbonaCopagoValue] = useState(null);
-  const [abonaCopagoItems, setAbonaCopagoItems] = useState(abonaCopago);
-
   const [signature, setSignature] = useState(null);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const {
+    value: abonaCopagoValue,
+    setValue: setAbonaCopagoValue,
+    items: abonaCopagoItems,
+  } = useDropdown({ initialItems: abonaCopago });
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);

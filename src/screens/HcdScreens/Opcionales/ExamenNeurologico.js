@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   ScrollView,
@@ -9,7 +8,7 @@ import {
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { updateHcd } from "../../../store/slices/hcd";
-import { getAllByKey } from "../../../helpers/data";
+import { useCheckbox } from "../../../hooks/useCheckbox";
 import CustomButton from "../../../components/CustomButton";
 import ListaCheckbox from "../../../components/ListaCheckbox";
 
@@ -17,13 +16,21 @@ export default function ExamenNeurologico() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const {
+    isLoading: isExamenNeuroLoading,
+    value: examenNeuroValue,
+    setValue: setExamenNeuroValue,
+    items: examenNeuroItems,
+  } = useCheckbox({ table: "asw.neuro" });
 
-  const [examenNeuroValue, setExamenNeuroValue] = useState([]);
-  const [examenNeuroItems, setExamenNeuroItems] = useState([]);
+  const {
+    isLoading: isEstadoMentalLoading,
+    value: estadoMentalValue,
+    setValue: setEstadoMentalValue,
+    items: estadoMentalItems,
+  } = useCheckbox({ table: "asw.neuro_estado_mental" });
 
-  const [estadoMentalValue, setEstadoMentalValue] = useState([]);
-  const [estadoMentalItems, setEstadoMentalItems] = useState([]);
+  const isLoading = isExamenNeuroLoading || isEstadoMentalLoading;
 
   const onPressGuardar = () => {
     const examen_neuro =
@@ -31,23 +38,6 @@ export default function ExamenNeurologico() {
     dispatch(updateHcd({ examen_neuro }));
     navigation.goBack();
   };
-
-  useEffect(() => {
-    const cargar_datos = async () => {
-      if (estadoMentalItems.length && examenNeuroItems.length) return;
-      setIsLoading(true);
-      // getExamenNeuro
-      const examenNeuro = await getAllByKey("asw.neuro");
-      const examenNeuroFormatted = examenNeuro.map((examen) => examen.nombre);
-      setExamenNeuroItems(examenNeuroFormatted);
-      // getEstadoMental
-      const estadoMental = await getAllByKey("asw.neuro_estado_mental");
-      const estadoMentalFormatted = estadoMental.map((estado) => estado.nombre);
-      setEstadoMentalItems(estadoMentalFormatted);
-      setIsLoading(false);
-    };
-    cargar_datos();
-  }, []);
 
   return (
     <ScrollView style={styles.container}>

@@ -11,8 +11,8 @@ import {
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
-import { getAllByKey } from "../../helpers/data";
-import { getFormattedArray } from "../../helpers/CustomAutocomplete";
+import { useCheckbox } from "../../hooks/useCheckbox";
+import { useDropdown } from "../../hooks/useDropdown";
 import { updateHcd } from "../../store/slices/hcd";
 import { invalidInput } from "../../constants";
 import CustomInput from "../../components/CustomInput";
@@ -25,25 +25,44 @@ export default function Desenlace() {
   const dispatch = useDispatch();
   const { navigateAndSetHcdScreen } = useHcdNavigation();
   const { control, handleSubmit } = useForm();
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [desenlaceValue, setDesenlaceValue] = useState([]);
-  const [desenlaceItems, setDesenlaceItems] = useState([]);
-
-  const [evolucionValue, setEvolucionValue] = useState([]);
-  const [evolucionItems, setEvolucionItems] = useState([]);
-
-  const [alLlegarValue, setAlLlegarValue] = useState([]);
-  const [alLlegarItems, setAlLlegarItems] = useState([]);
-
-  const [institucionesValue, setInstitucionesValue] = useState(null);
-  const [institucionesItems, setInstitucionesItems] = useState([]);
-
   const [isInternationVisible, setIsInternationVisible] = useState(true);
   const [signature, setSignature] = useState(null);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const {
+    isLoading: isDesenlaceLoading,
+    value: desenlaceValue,
+    setValue: setDesenlaceValue,
+    items: desenlaceItems,
+  } = useCheckbox({ table: "asw.des", itemKey: "des_nombre" });
+
+  const {
+    isLoading: isEvolucionLoading,
+    value: evolucionValue,
+    setValue: setEvolucionValue,
+    items: evolucionItems,
+  } = useCheckbox({ table: "asw.evol", itemKey: "evol_nombre" });
+
+  const {
+    isLoading: isAlLlegarLoading,
+    value: alLlegarValue,
+    setValue: setAlLlegarValue,
+    items: alLlegarItems,
+  } = useCheckbox({ table: "asw.al_llegar", itemKey: "al_llegar_nombre" });
+
+  const {
+    isLoading: isInstitucionesLoading,
+    value: institucionesValue,
+    setValue: setInstitucionesValue,
+    items: institucionesItems,
+    setItems: setInstitucionesItems,
+  } = useDropdown({ table: "asw.institucion" });
+
+  const isLoading =
+    isDesenlaceLoading ||
+    isEvolucionLoading ||
+    isAlLlegarLoading ||
+    isInstitucionesLoading;
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -74,38 +93,6 @@ export default function Desenlace() {
     dispatch(updateHcd(datos));
     navigateAndSetHcdScreen("Finalizacion");
   };
-
-  // cargar_datos
-  useEffect(() => {
-    const cargar_datos = async () => {
-      if (desenlaceItems.length && evolucionItems.length) return;
-      setIsLoading(true);
-      // getDesenlace
-      const desenlace = await getAllByKey("asw.des");
-      const desenlaceFormatted = desenlace.map(
-        (antecedente) => antecedente.des_nombre
-      );
-      setDesenlaceItems(desenlaceFormatted);
-      // getEvolucion
-      const evolucion = await getAllByKey("asw.evol");
-      const evolucionFormatted = evolucion.map(
-        (antecedente) => antecedente.evol_nombre
-      );
-      setEvolucionItems(evolucionFormatted);
-      // getAlLlegar
-      const alLlegar = await getAllByKey("asw.al_llegar");
-      const alLlegarFormatted = alLlegar.map(
-        (antecedente) => antecedente.al_llegar_nombre
-      );
-      setAlLlegarItems(alLlegarFormatted);
-      // getInstituciones
-      const instituciones = await getAllByKey("asw.institucion");
-      const institucionesFormatted = getFormattedArray(instituciones, "nombre");
-      setInstitucionesItems(institucionesFormatted);
-      setIsLoading(false);
-    };
-    cargar_datos();
-  }, []);
 
   // get_internacion_IsVisible
   useEffect(() => {
