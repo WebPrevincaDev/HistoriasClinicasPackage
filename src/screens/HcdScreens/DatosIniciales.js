@@ -152,7 +152,7 @@ export default function DatosIniciales() {
             onRequestClose={closeModal}
             animationType="fade"
           >
-            <ScrollView style={styles.modalView}>
+            <ScrollView style={styles.container}>
               <Text style={styles.title}>Lista de antecedentes</Text>
               <ListaCheckbox
                 items={antecedentesItems}
@@ -237,8 +237,5 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 8,
-  },
-  modalView: {
-    padding: 16,
   },
 });

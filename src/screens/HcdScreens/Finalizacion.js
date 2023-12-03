@@ -132,7 +132,4 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 8,
   },
-  modalView: {
-    padding: 16,
-  },
 });
