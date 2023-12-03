@@ -42,7 +42,7 @@ import { addHcd, setHcdConfig } from "./thunks";
   piel_mucosa
   examen_neuro
   ap_respiratorio
-  historia_cyc
+  cyc
   historia_cardio
   historia_ecg_desc
   historia_sist_oseoart_muscular
@@ -161,9 +161,9 @@ export const getOpcionales = (state) => {
     },
     {
       label: "CABEZA Y CUELLO",
-      name: "historia_cyc",
+      name: "cyc",
       screen: "CabezaCuello",
-      value: hcd.historia_cyc,
+      value: hcd.cyc,
     },
     {
       label: "APARATO CARDIOVASCULAR",
