@@ -43,7 +43,7 @@ import { addHcd, setHcdConfig } from "./thunks";
   examen_neuro
   ap_respiratorio
   cyc
-  historia_cardio
+  cardio
   historia_ecg_desc
   historia_sist_oseoart_muscular
   historia_abdomen
@@ -167,9 +167,9 @@ export const getOpcionales = (state) => {
     },
     {
       label: "APARATO CARDIOVASCULAR",
-      name: "historia_cardio",
+      name: "cardio",
       screen: "AparatoCardiovascular",
-      value: hcd.historia_cardio,
+      value: hcd.cardio,
     },
     {
       label: "INFORME ECG",
