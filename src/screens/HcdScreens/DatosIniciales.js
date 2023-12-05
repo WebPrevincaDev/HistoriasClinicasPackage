@@ -5,7 +5,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View,
   Alert,
 } from "react-native";
 import { useDispatch } from "react-redux";
@@ -14,6 +13,7 @@ import { useHcdNavigation } from "../../hooks/useHcdNavigation";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import ListaCheckbox from "../../components/ListaCheckbox";
+import Form from "../../components/Form";
 import { useCheckbox } from "../../hooks/useCheckbox";
 import { updateHcd } from "../../store/slices/hcd";
 import { obtener_hora } from "../../helpers/common";
@@ -72,9 +72,7 @@ export default function DatosIniciales() {
 
   return (
     <ScrollView style={styles.container}>
-      {/* form Signos vitales */}
-      <View style={styles.form}>
-        <Text style={styles.title}>Signos vitales</Text>
+      <Form title="Signos vitales">
         <CustomInput
           name="hora"
           label="Hora"
@@ -135,11 +133,9 @@ export default function DatosIniciales() {
           placeholder="Sat. Oxígeno"
           control={control}
         />
-      </View>
+      </Form>
 
-      {/* form Antecedentes */}
-      <View style={styles.form}>
-        <Text style={styles.title}>Antecedentes</Text>
+      <Form title="Antecedentes">
         <Text>
           {resumenAntecedentes || "Presione el botón para agregar antecedentes"}
         </Text>
@@ -181,11 +177,9 @@ export default function DatosIniciales() {
             </ScrollView>
           </Modal>
         )}
-      </View>
+      </Form>
 
-      {/* form Tiempo de evolución de los síntomas */}
-      <View style={styles.form}>
-        <Text style={styles.title}>Tiempo de evolución de los síntomas</Text>
+      <Form title="Tiempo de evolución de los síntomas">
         <CustomInput
           name="dias"
           label="Días"
@@ -207,7 +201,7 @@ export default function DatosIniciales() {
         <Text>
           Se debe completar alguno de los campos, con uno solo es suficiente
         </Text>
-      </View>
+      </Form>
 
       <CustomButton text="SIGUIENTE" onPress={handleSubmit(onPressSiguiente)} />
     </ScrollView>
@@ -217,20 +211,6 @@ export default function DatosIniciales() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-  },
-  form: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 2,
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    marginBottom: 16,
     padding: 16,
   },
   title: {

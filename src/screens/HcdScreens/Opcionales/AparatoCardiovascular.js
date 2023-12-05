@@ -1,16 +1,11 @@
-import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  View,
-  Text,
-} from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { updateHcd } from "../../../store/slices/hcd";
 import { useCheckbox } from "../../../hooks/useCheckbox";
 import CustomButton from "../../../components/CustomButton";
 import ListaCheckbox from "../../../components/ListaCheckbox";
+import Form from "../../../components/Form";
 
 export default function AparatoCardiovascular() {
   const dispatch = useDispatch();
@@ -58,32 +53,29 @@ export default function AparatoCardiovascular() {
         <ActivityIndicator size="large" color="#000" />
       ) : (
         <>
-          <View style={styles.form}>
-            <Text style={styles.title}>Aparato cardiovascular</Text>
+          <Form title="Aparato cardiovascular">
             <ListaCheckbox
               items={apCardioItems}
               initialValues={apCardioValue}
               onItemSelect={setApCardioValue}
             />
-          </View>
+          </Form>
 
-          <View style={styles.form}>
-            <Text style={styles.title}>Soplo</Text>
+          <Form title="Soplo">
             <ListaCheckbox
               items={soploItems}
               initialValues={soploValue}
               onItemSelect={setSoploValue}
             />
-          </View>
+          </Form>
 
-          <View style={styles.form}>
-            <Text style={styles.title}>Pulso</Text>
+          <Form title="Pulso">
             <ListaCheckbox
               items={pulsoItems}
               initialValues={pulsoValue}
               onItemSelect={setPulsoValue}
             />
-          </View>
+          </Form>
 
           <CustomButton text="GUARDAR" onPress={onPressGuardar} />
           <CustomButton
@@ -101,24 +93,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-  },
-  form: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 2,
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    marginBottom: 16,
-    padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
   },
 });

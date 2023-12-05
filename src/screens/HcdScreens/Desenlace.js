@@ -4,7 +4,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View,
   Alert,
   Image,
 } from "react-native";
@@ -19,7 +18,8 @@ import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import ListaCheckbox from "../../components/ListaCheckbox";
-import ModalRegistrarFirma from "../../components/ModalRegistrarFirma/ModalRegistrarFirma";
+import ModalRegistrarFirma from "../../components/ModalRegistrarFirma";
+import Form from "../../components/Form";
 
 export default function Desenlace() {
   const dispatch = useDispatch();
@@ -110,36 +110,32 @@ export default function Desenlace() {
         <ActivityIndicator size="large" color="#000" />
       ) : (
         <>
-          <View style={styles.form}>
-            <Text style={styles.title}>Desenlace</Text>
+          <Form title="Desenlace">
             <ListaCheckbox
               items={desenlaceItems}
               initialValues={desenlaceValue}
               onItemSelect={setDesenlaceValue}
             />
-          </View>
+          </Form>
 
-          <View style={styles.form}>
-            <Text style={styles.title}>Evolución</Text>
+          <Form title="Evolución">
             <ListaCheckbox
               items={evolucionItems}
               initialValues={evolucionValue}
               onItemSelect={setEvolucionValue}
             />
-          </View>
+          </Form>
 
-          <View style={styles.form}>
-            <Text style={styles.title}>Al llegar al domicilio había</Text>
+          <Form title="Al llegar al domicilio había">
             <ListaCheckbox
               items={alLlegarItems}
               initialValues={alLlegarValue}
               onItemSelect={setAlLlegarValue}
             />
-          </View>
+          </Form>
 
           {isInternationVisible && (
-            <View style={styles.form}>
-              <Text style={styles.title}>Datos internación</Text>
+            <Form title="Datos internación">
               <Text>Firma del médico derivante</Text>
               <Image
                 style={{ width: "100%", height: 250 }}
@@ -179,7 +175,7 @@ export default function Desenlace() {
                 control={control}
                 rules={{ required: true }}
               />
-            </View>
+            </Form>
           )}
 
           <CustomButton
@@ -196,24 +192,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-  },
-  form: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 2,
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    marginBottom: 16,
-    padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
   },
 });

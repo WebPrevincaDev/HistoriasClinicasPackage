@@ -1,10 +1,4 @@
-import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  View,
-  Text,
-} from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
@@ -13,6 +7,7 @@ import { useCheckbox } from "../../../hooks/useCheckbox";
 import ListaCheckbox from "../../../components/ListaCheckbox";
 import CustomButton from "../../../components/CustomButton";
 import CustomInput from "../../../components/CustomInput";
+import Form from "../../../components/Form";
 
 export default function Urogenital() {
   const dispatch = useDispatch();
@@ -39,8 +34,7 @@ export default function Urogenital() {
         <ActivityIndicator size="large" color="#000" />
       ) : (
         <>
-          <View style={styles.form}>
-            <Text style={styles.title}>Urogenital</Text>
+          <Form title="Urogenital">
             <ListaCheckbox
               items={urogenitalItems}
               initialValues={urogenitalValue}
@@ -52,7 +46,7 @@ export default function Urogenital() {
               placeholder="Otro"
               control={control}
             />
-          </View>
+          </Form>
 
           <CustomButton text="GUARDAR" onPress={handleSubmit(onPressGuardar)} />
           <CustomButton
@@ -70,24 +64,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-  },
-  form: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 2,
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    marginBottom: 16,
-    padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
   },
 });

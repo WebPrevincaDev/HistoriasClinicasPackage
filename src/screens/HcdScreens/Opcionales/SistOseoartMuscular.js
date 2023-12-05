@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View, Text } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
@@ -8,6 +8,7 @@ import ListaCheckbox from "../../../components/ListaCheckbox";
 import CustomButton from "../../../components/CustomButton";
 import CustomInput from "../../../components/CustomInput";
 import sistOseoartMuscular from "../../../placeholder/sistOseoartMuscular.json";
+import Form from "../../../components/Form";
 
 export default function SistOseoartMuscular() {
   const dispatch = useDispatch();
@@ -29,8 +30,7 @@ export default function SistOseoartMuscular() {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.form}>
-        <Text style={styles.title}>Sistema oseoart. y muscular</Text>
+      <Form title="Sistema oseoart. y muscular">
         <ListaCheckbox
           items={sistemaItems}
           initialValues={sistemaValue}
@@ -42,7 +42,7 @@ export default function SistOseoartMuscular() {
           placeholder="Otro"
           control={control}
         />
-      </View>
+      </Form>
 
       <CustomButton text="GUARDAR" onPress={handleSubmit(onPressGuardar)} />
       <CustomButton
@@ -58,24 +58,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-  },
-  form: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 2,
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    marginBottom: 16,
-    padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
   },
 });
