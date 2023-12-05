@@ -45,7 +45,7 @@ import { addHcd, setHcdConfig } from "./thunks";
   cyc
   cardio
   historia_ecg_desc
-  historia_sist_oseoart_muscular
+  sist_oseoart_muscular
   historia_abdomen
   historia_urogen
   historia_gco
@@ -180,9 +180,9 @@ export const getOpcionales = (state) => {
     },
     {
       label: "SIST. OSEOARTC. Y MUSCULAR",
-      name: "historia_sist_oseoart_muscular",
+      name: "sist_oseoart_muscular",
       screen: "SistOseoartMuscular",
-      value: hcd.historia_sist_oseoart_muscular,
+      value: hcd.sist_oseoart_muscular,
     },
     {
       label: "ABDOMEN",
