@@ -48,7 +48,7 @@ import { addHcd, setHcdConfig } from "./thunks";
   sist_oseoart_muscular
   abdomen
   urogen
-  historia_gco
+  gco
   historia_psiquiatrico
   trauma
   // Diagnostico
@@ -198,9 +198,9 @@ export const getOpcionales = (state) => {
     },
     {
       label: "GINECOBSTETRICO",
-      name: "historia_gco",
+      name: "gco",
       screen: "Ginecobstetrico",
-      value: hcd.historia_gco,
+      value: hcd.gco,
     },
     {
       label: "PSIQUIATRICO",
