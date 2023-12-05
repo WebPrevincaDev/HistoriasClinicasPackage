@@ -47,7 +47,7 @@ import { addHcd, setHcdConfig } from "./thunks";
   historia_ecg_desc
   sist_oseoart_muscular
   abdomen
-  historia_urogen
+  urogen
   historia_gco
   historia_psiquiatrico
   trauma
@@ -192,9 +192,9 @@ export const getOpcionales = (state) => {
     },
     {
       label: "UROGENITAL",
-      name: "historia_urogen",
+      name: "urogen",
       screen: "Urogenital",
-      value: hcd.historia_urogen,
+      value: hcd.urogen,
     },
     {
       label: "GINECOBSTETRICO",
