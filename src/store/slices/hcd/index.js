@@ -46,7 +46,7 @@ import { addHcd, setHcdConfig } from "./thunks";
   cardio
   historia_ecg_desc
   sist_oseoart_muscular
-  historia_abdomen
+  abdomen
   historia_urogen
   historia_gco
   historia_psiquiatrico
@@ -186,9 +186,9 @@ export const getOpcionales = (state) => {
     },
     {
       label: "ABDOMEN",
-      name: "historia_abdomen",
+      name: "abdomen",
       screen: "Abdomen",
-      value: hcd.historia_abdomen,
+      value: hcd.abdomen,
     },
     {
       label: "UROGENITAL",
