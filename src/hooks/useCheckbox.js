@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { getAllByKey } from "../helpers/data";
 
-function useCheckbox({ table, itemKey = "nombre" }) {
+function useCheckbox({ table, initialItems, itemKey = "nombre" }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const [value, setValue] = useState([]);
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(initialItems || []);
 
   useEffect(() => {
     const cargar_datos = async () => {
