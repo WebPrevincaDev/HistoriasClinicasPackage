@@ -49,7 +49,7 @@ import { addHcd, setHcdConfig } from "./thunks";
   abdomen
   urogen
   gco
-  historia_psiquiatrico
+  psiquiatrico
   trauma
   // Diagnostico
   diagnostico
@@ -204,9 +204,9 @@ export const getOpcionales = (state) => {
     },
     {
       label: "PSIQUIATRICO",
-      name: "historia_psiquiatrico",
+      name: "psiquiatrico",
       screen: "Psiquiatrico",
-      value: hcd.historia_psiquiatrico,
+      value: hcd.psiquiatrico,
     },
     {
       label: "TRAUMA",
