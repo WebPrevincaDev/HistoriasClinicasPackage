@@ -71,6 +71,9 @@ import { addHcd, setHcdConfig } from "./thunks";
   firma_pac_acompanante
   // ScoreGlasgow
   medicionesScoreGlasgow: [{ hora, ocular, verbal, motora, total }]
+  // Trauma
+  historia_traumas: { zona1: "trauma_tipo1", zona2: "trauma_tipo2", ... }
+  mecanismo
 } */
 
 export const initialState = {
@@ -93,6 +96,13 @@ export const sharedSlice = createSlice({
       state.hcd.medicionesScoreGlasgow
         ? state.hcd.medicionesScoreGlasgow.push(action.payload)
         : (state.hcd.medicionesScoreGlasgow = [action.payload]);
+    },
+    addTraumaToHcd: (state, action) => {
+      const { zona, trauma_tipo } = action.payload;
+      state.hcd.trauma = "Con datos cargados";
+      state.hcd.historia_traumas
+        ? (state.hcd.historia_traumas[zona] = trauma_tipo)
+        : (state.hcd.historia_traumas = { [zona]: trauma_tipo });
     },
     setHcdScreen: (state, action) => {
       state.pantallaHCD = action.payload;
@@ -220,7 +230,87 @@ export const getOpcionales = (state) => {
   return ds;
 };
 
-export const { setHcdScreen, updateHcd, addScoreGlasgowToHcd } =
+export const getTraumaLugares = (state) => {
+  const historia_traumas = state.hcd.hcd.historia_traumas || {};
+
+  const lugares = [
+    {
+      label: "ADBOMEN",
+      name: "abdomen",
+      value: historia_traumas.abdomen,
+    },
+    {
+      label: "CARA",
+      name: "cara",
+      value: historia_traumas.cara,
+    },
+    {
+      label: "CRANEO",
+      name: "craneo",
+      value: historia_traumas.craneo,
+    },
+    {
+      label: "CUELLO",
+      name: "cuello",
+      value: historia_traumas.cuello,
+    },
+    {
+      label: "GENITALES",
+      name: "genitales",
+      value: historia_traumas.genitales,
+    },
+    {
+      label: "MIEMBRO INF DERECHO",
+      name: "miembro_inf_derecho",
+      value: historia_traumas.miembro_inf_derecho,
+    },
+    {
+      label: "MIEMBRO INF IZQUIERDO",
+      name: "miembro_inf_izquierdo",
+      value: historia_traumas.miembro_inf_izquierdo,
+    },
+    {
+      label: "MIEMBRO SUP DERECHO",
+      name: "miembro_sup_derecho",
+      value: historia_traumas.miembro_sup_derecho,
+    },
+    {
+      label: "MIEMBRO SUP IZQUIERDO",
+      name: "miembro_sup_izquierdo",
+      value: historia_traumas.miembro_sup_izquierdo,
+    },
+    {
+      label: "PELVIS",
+      name: "pelvis",
+      value: historia_traumas.pelvis,
+    },
+    {
+      label: "PERINE",
+      name: "perine",
+      value: historia_traumas.perine,
+    },
+    {
+      label: "RAQUIS",
+      name: "raquis",
+      value: historia_traumas.raquis,
+    },
+    {
+      label: "TORAX",
+      name: "torax",
+      value: historia_traumas.torax,
+    },
+    {
+      label: "MECANISMO",
+      name: "mecanismo",
+      screen: "Mecanismo",
+      value: state.hcd.hcd.mecanismo,
+    },
+  ];
+
+  return lugares;
+};
+
+export const { setHcdScreen, updateHcd, addScoreGlasgowToHcd, addTraumaToHcd } =
   sharedSlice.actions;
 
 export default sharedSlice.reducer;
