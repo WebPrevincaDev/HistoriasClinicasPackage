@@ -24,6 +24,7 @@ import Urogenital from "../../screens/HcdScreens/Opcionales/Urogenital";
 import Ginecobstetrico from "../../screens/HcdScreens/Opcionales/Ginecobstetrico";
 import Psiquiatrico from "../../screens/HcdScreens/Opcionales/Psiquiatrico";
 import Trauma from "../../screens/HcdScreens/Opcionales/Trauma";
+import Mecanismo from "../../screens/HcdScreens/Opcionales/Mecanismo";
 
 const HCDStack = createNativeStackNavigator();
 
@@ -134,6 +135,11 @@ const HcdStack = () => {
         name="Trauma"
         component={Trauma}
         options={{ title: "Trauma" }}
+      />
+      <HCDStack.Screen
+        name="Mecanismo"
+        component={Mecanismo}
+        options={{ title: "Mecanismo" }}
       />
       <HCDStack.Screen
         name="Previsualizacion"
