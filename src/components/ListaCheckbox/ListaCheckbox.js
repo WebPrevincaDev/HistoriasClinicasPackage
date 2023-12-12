@@ -23,6 +23,7 @@ function ListaCheckbox({ items, onItemSelect, initialValues = [] }) {
             checked={selectedItems.includes(item)}
             onPress={() => toggleItem(item)}
             size={18}
+            containerStyle={{ margin: 2, marginEnd: 2, marginStart: 2 }}
           />
         </View>
       ))}
