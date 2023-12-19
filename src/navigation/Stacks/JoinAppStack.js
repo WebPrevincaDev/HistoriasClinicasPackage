@@ -14,10 +14,10 @@ const Stack = createNativeStackNavigator();
 const JoinAppStackScreens = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {/* <Stack.Screen name="SignIn" component={SignIn} />
+      <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       <Stack.Screen name="NewPassword" component={NewPassword} />
-      <Stack.Screen name="HomeTab" component={HomeTabs} /> */}
+      <Stack.Screen name="HomeTab" component={HomeTabs} />
       <Stack.Screen name="HcdStack" component={HcdStack} />
       <Stack.Screen name="Signature" component={Signature} />
     </Stack.Navigator>
