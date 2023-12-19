@@ -104,7 +104,7 @@ const HcdStack = () => {
       <HCDStack.Screen
         name="InformeEcg"
         component={InformeEcg}
-        options={{ title: "Informe ECG" }}
+        options={{ title: "Informe electrocardiograma" }}
       />
       <HCDStack.Screen
         name="SistOseoartMuscular"
