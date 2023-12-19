@@ -44,7 +44,7 @@ import { addHcd, setHcdConfig } from "./thunks";
   ap_respiratorio
   cyc
   cardio
-  historia_ecg_desc
+  ecg_desc
   sist_oseoart_muscular
   abdomen
   urogen
@@ -74,6 +74,8 @@ import { addHcd, setHcdConfig } from "./thunks";
   // Trauma
   historia_traumas: { zona1: "trauma_tipo1", zona2: "trauma_tipo2", ... }
   mecanismo
+  // InformeEcg
+  imagenesEcg: [{ id: string, src: string }, ...]
 } */
 
 export const initialState = {
@@ -183,9 +185,9 @@ export const getOpcionales = (state) => {
     },
     {
       label: "INFORME ECG",
-      name: "historia_ecg_desc",
+      name: "ecg_desc",
       screen: "InformeEcg",
-      value: hcd.historia_ecg_desc,
+      value: hcd.ecg_desc,
       shouldRenderNormalBtn: false,
     },
     {
