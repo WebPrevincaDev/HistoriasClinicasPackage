@@ -15,7 +15,7 @@ import CustomButton from "../../components/CustomButton";
 import ListaCheckbox from "../../components/ListaCheckbox";
 import Form from "../../components/Form";
 import { useCheckbox } from "../../hooks/useCheckbox";
-import { updateHcd } from "../../store/slices/hcd";
+import { updateHcd, addSignosVitalesToHcd } from "../../store/slices/hcd";
 import { obtener_hora } from "../../helpers/common";
 
 export default function DatosIniciales() {
@@ -53,7 +53,7 @@ export default function DatosIniciales() {
     setIsModalOpen(false);
   };
 
-  const onPressSiguiente = (data) => {
+  const onPressSiguiente = (inputData) => {
     const [dias, horas, minutos] = getValues(["dias", "horas", "minutos"]);
     if (!dias && !horas && !minutos) {
       Alert.alert(
@@ -62,11 +62,13 @@ export default function DatosIniciales() {
       return;
     }
     const datos = {
-      ...data,
+      ...inputData,
       // piso la propiedad antecedentes. antes era un obj, ahora un string
       antecedentes: resumenAntecedentes,
     };
-    dispatch(updateHcd(datos));
+    const { signosVitales, ...otherData } = datos;
+    dispatch(updateHcd(otherData));
+    dispatch(addSignosVitalesToHcd(signosVitales));
     navigateAndSetHcdScreen("Opcionales");
   };
 
@@ -74,61 +76,61 @@ export default function DatosIniciales() {
     <ScrollView style={styles.container}>
       <Form title="Signos vitales">
         <CustomInput
-          name="hora"
+          name="signosVitales.hora"
           label="Hora"
           placeholder="Hora"
           control={control}
           defaultValue={obtener_hora()}
         />
         <CustomInput
-          name="tas"
+          name="signosVitales.tas"
           label="TAS"
           placeholder="TAS"
           control={control}
           rules={{ required: true }}
         />
         <CustomInput
-          name="tad"
+          name="signosVitales.tad"
           label="TAD"
           placeholder="TAD"
           control={control}
           rules={{ required: true }}
         />
         <CustomInput
-          name="temperatura"
+          name="signosVitales.temperatura"
           label="Temperatura"
           placeholder="Temperatura"
           control={control}
           rules={{ required: true }}
         />
         <CustomInput
-          name="frres"
+          name="signosVitales.frres"
           label="FR. RES"
           placeholder="FR. RES"
           control={control}
           rules={{ required: true }}
         />
         <CustomInput
-          name="fc"
+          name="signosVitales.fc"
           label="FC"
           placeholder="FC"
           control={control}
           rules={{ required: true }}
         />
         <CustomInput
-          name="llcap"
+          name="signosVitales.llcap"
           label="LL. CAP"
           placeholder="LL. CAP"
           control={control}
         />
         <CustomInput
-          name="glucemia"
+          name="signosVitales.glucemia"
           label="Glucemia"
           placeholder="Glucemia"
           control={control}
         />
         <CustomInput
-          name="sat_oxigeno"
+          name="signosVitales.sat_oxigeno"
           label="Sat. Oxígeno"
           placeholder="Sat. Oxígeno"
           control={control}

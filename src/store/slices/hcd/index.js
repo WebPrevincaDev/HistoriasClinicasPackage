@@ -26,17 +26,9 @@ import { addHcd, setHcdConfig } from "./thunks";
   // Datos iniciales
   antecedentes: string
   dias
-  fc
-  frres
-  glucemia
-  hora
   horas
-  llcap
   minutos
-  sat_oxigeno
-  tad
-  tas
-  temperatura
+  medicionesSignosVitales: [{ hora, tas, tad, temperatura, frres, fc, llcap, glucemia, sat_oxigeno }, ...]
   // Opcionales
   edemas
   piel_mucosa
@@ -105,6 +97,11 @@ export const sharedSlice = createSlice({
       state.hcd.historia_traumas
         ? (state.hcd.historia_traumas[zona] = trauma_tipo)
         : (state.hcd.historia_traumas = { [zona]: trauma_tipo });
+    },
+    addSignosVitalesToHcd: (state, action) => {
+      state.hcd.medicionesSignosVitales
+        ? state.hcd.medicionesSignosVitales.push(action.payload)
+        : (state.hcd.medicionesSignosVitales = [action.payload]);
     },
     setHcdScreen: (state, action) => {
       state.pantallaHCD = action.payload;
@@ -312,7 +309,12 @@ export const getTraumaLugares = (state) => {
   return lugares;
 };
 
-export const { setHcdScreen, updateHcd, addScoreGlasgowToHcd, addTraumaToHcd } =
-  sharedSlice.actions;
+export const {
+  setHcdScreen,
+  updateHcd,
+  addScoreGlasgowToHcd,
+  addTraumaToHcd,
+  addSignosVitalesToHcd,
+} = sharedSlice.actions;
 
 export default sharedSlice.reducer;
