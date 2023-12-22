@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import * as Application from "expo-application";
+import * as Print from "expo-print";
 import { useDropdown } from "../../hooks/useDropdown";
 import { setHcdScreen, updateHcd } from "../../store/slices/hcd";
 import { addHcd, agregarPaciente } from "../../store/slices/hcd/thunks";
@@ -15,12 +16,16 @@ import CustomButton from "../../components/CustomButton";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import ModalRegistrarFirma from "../../components/ModalRegistrarFirma";
 import abonaCopago from "../../placeholder/abonaCopago.json";
+import CreatePdfService from "../../services/CreatePdfService";
+
+const cPdf = new CreatePdfService();
 
 export default function Finalizacion() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const { control, handleSubmit } = useForm();
-  const { hcd, arr_hcd } = useSelector((state) => state.hcd);
+  const { user } = useSelector((state) => state.auth);
+  const { hcd, hcdConfig, arr_hcd } = useSelector((state) => state.hcd);
   const [signature, setSignature] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -73,6 +78,24 @@ export default function Finalizacion() {
     navigation.navigate("Previsualizacion");
   };
 
+  const onPressImprimir = async (inputData) => {
+    const datos = guardarDatos(inputData);
+    if (!datos) return;
+
+    const html = cPdf.create_pdf({
+      hcd: { ...hcd, ...datos },
+      user,
+      hcdConfig,
+    });
+
+    await Print.printAsync({
+      html,
+      width: 612,
+      height: 792,
+      base64: true,
+    });
+  };
+
   return (
     <ScrollView style={styles.container}>
       <CustomAutocomplete
@@ -116,7 +139,7 @@ export default function Finalizacion() {
         text="PREVISUALIZAR"
         onPress={handleSubmit(onPressPrevisualizar)}
       />
-      {/* <CustomButton text="IMPRIMIR" onPress={handleSubmit(onPressImprimir)} /> */}
+      <CustomButton text="IMPRIMIR" onPress={handleSubmit(onPressImprimir)} />
       <CustomButton text="FINALIZAR" onPress={handleSubmit(onPressFinalizar)} />
     </ScrollView>
   );
