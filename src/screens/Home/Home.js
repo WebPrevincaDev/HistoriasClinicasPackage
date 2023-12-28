@@ -6,7 +6,7 @@ import CustomAutocomplete from "../../components/CustomAutocomplete";
 import mobileOptions from "../../placeholder/mobiles.json";
 import CustomButton from "../../components/CustomButton";
 import { filterProfessionalsByGroup } from "../../helpers/data";
-import { setHcdConfig } from "../../store/slices/hcd/thunks";
+import { setHcdConfig } from "../../store/slices/hcd";
 import { getFormattedArray } from "../../helpers/CustomAutocomplete";
 
 const ninguno = { label: "Ninguno", value: "Ninguno" };
@@ -47,7 +47,7 @@ const Home = () => {
         enfermero: nurseValue,
         medico: user.app_nombre,
       };
-      await dispatch(setHcdConfig(configData)).unwrap();
+      dispatch(setHcdConfig(configData));
       Alert.alert("Datos guardados con éxito");
       navigation.navigate("CrearHCD");
     } catch (error) {

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addHcd, setHcdConfig } from "./thunks";
+import { addHcd } from "./thunks";
 
 // a medida que agregue propiedades a hcd las anoto acá para tenerlo de machete
 /* {
@@ -83,6 +83,9 @@ export const sharedSlice = createSlice({
   name: "hcd",
   initialState,
   reducers: {
+    setHcdConfig: (state, action) => {
+      state.hcdConfig = action.payload;
+    },
     updateHcd: (state, action) => {
       state.hcd = { ...state.hcd, ...action.payload };
     },
@@ -109,21 +112,6 @@ export const sharedSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // setHcdConfig
-      .addCase(setHcdConfig.pending, (state) => {
-        state.isLoading = true;
-        state.error = "";
-        state.hcdConfig = null;
-      })
-      .addCase(setHcdConfig.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message;
-      })
-      .addCase(setHcdConfig.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.hcdConfig = action.payload;
-      })
-
       // addHcd
       .addCase(addHcd.fulfilled, (state, action) => {
         state.arr_hcd = action.payload;
@@ -310,6 +298,7 @@ export const getTraumaLugares = (state) => {
 };
 
 export const {
+  setHcdConfig,
   setHcdScreen,
   updateHcd,
   addScoreGlasgowToHcd,
