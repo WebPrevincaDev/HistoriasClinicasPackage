@@ -70,6 +70,15 @@ import { addHcd } from "./thunks";
   imagenesEcg: [{ id: string, src: string }, ...]
 } */
 
+// hcdConfig
+/* {
+  medico (user logueado)
+  firma
+  movil
+  chofer
+  enfermero
+} */
+
 export const initialState = {
   isLoading: false,
   error: "",
@@ -84,7 +93,7 @@ export const sharedSlice = createSlice({
   initialState,
   reducers: {
     setHcdConfig: (state, action) => {
-      state.hcdConfig = action.payload;
+      state.hcdConfig = { ...state.hcdConfig, ...action.payload };
     },
     updateHcd: (state, action) => {
       state.hcd = { ...state.hcd, ...action.payload };

@@ -1,13 +1,10 @@
 import {
   Image,
   StyleSheet,
-  Text,
   View,
   useWindowDimensions,
   ScrollView,
-  TextInput,
   Alert,
-  Button,
 } from "react-native";
 import PlaceHolderLogo from "../../../assets/images/testLogo.jpg";
 import CustomInput from "../../components/CustomInput";
@@ -22,24 +19,23 @@ const SignIn = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const { control, handleSubmit, formState: {errors} } = useForm();
+  const { control, handleSubmit } = useForm();
 
   const { isLoading } = useSelector((state) => state.auth);
 
   const onSignInPressed = async (data) => {
     try {
       await dispatch(login(data)).unwrap();
-      navigation.navigate("HomeTab");
+      navigation.navigate("Signature");
     } catch (error) {
       Alert.alert(error.message);
     }
   };
 
-  const onForgotPasswordPressed = () => {
-    console.warn("Forgot Password");
-
-    navigation.navigate("ForgotPassword");
-  };
+  // const onForgotPasswordPressed = () => {
+  //   console.warn("Forgot Password");
+  //   navigation.navigate("ForgotPassword");
+  // };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -70,7 +66,8 @@ const SignIn = () => {
           disabled={isLoading}
           onPress={handleSubmit(onSignInPressed)}
         />
-      <Button onPress={()=>navigation.navigate('Signature')} title="IR A SIGNATURE"/>
+
+        {/* <Button onPress={()=>navigation.navigate('Signature')} title="IR A SIGNATURE"/> */}
 
         {/* <CustomButton
           text={"Olvidé mi Contraseña"}
