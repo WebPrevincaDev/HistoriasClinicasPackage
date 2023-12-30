@@ -19,6 +19,9 @@ const CustomAutocomplete = ({ label, required, ...dropDownProps }) => {
         searchPlaceholder="Buscar..."
         placeholder="Seleccione un elemento"
         {...dropDownProps}
+        style={styles.dropDown}
+        dropDownContainerStyle={styles.dropDownContainer}
+        arrowIconStyle={styles.arrowIcon}
       />
     </View>
   );
@@ -28,6 +31,23 @@ export default CustomAutocomplete;
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 8,
+    marginVertical: 4,
+  },
+  dropDown: {
+    backgroundColor: "white",
+    borderColor: "#e8e8e8",
+    borderWidth: 1,
+    borderRadius: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    minHeight: 40,
+  },
+  dropDownContainer: {
+    backgroundColor: "white",
+    borderColor: "#e8e8e8",
+  },
+  arrowIcon: {
+    width: 16,
+    height: 16,
   },
 });

@@ -46,35 +46,36 @@ const SignIn = () => {
           resizeMode="contain"
         />
 
-        <CustomInput
-          name={'matricula'}
-          placeholder={"Matrícula"}
-          control={control}
-          rules={{required: 'Se requiere la matrícula'}}
-        />
+        <View style={{ marginTop: 16 }}>
+          <CustomInput
+            name={'matricula'}
+            placeholder={"Matrícula"}
+            control={control}
+            rules={{required: 'Se requiere la matrícula'}}
+          />
 
-        <CustomInput
-          name={'password'}
-          placeholder={"Contraseña"}
-          control={control}
-          secureTextEntry
-          rules={{required: 'Por favor ingrese una contraseña'}}
-        />
+          <CustomInput
+            name={'password'}
+            placeholder={"Contraseña"}
+            control={control}
+            secureTextEntry
+            rules={{required: 'Por favor ingrese una contraseña'}}
+          />
 
-        <CustomButton
-          text={isLoading ? "Cargando..." : "Ingresar"}
-          disabled={isLoading}
-          onPress={handleSubmit(onSignInPressed)}
-        />
+          <CustomButton
+            text={isLoading ? "Cargando..." : "Ingresar"}
+            disabled={isLoading}
+            onPress={handleSubmit(onSignInPressed)}
+          />
 
-        {/* <Button onPress={()=>navigation.navigate('Signature')} title="IR A SIGNATURE"/> */}
+          {/* <Button onPress={()=>navigation.navigate('Signature')} title="IR A SIGNATURE"/> */}
 
-        {/* <CustomButton
-          text={"Olvidé mi Contraseña"}
-          onPress={onForgotPasswordPressed}
-          type="TERTIARY"
-        /> */}
-
+          {/* <CustomButton
+            text={"Olvidé mi Contraseña"}
+            onPress={onForgotPasswordPressed}
+            type="TERTIARY"
+          /> */}
+        </View>
       </View>
     </ScrollView>
   );
@@ -84,12 +85,13 @@ export default SignIn;
 
 const styles = StyleSheet.create({
   root: {
-    alignItems: "center",
-    padding: 20,
+    flex: 1,
+    padding: 16,
   },
   logo: {
     width: "70%",
     maxWidth: 300,
     maxHeight: 200,
+    alignSelf: "center",
   },
 });
