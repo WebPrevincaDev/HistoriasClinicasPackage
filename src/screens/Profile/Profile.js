@@ -26,11 +26,11 @@ const Profile = () => {
       />
       <View style={styles.infoContainer}>
         <Text style={styles.title}>Nombre</Text>
-        <Text style={styles.data}>{user.app_nombre}</Text>
+        <Text style={styles.data}>{user.nombre}</Text>
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.title}>Matricula</Text>
-        <Text style={styles.data}>{user.app_matricula}</Text>
+        <Text style={styles.data}>{user.matricula}</Text>
       </View>
 
       {/* <CustomButton

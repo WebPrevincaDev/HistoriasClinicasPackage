@@ -19,7 +19,7 @@ const HomeHCD = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Médico: {user.app_nombre}</Text>
+      <Text style={styles.title}>Médico: {user.nombre}</Text>
       <CustomButton text="AGREGAR" onPress={addNewHistoriaClinica} />
 
       <FlatList

@@ -1,9 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  get_usuario,
-  saveAsyncStorage,
-  sincronizarAll,
-} from "../../../helpers/data";
+import { get_usuario, sincronizarAll } from "../../../helpers/data";
 
 const get_proximo_cierre = () => {
   let result = new Date();
@@ -42,15 +38,12 @@ export const login = createAsyncThunk("auth/login", async (data) => {
 
   console.log("login exitoso");
 
-  // login_exitoso => guardarSesion
-  const sesion = {
-    username: data.matricula,
-    password: data.password,
-    medico: user,
+  return {
+    matricula: user.app_matricula,
+    mail: user.app_mail,
+    nombre: user.app_nombre,
+    // password: user.app_password,
+    // id: user.id,
     cierre: get_proximo_cierre(),
   };
-  await saveAsyncStorage(sesion, "sesion");
-  console.log("sesion guardada");
-
-  return user;
 });

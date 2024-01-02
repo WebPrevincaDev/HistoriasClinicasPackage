@@ -45,7 +45,7 @@ const Home = () => {
         movil: mobileValue,
         chofer: driverValue,
         enfermero: nurseValue,
-        medico: user.app_nombre,
+        medico: user.nombre,
       };
       dispatch(setHcdConfig(configData));
       Alert.alert("Datos guardados con éxito");
@@ -84,7 +84,7 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Datos</Text>
-      <Text>Médico: {user.app_nombre}</Text>
+      <Text>Médico: {user.nombre}</Text>
       {isLoading ? (
         <ActivityIndicator size="large" color="#000" />
       ) : (

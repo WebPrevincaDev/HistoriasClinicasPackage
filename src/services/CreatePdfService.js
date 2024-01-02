@@ -211,11 +211,8 @@ export default class CreatePdfService {
         ${this.campo("MÓVIL", hcdConfig.movil)}     
         ${this.campo("CHOFER", hcdConfig.chofer)}
         ${this.campo("ENFERMERO", hcdConfig.enfermero)}
-        ${this.campo(
-          "MÉDICO",
-          `${user.app_nombre}<br /> Mat: ${user.app_matricula}`
-        )}
-        ${this.imgFirma(user.archivo_firma)}            
+        ${this.campo("MÉDICO", `${user.nombre}<br /> Mat: ${user.matricula}`)}
+        ${this.imgFirma(user.firma)}            
       </table>`;
   }
 
