@@ -5,18 +5,31 @@ import {
   Image,
   useWindowDimensions,
 } from "react-native";
-import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import { resetHcdStore } from "../../store/slices/hcd";
+import { logout } from "../../store/slices/auth";
 
 // Assets
 import DrProfileIcon from "../../../assets/images/DoctorUserIcon.png";
 
 // Components
 import CustomButton from "../../components/CustomButton";
-import { useSelector } from "react-redux";
 
 const Profile = () => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
   const { height } = useWindowDimensions();
   const { user } = useSelector((state) => state.auth);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(resetHcdStore());
+    navigation.navigate("SignIn");
+  };
+
+  if (!user) return null;
+
   return (
     <View style={styles.container}>
       <Image
@@ -39,11 +52,7 @@ const Profile = () => {
         type="SIMPLE"
       /> */}
 
-      <CustomButton
-        onPress={() => console.warn("SE ESTÁ CERRANDO LA SESIÓN")}
-        text="CERRAR SESIÓN"
-        type="SIMPLE"
-      />
+      <CustomButton text="CERRAR SESIÓN" onPress={handleLogout} type="SIMPLE" />
     </View>
   );
 };

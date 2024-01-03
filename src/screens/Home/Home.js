@@ -81,6 +81,8 @@ const Home = () => {
     }
   }, [hcdConfig]);
 
+  if (!user) return null;
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Datos</Text>

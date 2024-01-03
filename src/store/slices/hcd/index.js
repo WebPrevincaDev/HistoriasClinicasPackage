@@ -92,6 +92,9 @@ export const sharedSlice = createSlice({
   name: "hcd",
   initialState,
   reducers: {
+    resetHcdStore: () => {
+      return initialState;
+    },
     setHcdConfig: (state, action) => {
       state.hcdConfig = { ...state.hcdConfig, ...action.payload };
     },
@@ -307,6 +310,7 @@ export const getTraumaLugares = (state) => {
 };
 
 export const {
+  resetHcdStore,
   setHcdConfig,
   setHcdScreen,
   updateHcd,

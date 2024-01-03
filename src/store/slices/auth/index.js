@@ -11,7 +11,11 @@ export const initialState = {
 export const sharedSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    logout: () => {
+      return initialState;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
@@ -31,5 +35,7 @@ export const sharedSlice = createSlice({
       });
   },
 });
+
+export const { logout } = sharedSlice.actions;
 
 export default sharedSlice.reducer;
