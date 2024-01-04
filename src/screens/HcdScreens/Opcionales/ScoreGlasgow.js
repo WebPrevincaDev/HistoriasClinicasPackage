@@ -97,18 +97,21 @@ export default function ScoreGlasgow() {
             label="Ocular"
             placeholder="Ocular"
             control={control}
+            keyboardType="number-pad"
           />
           <CustomInput
             name="verbal"
             label="Verbal"
             placeholder="Verbal"
             control={control}
+            keyboardType="number-pad"
           />
           <CustomInput
             name="motora"
             label="Motora"
             placeholder="Motora"
             control={control}
+            keyboardType="number-pad"
           />
           <Text style={styles.total}>Total: {total}</Text>
           <CustomButton text="GUARDAR" onPress={handleSubmit(onPressGuardar)} />

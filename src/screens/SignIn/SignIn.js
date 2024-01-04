@@ -52,6 +52,7 @@ const SignIn = () => {
             placeholder={"Matrícula"}
             control={control}
             rules={{required: 'Se requiere la matrícula'}}
+            keyboardType="number-pad"
           />
 
           <CustomInput

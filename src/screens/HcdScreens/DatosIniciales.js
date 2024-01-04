@@ -88,6 +88,7 @@ export default function DatosIniciales() {
           placeholder="TAS"
           control={control}
           rules={{ required: true }}
+          keyboardType="number-pad"
         />
         <CustomInput
           name="signosVitales.tad"
@@ -95,6 +96,7 @@ export default function DatosIniciales() {
           placeholder="TAD"
           control={control}
           rules={{ required: true }}
+          keyboardType="number-pad"
         />
         <CustomInput
           name="signosVitales.temperatura"
@@ -102,6 +104,7 @@ export default function DatosIniciales() {
           placeholder="Temperatura"
           control={control}
           rules={{ required: true }}
+          keyboardType="number-pad"
         />
         <CustomInput
           name="signosVitales.frres"
@@ -109,6 +112,7 @@ export default function DatosIniciales() {
           placeholder="FR. RES"
           control={control}
           rules={{ required: true }}
+          keyboardType="number-pad"
         />
         <CustomInput
           name="signosVitales.fc"
@@ -116,6 +120,7 @@ export default function DatosIniciales() {
           placeholder="FC"
           control={control}
           rules={{ required: true }}
+          keyboardType="number-pad"
         />
         <CustomInput
           name="signosVitales.llcap"
@@ -128,12 +133,14 @@ export default function DatosIniciales() {
           label="Glucemia"
           placeholder="Glucemia"
           control={control}
+          keyboardType="number-pad"
         />
         <CustomInput
           name="signosVitales.sat_oxigeno"
           label="Sat. Oxígeno"
           placeholder="Sat. Oxígeno"
           control={control}
+          keyboardType="number-pad"
         />
       </Form>
 
@@ -187,18 +194,21 @@ export default function DatosIniciales() {
           label="Días"
           placeholder="Días"
           control={control}
+          keyboardType="number-pad"
         />
         <CustomInput
           name="horas"
           label="Horas"
           placeholder="Horas"
           control={control}
+          keyboardType="number-pad"
         />
         <CustomInput
           name="minutos"
           label="Minutos"
           placeholder="Minutos"
           control={control}
+          keyboardType="number-pad"
         />
         <Text>
           Se debe completar alguno de los campos, con uno solo es suficiente

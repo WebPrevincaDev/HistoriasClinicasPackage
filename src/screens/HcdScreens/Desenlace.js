@@ -174,6 +174,7 @@ export default function Desenlace() {
                 placeholder="Matrícula"
                 control={control}
                 rules={{ required: true }}
+                keyboardType="number-pad"
               />
             </Form>
           )}

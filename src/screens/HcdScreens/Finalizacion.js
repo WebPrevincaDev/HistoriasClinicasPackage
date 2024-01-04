@@ -133,6 +133,7 @@ export default function Finalizacion() {
         label="DNI paciente/acompañante"
         placeholder="DNI"
         control={control}
+        keyboardType="number-pad"
       />
 
       <CustomButton

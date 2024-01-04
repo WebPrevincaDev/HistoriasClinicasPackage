@@ -12,6 +12,7 @@ const CustomInput = ({
   rules = {},
   multiline,
   numberOfLines,
+  keyboardType,
 }) => {
   return (
     <Controller
@@ -38,6 +39,7 @@ const CustomInput = ({
             secureTextEntry={secureTextEntry}
             multiline={multiline}
             numberOfLines={numberOfLines}
+            keyboardType={keyboardType}
             style={styles.input(error)}
           />
           {error?.message && <Text style={styles.error}>{error.message}</Text>}

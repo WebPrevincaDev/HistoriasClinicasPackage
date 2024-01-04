@@ -171,6 +171,7 @@ export default function Paciente() {
             placeholder="DNI"
             control={control}
             rules={{ required: requiredOptions.pac_dni }}
+            keyboardType="number-pad"
           />
           <CustomAutocomplete
             label="Cobertura"
@@ -194,6 +195,7 @@ export default function Paciente() {
             placeholder="Nro de Socio"
             control={control}
             rules={{ required: requiredOptions.pac_nro_socio }}
+            keyboardType="number-pad"
           />
           <CustomInput
             name="pac_apellido"
@@ -215,6 +217,7 @@ export default function Paciente() {
             placeholder="Edad"
             control={control}
             rules={{ required: requiredOptions.pac_edad }}
+            keyboardType="number-pad"
           />
           <CustomAutocomplete
             label="Localidad"
@@ -245,6 +248,7 @@ export default function Paciente() {
             placeholder="Nro"
             control={control}
             rules={{ required: requiredOptions.pac_nro }}
+            keyboardType="number-pad"
           />
           <CustomInput
             name="pac_piso"
@@ -252,6 +256,7 @@ export default function Paciente() {
             placeholder="Piso"
             control={control}
             rules={{ required: requiredOptions.pac_piso }}
+            keyboardType="number-pad"
           />
           <CustomInput
             name="pac_dto"
