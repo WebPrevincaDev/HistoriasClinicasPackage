@@ -17,6 +17,8 @@ const HomeHCD = () => {
     navigation.navigate("HcdStack");
   };
 
+  if (!user) return null;
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Médico: {user.nombre}</Text>
