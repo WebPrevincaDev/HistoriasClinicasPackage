@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from "react-native";
 function Form({ title, children }) {
   return (
     <View style={styles.form}>
-      <Text style={styles.title}>{title}</Text>
+      {title && <Text style={styles.title}>{title}</Text>}
       {children}
     </View>
   );
