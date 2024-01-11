@@ -16,8 +16,6 @@ const CustomAutocomplete = ({ label, required, ...dropDownProps }) => {
         setOpen={setOpen}
         searchable={true}
         searchWithRegionalAccents={true}
-        searchPlaceholder="Buscar..."
-        placeholder="Seleccione un elemento"
         {...dropDownProps}
         style={styles.dropDown}
         dropDownContainerStyle={styles.dropDownContainer}

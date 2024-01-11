@@ -12,6 +12,7 @@ import { persistStore } from "redux-persist";
 let persistor = persistStore(store);
 
 DropDownPicker.setListMode("MODAL");
+DropDownPicker.setLanguage("ES");
 
 export default function App() {
   return (
