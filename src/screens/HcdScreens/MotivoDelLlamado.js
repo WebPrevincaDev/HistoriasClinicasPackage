@@ -1,7 +1,8 @@
-import { ActivityIndicator, Alert, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { useDispatch } from "react-redux";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import CustomButton from "../../components/CustomButton";
+import Loader from "../../components/Loader";
 import colors from "../../placeholder/colors.json";
 import { updateHcd } from "../../store/slices/hcd";
 import { useDropdown } from "../../hooks/useDropdown";
@@ -40,7 +41,7 @@ export default function MotivoDelLlamado() {
   return (
     <View style={styles.container}>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#000" />
+        <Loader />
       ) : (
         <>
           <CustomAutocomplete

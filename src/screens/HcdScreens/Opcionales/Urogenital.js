@@ -1,4 +1,4 @@
-import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
@@ -7,6 +7,7 @@ import { useCheckbox } from "../../../hooks/useCheckbox";
 import ListaCheckbox from "../../../components/ListaCheckbox";
 import CustomButton from "../../../components/CustomButton";
 import CustomInput from "../../../components/CustomInput";
+import Loader from "../../../components/Loader";
 import Form from "../../../components/Form";
 
 export default function Urogenital() {
@@ -31,7 +32,7 @@ export default function Urogenital() {
   return (
     <ScrollView style={styles.container}>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#000" />
+        <Loader />
       ) : (
         <>
           <Form title="Urogenital">

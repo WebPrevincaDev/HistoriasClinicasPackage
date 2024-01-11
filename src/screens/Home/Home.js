@@ -1,10 +1,11 @@
-import { ActivityIndicator, Alert, StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import mobileOptions from "../../placeholder/mobiles.json";
 import CustomButton from "../../components/CustomButton";
+import Loader from "../../components/Loader";
 import Title from "../../components/Title";
 import { filterProfessionalsByGroup } from "../../helpers/data";
 import { setHcdConfig } from "../../store/slices/hcd";
@@ -89,7 +90,7 @@ const Home = () => {
       <Title>Datos</Title>
       <Text>Médico: {user.nombre}</Text>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#000" />
+        <Loader />
       ) : (
         <>
           <CustomAutocomplete

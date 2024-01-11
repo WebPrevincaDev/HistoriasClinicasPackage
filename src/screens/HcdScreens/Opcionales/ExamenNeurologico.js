@@ -1,10 +1,11 @@
-import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { updateHcd } from "../../../store/slices/hcd";
 import { useCheckbox } from "../../../hooks/useCheckbox";
 import CustomButton from "../../../components/CustomButton";
 import ListaCheckbox from "../../../components/ListaCheckbox";
+import Loader from "../../../components/Loader";
 import Form from "../../../components/Form";
 
 export default function ExamenNeurologico() {
@@ -37,7 +38,7 @@ export default function ExamenNeurologico() {
   return (
     <ScrollView style={styles.container}>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#000" />
+        <Loader />
       ) : (
         <>
           <Form title="Examen neurológico">

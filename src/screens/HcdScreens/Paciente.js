@@ -1,4 +1,4 @@
-import { ActivityIndicator, Alert, StyleSheet, ScrollView } from "react-native";
+import { Alert, StyleSheet, ScrollView } from "react-native";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
+import Loader from "../../components/Loader";
 import { getAllByKey } from "../../helpers/data";
 import { useDropdown } from "../../hooks/useDropdown";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
@@ -162,7 +163,7 @@ export default function Paciente() {
   return (
     <ScrollView style={styles.container}>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#000" />
+        <Loader />
       ) : (
         <>
           <CustomInput

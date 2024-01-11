@@ -1,12 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  Text,
-  Alert,
-  Image,
-} from "react-native";
+import { ScrollView, StyleSheet, Text, Alert, Image } from "react-native";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
@@ -19,6 +12,7 @@ import CustomButton from "../../components/CustomButton";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import ListaCheckbox from "../../components/ListaCheckbox";
 import ModalRegistrarFirma from "../../components/ModalRegistrarFirma";
+import Loader from "../../components/Loader";
 import Form from "../../components/Form";
 
 export default function Desenlace() {
@@ -107,7 +101,7 @@ export default function Desenlace() {
   return (
     <ScrollView style={styles.container}>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#000" />
+        <Loader />
       ) : (
         <>
           <Form title="Desenlace">

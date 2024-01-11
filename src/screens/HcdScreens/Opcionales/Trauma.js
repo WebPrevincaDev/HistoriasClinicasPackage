@@ -1,4 +1,4 @@
-import { ActivityIndicator, View, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { getTraumaLugares } from "../../../store/slices/hcd";
@@ -6,6 +6,7 @@ import { useCheckbox } from "../../../hooks/useCheckbox";
 import CustomButton from "../../../components/CustomButton";
 import ItemOpcional from "../../../components/ItemOpcional";
 import ItemTrauma from "../../../components/ItemTrauma/ItemTrauma";
+import Loader from "../../../components/Loader";
 
 export default function Trauma() {
   const navigation = useNavigation();
@@ -21,7 +22,7 @@ export default function Trauma() {
   return (
     <View style={styles.container}>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#000" />
+        <Loader />
       ) : (
         <>
           <FlatList

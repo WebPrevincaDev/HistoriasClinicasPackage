@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, ScrollView, StyleSheet, Alert } from "react-native";
+import { ScrollView, StyleSheet, Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
@@ -10,6 +10,7 @@ import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import MedicamentoItem from "../../components/MedicamentoItem";
+import Loader from "../../components/Loader";
 
 export default function Diagnostico() {
   const dispatch = useDispatch();
@@ -66,7 +67,7 @@ export default function Diagnostico() {
   return (
     <ScrollView style={styles.container}>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#000" />
+        <Loader />
       ) : (
         <>
           <CustomAutocomplete

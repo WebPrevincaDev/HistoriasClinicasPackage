@@ -1,18 +1,12 @@
 import { useState } from "react";
-import {
-  ActivityIndicator,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  Alert,
-} from "react-native";
+import { Modal, ScrollView, StyleSheet, Text, Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import ListaCheckbox from "../../components/ListaCheckbox";
+import Loader from "../../components/Loader";
 import Title from "../../components/Title";
 import Form from "../../components/Form";
 import { useCheckbox } from "../../hooks/useCheckbox";
@@ -151,7 +145,7 @@ export default function DatosIniciales() {
         </Text>
         <CustomButton text="Modificar antecedentes" onPress={openModal} />
         {isLoading ? (
-          <ActivityIndicator size="large" color="#000" />
+          <Loader />
         ) : (
           <Modal
             visible={isModalOpen}
