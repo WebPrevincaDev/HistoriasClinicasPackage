@@ -66,9 +66,9 @@ function CameraModal({ cameraRef, image, setImage, onSaveImage, onCancel }) {
       <TouchableOpacity style={styles.button} onPress={openModal}>
         <Text>Agregar imagen</Text>
         <MaterialCommunityIcons
-          name="camera"
+          name="camera-plus"
           style={{ marginLeft: 8 }}
-          size={24}
+          size={20}
         />
       </TouchableOpacity>
 
@@ -85,21 +85,41 @@ function CameraModal({ cameraRef, image, setImage, onSaveImage, onCancel }) {
               <Camera style={styles.camera} type={type} ref={cameraRef}>
                 <View style={styles.buttonContainer}>
                   <CustomButton
-                    text=" X "
+                    text={
+                      <MaterialCommunityIcons
+                        name="window-close"
+                        color="white"
+                        size={20}
+                      />
+                    }
                     onPress={closeModal}
                     disabled={isLoading}
+                    type="SIMPLE"
                   />
                 </View>
                 <View style={styles.buttonContainer}>
                   <CustomButton
-                    text="Cambiar cámara"
+                    text={
+                      <MaterialCommunityIcons
+                        name="camera-flip"
+                        color="white"
+                        size={20}
+                      />
+                    }
                     onPress={toggleCameraType}
                     disabled={isLoading}
+                    type="SIMPLE"
                   />
                 </View>
               </Camera>
               <CustomButton
-                text="Capturar"
+                text={
+                  <MaterialCommunityIcons
+                    name="camera"
+                    style={{ marginLeft: 8 }}
+                    size={24}
+                  />
+                }
                 onPress={takePicture}
                 disabled={isLoading}
               />
@@ -110,10 +130,30 @@ function CameraModal({ cameraRef, image, setImage, onSaveImage, onCancel }) {
               <Image source={{ uri: image }} style={{ flex: 1 }} />
               <View style={{ flexDirection: "row" }}>
                 <View style={{ flex: 1 }}>
-                  <CustomButton text="Cancelar" onPress={onCancel} />
+                  <CustomButton
+                    text={
+                      <MaterialCommunityIcons
+                        name="trash-can"
+                        color="red"
+                        size={24}
+                      />
+                    }
+                    onPress={onCancel}
+                    type="SIMPLE"
+                  />
                 </View>
                 <View style={{ flex: 1 }}>
-                  <CustomButton text="Guardar" onPress={onSaveImage} />
+                  <CustomButton
+                    text={
+                      <MaterialCommunityIcons
+                        name="upload"
+                        color="black"
+                        size={24}
+                      />
+                    }
+                    onPress={onSaveImage}
+                    type="SIMPLE"
+                  />
                 </View>
               </View>
             </>

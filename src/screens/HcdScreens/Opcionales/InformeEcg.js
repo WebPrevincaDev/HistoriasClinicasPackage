@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -97,7 +98,17 @@ export default function InformeEcg() {
           <View style={{ flex: 1, marginVertical: 8 }}>
             <TouchableOpacity>
               <View style={styles.deleteButtonStyle}>
-                <CustomButton text="🗑️" onPress={() => deleteImage(item)} />
+                <CustomButton
+                  text={
+                    <MaterialCommunityIcons
+                      name="trash-can"
+                      size={20}
+                      color="red"
+                    />
+                  }
+                  onPress={() => deleteImage(item)}
+                  type="SIMPLE"
+                />
               </View>
               <Image source={{ uri: item.src }} style={{ height: 120 }} />
             </TouchableOpacity>
