@@ -1,9 +1,10 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
+import Title from "../Title";
 
 function Form({ title, children }) {
   return (
     <View style={styles.form}>
-      {title && <Text style={styles.title}>{title}</Text>}
+      {title && <Title>{title}</Title>}
       {children}
     </View>
   );
@@ -25,10 +26,5 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 16,
     padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
   },
 });

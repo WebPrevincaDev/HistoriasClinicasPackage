@@ -40,12 +40,12 @@ const Profile = () => {
       />
 
       <Form>
-        <Text style={styles.title}>Nombre</Text>
+        <Text style={styles.label}>Nombre</Text>
         <Text style={styles.data}>{user.nombre}</Text>
 
         <View style={styles.divider} />
 
-        <Text style={styles.title}>Matrícula</Text>
+        <Text style={styles.label}>Matrícula</Text>
         <Text style={styles.data}>{user.matricula}</Text>
       </Form>
 
@@ -56,27 +56,22 @@ const Profile = () => {
 
 export default Profile;
 
-// Plantearse crear un componente "infoComponent"
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
   },
-
-  title: {
+  label: {
     color: "#AAAAAA",
   },
-
   data: {
     fontSize: 24,
   },
-
   divider: {
     height: 2,
     backgroundColor: "#EEEEEE",
     marginVertical: 16,
   },
-
   logo: {
     width: "70%",
     maxWidth: 300,

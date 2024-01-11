@@ -13,6 +13,7 @@ import { useHcdNavigation } from "../../hooks/useHcdNavigation";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import ListaCheckbox from "../../components/ListaCheckbox";
+import Title from "../../components/Title";
 import Form from "../../components/Form";
 import { useCheckbox } from "../../hooks/useCheckbox";
 import { updateHcd, addSignosVitalesToHcd } from "../../store/slices/hcd";
@@ -158,7 +159,7 @@ export default function DatosIniciales() {
             animationType="fade"
           >
             <ScrollView style={styles.container}>
-              <Text style={styles.title}>Lista de antecedentes</Text>
+              <Title>Lista de antecedentes</Title>
               <ListaCheckbox
                 items={antecedentesItems}
                 initialValues={antecedentesValue}
@@ -224,10 +225,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
   },
 });

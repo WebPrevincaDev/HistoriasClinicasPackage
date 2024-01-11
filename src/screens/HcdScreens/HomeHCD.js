@@ -2,6 +2,7 @@ import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import CustomButton from "../../components/CustomButton";
+import Title from "../../components/Title";
 
 const HomeHCD = () => {
   const navigation = useNavigation();
@@ -21,7 +22,7 @@ const HomeHCD = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Médico: {user.nombre}</Text>
+      <Title>Médico: {user.nombre}</Title>
       <CustomButton text="AGREGAR" onPress={addNewHistoriaClinica} />
 
       <FlatList
@@ -44,10 +45,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
   },
 });

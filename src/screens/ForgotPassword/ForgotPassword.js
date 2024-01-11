@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import React from "react";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
+import Title from "../../components/Title";
 import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
 
@@ -23,7 +24,7 @@ const ForgotPassword = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>
-        <Text style={styles.title}>Recupera tú contraseña</Text>
+        <Title>Recupera tu contraseña</Title>
 
         <CustomInput name={"email"} placeholder={"Email"} control={control} rules={{required: 'Ingrese su email por favor'}} />
 
@@ -45,12 +46,6 @@ const styles = StyleSheet.create({
   root: {
     alignItems: "center",
     padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#051C60",
-    margin: 10,
   },
   text: {
     color: 'gray',

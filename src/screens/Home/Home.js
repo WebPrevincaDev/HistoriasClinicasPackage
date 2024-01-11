@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import mobileOptions from "../../placeholder/mobiles.json";
 import CustomButton from "../../components/CustomButton";
+import Title from "../../components/Title";
 import { filterProfessionalsByGroup } from "../../helpers/data";
 import { setHcdConfig } from "../../store/slices/hcd";
 import { getFormattedArray } from "../../helpers/CustomAutocomplete";
@@ -85,7 +86,7 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Datos</Text>
+      <Title>Datos</Title>
       <Text>Médico: {user.nombre}</Text>
       {isLoading ? (
         <ActivityIndicator size="large" color="#000" />
@@ -132,10 +133,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
   },
 });
