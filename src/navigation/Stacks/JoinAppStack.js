@@ -20,21 +20,22 @@ const JoinAppStackScreens = () => {
   const { user } = useSelector((state) => state.auth);
   const { hcdConfig, hcd } = useSelector((state) => state.hcd);
 
-  // si sesión no es válida => SignIn,
+  // si sesión no es válida y no hay hcd en proceso => SignIn,
   // si no firmó => Signature,
   // si no tiene hcd en proceso => HomeTab,
   // else => HcdStack
-  const initialRouteName = !isSessionValid(user)
-    ? "SignIn"
-    : !hcdConfig.firma
-    ? "Signature"
-    : !Object.keys(hcd).length
-    ? "HomeTab"
-    : "HcdStack";
+  const initialRouteName =
+    !isSessionValid(user) && !Object.keys(hcd).length
+      ? "SignIn"
+      : !hcdConfig.firma
+      ? "Signature"
+      : !Object.keys(hcd).length
+      ? "HomeTab"
+      : "HcdStack";
 
   useEffect(() => {
-    // si la sesión no es válida reseteo auth y hcd store
-    if (!isSessionValid(user)) {
+    // si la sesión no es válida y no hay hcd en proceso reseteo auth y hcd store
+    if (!isSessionValid(user) && !Object.keys(hcd).length) {
       dispatch(logout());
       dispatch(resetHcdStore());
     }
