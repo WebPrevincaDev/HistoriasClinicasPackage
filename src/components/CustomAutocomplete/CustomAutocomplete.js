@@ -22,6 +22,7 @@ const CustomAutocomplete = ({ label, required, ...dropDownProps }) => {
         style={styles.dropDown}
         dropDownContainerStyle={styles.dropDownContainer}
         arrowIconStyle={styles.arrowIcon}
+        placeholderStyle={styles.placeholder}
       />
     </View>
   );
@@ -49,5 +50,8 @@ const styles = StyleSheet.create({
   arrowIcon: {
     width: 16,
     height: 16,
+  },
+  placeholder: {
+    color: "#a6a6a6",
   },
 });

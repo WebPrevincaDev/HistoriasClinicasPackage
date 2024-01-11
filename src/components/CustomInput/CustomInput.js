@@ -33,6 +33,7 @@ const CustomInput = ({
           )}
           <TextInput
             placeholder={placeholder}
+            placeholderTextColor="#a6a6a6"
             value={value}
             onChangeText={onChange}
             onBlur={onBlur}
