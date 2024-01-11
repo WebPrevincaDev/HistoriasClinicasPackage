@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import CustomButton from "../../components/CustomButton";
 
 function MedicamentoItem({
@@ -41,9 +42,9 @@ function MedicamentoItem({
       <View style={styles.btnContainer}>
         <View>
           <CustomButton
-            text="-"
+            text={<MaterialCommunityIcons name="minus-thick" size={16} />}
             onPress={onDecrementarCantidad}
-            type="SECONDARY"
+            type="SIMPLE"
           />
         </View>
 
@@ -51,14 +52,20 @@ function MedicamentoItem({
 
         <View>
           <CustomButton
-            text="+"
+            text={<MaterialCommunityIcons name="plus-thick" size={16} />}
             onPress={onIncrementarCantidad}
-            type="SECONDARY"
+            type="SIMPLE"
           />
         </View>
 
         <View>
-          <CustomButton text="🗑️" onPress={onEliminar} type="SECONDARY" />
+          <CustomButton
+            text={
+              <MaterialCommunityIcons name="trash-can" size={16} color="red" />
+            }
+            onPress={onEliminar}
+            type="SIMPLE"
+          />
         </View>
       </View>
     </View>
