@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { resetHcdStore } from "../../store/slices/hcd";
 import { logout } from "../../store/slices/auth";
+import { colors } from "../../constants";
 
 // Assets
 import DrProfileIcon from "../../../assets/images/DoctorUserIcon.png";
@@ -62,14 +63,14 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   label: {
-    color: "#AAAAAA",
+    color: colors.gray,
   },
   data: {
     fontSize: 24,
   },
   divider: {
     height: 2,
-    backgroundColor: "#EEEEEE",
+    backgroundColor: colors.grayLight,
     marginVertical: 16,
   },
   logo: {

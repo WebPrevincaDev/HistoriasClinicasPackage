@@ -1,5 +1,6 @@
 import { StyleSheet, Text } from "react-native";
 import { Slider } from "react-native-elements";
+import { colors } from "../../constants";
 
 function CustomSlider({ label, value, setValue }) {
   return (
@@ -25,6 +26,6 @@ const styles = StyleSheet.create({
   thumb: {
     height: 20,
     width: 20,
-    backgroundColor: "#3B71F3",
+    backgroundColor: colors.primary,
   },
 });

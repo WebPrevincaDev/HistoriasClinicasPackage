@@ -1,7 +1,8 @@
 import { ActivityIndicator } from "react-native";
+import { colors } from "../../constants";
 
 function Loader() {
-  return <ActivityIndicator size="large" color="#000" />;
+  return <ActivityIndicator size="large" color={colors.black} />;
 }
 
 export default Loader;

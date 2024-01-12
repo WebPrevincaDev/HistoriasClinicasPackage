@@ -1,4 +1,5 @@
 import { StyleSheet, Text, Pressable } from "react-native";
+import { colors } from "../../constants";
 
 const CustomButton = ({ onPress, text, disabled, type = "PRIMARY" }) => {
   return (
@@ -24,10 +25,10 @@ const styles = StyleSheet.create({
     opacity: disabled ? 0.6 : 1,
   }),
   container_PRIMARY: {
-    backgroundColor: "#3B71F3",
+    backgroundColor: colors.primary,
   },
   container_SECONDARY: {
-    borderColor: "#3B71F3",
+    borderColor: colors.primary,
     borderWidth: 2,
   },
   container_TERTIARY: {},
@@ -39,16 +40,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   text_PRIMARY: {
-    color: "white",
+    color: colors.white,
   },
   text_SECONDARY: {
-    color: "#3B71F3",
+    color: colors.primary,
   },
   text_TERTIARY: {
     color: "gray",
   },
   text_SIMPLE: {
-    color: "#004dff",
+    color: colors.primaryDark,
     fontSize: 20,
   },
 });

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
+import { colors } from "../../constants";
 
 const CustomAutocomplete = ({ label, required, ...dropDownProps }) => {
   const [open, setOpen] = useState(false);
@@ -9,7 +10,7 @@ const CustomAutocomplete = ({ label, required, ...dropDownProps }) => {
     <View style={styles.container}>
       <Text>
         {label}
-        {required && <Text style={{ color: "red" }}> *</Text>}
+        {required && <Text style={styles.required}> *</Text>}
       </Text>
       <DropDownPicker
         open={open}
@@ -32,9 +33,13 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: 4,
   },
+  required: {
+    color: colors.red,
+    fontWeight: "bold",
+  },
   dropDown: {
-    backgroundColor: "white",
-    borderColor: "#e8e8e8",
+    backgroundColor: colors.white,
+    borderColor: colors.grayLight,
     borderWidth: 1,
     borderRadius: 6,
     paddingHorizontal: 12,
@@ -42,14 +47,14 @@ const styles = StyleSheet.create({
     minHeight: 40,
   },
   dropDownContainer: {
-    backgroundColor: "white",
-    borderColor: "#e8e8e8",
+    backgroundColor: colors.white,
+    borderColor: colors.grayLight,
   },
   arrowIcon: {
     width: 16,
     height: 16,
   },
   placeholder: {
-    color: "#a6a6a6",
+    color: colors.gray,
   },
 });

@@ -11,6 +11,7 @@ import { Camera, CameraType } from "expo-camera";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImageManipulator from "expo-image-manipulator";
 import CustomButton from "../CustomButton";
+import { colors } from "../../constants";
 
 function CameraModal({ cameraRef, image, setImage, onSaveImage, onCancel }) {
   const [type, setType] = useState(CameraType.back);
@@ -88,7 +89,7 @@ function CameraModal({ cameraRef, image, setImage, onSaveImage, onCancel }) {
                     text={
                       <MaterialCommunityIcons
                         name="window-close"
-                        color="white"
+                        color={colors.white}
                         size={20}
                       />
                     }
@@ -102,7 +103,7 @@ function CameraModal({ cameraRef, image, setImage, onSaveImage, onCancel }) {
                     text={
                       <MaterialCommunityIcons
                         name="camera-flip"
-                        color="white"
+                        color={colors.white}
                         size={20}
                       />
                     }
@@ -134,7 +135,7 @@ function CameraModal({ cameraRef, image, setImage, onSaveImage, onCancel }) {
                     text={
                       <MaterialCommunityIcons
                         name="trash-can"
-                        color="red"
+                        color={colors.red}
                         size={24}
                       />
                     }

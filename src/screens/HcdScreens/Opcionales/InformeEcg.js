@@ -19,6 +19,7 @@ import CameraModal from "../../../components/CameraModal";
 import CustomAutocomplete from "../../../components/CustomAutocomplete";
 import informeEcg from "../../../placeholder/informeEcg.json";
 import { FilesImagenesEcgManager } from "../../../data/FilesImagenesEcgManager";
+import { colors } from "../../../constants";
 
 const filesImgManager = new FilesImagenesEcgManager();
 
@@ -103,7 +104,7 @@ export default function InformeEcg() {
                     <MaterialCommunityIcons
                       name="trash-can"
                       size={20}
-                      color="red"
+                      color={colors.red}
                     />
                   }
                   onPress={() => deleteImage(item)}

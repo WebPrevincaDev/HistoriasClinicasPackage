@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import React from "react";
 import { Controller } from "react-hook-form";
+import { colors } from "../../constants";
 
 const CustomInput = ({
   label,
@@ -33,7 +33,7 @@ const CustomInput = ({
           )}
           <TextInput
             placeholder={placeholder}
-            placeholderTextColor="#a6a6a6"
+            placeholderTextColor={colors.gray}
             value={value}
             onChangeText={onChange}
             onBlur={onBlur}
@@ -58,12 +58,12 @@ const styles = StyleSheet.create({
     marginVertical: 4,
   },
   required: {
-    color: "red",
+    color: colors.red,
     fontWeight: "bold",
   },
   input: (error) => ({
-    backgroundColor: "white",
-    borderColor: error ? "red" : "#e8e8e8",
+    backgroundColor: colors.white,
+    borderColor: error ? colors.red : colors.grayLight,
     borderWidth: 1,
     borderRadius: 6,
     paddingHorizontal: 12,
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     minHeight: 40,
   }),
   error: {
-    color: "red",
+    color: colors.red,
     alignSelf: "stretch",
   },
 });

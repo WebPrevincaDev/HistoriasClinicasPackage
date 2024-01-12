@@ -65,11 +65,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
   },
-  text: {
-    color: "gray",
-    marginVertical: 10,
-  },
-  link: {
-    color: "#FDB075",
-  },
 });

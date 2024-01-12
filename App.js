@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DropDownPicker from "react-native-dropdown-picker";
 import Navigation from "./src/navigation";
+import { colors } from "./src/constants";
 
 //Redux
 import { store } from "./src/store";
@@ -29,6 +30,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9FBFC",
+    backgroundColor: colors.white,
   },
 });

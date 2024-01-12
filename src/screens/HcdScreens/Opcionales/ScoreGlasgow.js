@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { obtener_hora } from "../../../helpers/common";
 import { addScoreGlasgowToHcd } from "../../../store/slices/hcd";
+import { colors } from "../../../constants";
 import CustomButton from "../../../components/CustomButton";
 import CustomInput from "../../../components/CustomInput";
 
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   card: {
-    shadowColor: "#000",
+    shadowColor: colors.black,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -136,7 +137,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 2,
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     borderRadius: 8,
     marginBottom: 16,
     padding: 16,
