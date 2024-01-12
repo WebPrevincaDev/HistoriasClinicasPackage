@@ -4,15 +4,11 @@ import { colors } from "../../constants";
 
 const CustomInput = ({
   label,
-  placeholder,
   name,
-  secureTextEntry,
   control,
   defaultValue = "",
   rules = {},
-  multiline,
-  numberOfLines,
-  keyboardType,
+  ...inputProps
 }) => {
   return (
     <Controller
@@ -32,16 +28,12 @@ const CustomInput = ({
             </Text>
           )}
           <TextInput
-            placeholder={placeholder}
-            placeholderTextColor={colors.gray}
             value={value}
             onChangeText={onChange}
             onBlur={onBlur}
-            secureTextEntry={secureTextEntry}
-            multiline={multiline}
-            numberOfLines={numberOfLines}
-            keyboardType={keyboardType}
             style={styles.input(error)}
+            placeholderTextColor={colors.gray}
+            {...inputProps}
           />
           {error?.message && <Text style={styles.error}>{error.message}</Text>}
         </View>
