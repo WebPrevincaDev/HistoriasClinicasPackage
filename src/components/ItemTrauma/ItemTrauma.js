@@ -1,7 +1,15 @@
-import { Modal, View, Text, ScrollView, StyleSheet } from "react-native";
+import {
+  Modal,
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addTraumaToHcd } from "../../store/slices/hcd";
+import { colors } from "../../constants";
 import CustomButton from "../CustomButton";
 import ListaCheckbox from "../ListaCheckbox";
 
@@ -29,20 +37,14 @@ function ItemTrauma({
     setCheckboxValue([]);
   };
 
-  const renderBtnText = () => (
-    <>
-      <Text>{label}</Text>
-      {value && <Text>{`\n${value}`}</Text>}
-    </>
-  );
-
   return (
     <View style={styles.item}>
-      <CustomButton
-        text={renderBtnText()}
-        onPress={openModal}
-        type="SECONDARY"
-      />
+      <TouchableOpacity style={styles.button} onPress={openModal}>
+        <View style={{ alignItems: "center" }}>
+          <Text style={styles.label}>{label}</Text>
+          {value && <Text style={styles.data}>{value}</Text>}
+        </View>
+      </TouchableOpacity>
 
       <Modal
         visible={isModalOpen}
@@ -73,7 +75,28 @@ const styles = StyleSheet.create({
   },
   item: {
     flexDirection: "row",
-    flexWrap: "wrap",
     textAlign: "center",
+  },
+  button: {
+    flexGrow: 1,
+    minHeight: 48,
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 12,
+    backgroundColor: colors.white,
+    borderColor: colors.grayLight,
+    borderWidth: 1,
+    borderRadius: 6,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  data: {
+    marginTop: 4,
+    color: colors.grayDark,
   },
 });
