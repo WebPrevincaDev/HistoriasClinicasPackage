@@ -1,10 +1,12 @@
 import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import { updateHcd } from "../../store/slices/hcd";
 import CustomButton from "../../components/CustomButton";
 import Title from "../../components/Title";
 
 const HomeHCD = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const { user } = useSelector((state) => state.auth);
   const { hcdConfig, arr_hcd } = useSelector((state) => state.hcd);
@@ -15,6 +17,7 @@ const HomeHCD = () => {
       navigation.navigate("Home");
       return;
     }
+    dispatch(updateHcd({ fecha: new Date().toISOString() }));
     navigation.navigate("HcdStack");
   };
 
