@@ -27,7 +27,7 @@ const JoinAppStackScreens = () => {
   const initialRouteName =
     !isSessionValid(user) && !Object.keys(hcd).length
       ? "SignIn"
-      : !hcdConfig.firma
+      : !hcdConfig?.firma
       ? "Signature"
       : !Object.keys(hcd).length
       ? "HomeTab"
