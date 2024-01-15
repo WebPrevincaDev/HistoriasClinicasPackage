@@ -21,13 +21,13 @@ const Home = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [nurseValue, setNurseValue] = useState(null);
+  const [nurseValue, setNurseValue] = useState(hcdConfig?.enfermero || null);
   const [nurseItems, setNurseItems] = useState([]);
 
-  const [driverValue, setDriverValue] = useState(null);
+  const [driverValue, setDriverValue] = useState(hcdConfig?.chofer || null);
   const [driverItems, setDriverItems] = useState([]);
 
-  const [mobileValue, setMobileValue] = useState(null);
+  const [mobileValue, setMobileValue] = useState(hcdConfig?.movil || null);
   const [mobileItems, setMobileItems] = useState(mobileOptions);
 
   const guardarConfiguracion = async () => {
@@ -74,14 +74,6 @@ const Home = () => {
     };
     cargar_datos();
   }, []);
-
-  useEffect(() => {
-    if (hcdConfig) {
-      setNurseValue(hcdConfig.enfermero);
-      setDriverValue(hcdConfig.chofer);
-      setMobileValue(hcdConfig.movil);
-    }
-  }, [hcdConfig]);
 
   if (!user) return null;
 
