@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { Controller } from "react-hook-form";
 import { colors } from "../../constants";
+import RequiredIndicator from "../RequiredIndicator";
 
 const CustomInput = ({
   label,
@@ -24,7 +25,7 @@ const CustomInput = ({
           {label && (
             <Text>
               {label}
-              {rules.required && <Text style={styles.required}> *</Text>}
+              {rules.required && <RequiredIndicator />}
             </Text>
           )}
           <TextInput
@@ -48,10 +49,6 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     marginVertical: 4,
-  },
-  required: {
-    color: colors.red,
-    fontWeight: "bold",
   },
   input: (error) => ({
     backgroundColor: colors.white,
