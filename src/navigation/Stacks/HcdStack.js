@@ -25,12 +25,16 @@ import Ginecobstetrico from "../../screens/HcdScreens/Opcionales/Ginecobstetrico
 import Psiquiatrico from "../../screens/HcdScreens/Opcionales/Psiquiatrico";
 import Trauma from "../../screens/HcdScreens/Opcionales/Trauma";
 import Mecanismo from "../../screens/HcdScreens/Opcionales/Mecanismo";
+import MotivoCancelacion from "../../screens/HcdScreens/MotivoCancelacion";
+import SignosVitales from "../../screens/HcdScreens/SignosVitales";
+// Components
+import HcdHeaderBtns from "../../components/HcdHeaderBtns";
 
 const HCDStack = createNativeStackNavigator();
 
 const HcdStack = () => {
   return (
-    <HCDStack.Navigator>
+    <HCDStack.Navigator screenOptions={{ headerRight: HcdHeaderBtns }}>
       <HCDStack.Screen
         name="MotivoDelLlamado"
         component={MotivoDelLlamado}
@@ -74,7 +78,7 @@ const HcdStack = () => {
       <HCDStack.Screen
         name="ScoreGlasgow"
         component={ScoreGlasgow}
-        options={{ title: "Score de Glasgow" }}
+        options={{ title: "Score de Glasgow", headerRight: null }}
       />
       <HCDStack.Screen
         name="PielMucosa"
@@ -145,6 +149,16 @@ const HcdStack = () => {
         name="Previsualizacion"
         component={Previsualizacion}
         options={{ title: "Previsualización" }}
+      />
+      <HCDStack.Screen
+        name="MotivoCancelacion"
+        component={MotivoCancelacion}
+        options={{ title: "Motivo de cancelación", headerRight: null }}
+      />
+      <HCDStack.Screen
+        name="SignosVitales"
+        component={SignosVitales}
+        options={{ title: "Agregar signos vitales", headerRight: null }}
       />
     </HCDStack.Navigator>
   );
