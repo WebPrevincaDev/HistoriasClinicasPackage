@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Modal, ScrollView, StyleSheet, Text, Alert } from "react-native";
 import { useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
+import { useCustomForm } from "../../hooks/useCustomForm";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
@@ -16,7 +16,9 @@ import { updateHcd, addSignosVitalesToHcd } from "../../store/slices/hcd";
 export default function DatosIniciales() {
   const dispatch = useDispatch();
   const { navigateAndSetHcdScreen } = useHcdNavigation();
-  const { control, handleSubmit, getValues } = useForm();
+  const { control, handleSubmit, getValues } = useCustomForm({
+    storeKeys: ["dias", "horas", "minutos"],
+  });
 
   const {
     isLoading,

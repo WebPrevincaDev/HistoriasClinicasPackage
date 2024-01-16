@@ -19,14 +19,14 @@ export default function MotivoDelLlamado() {
     setValue: setMotivoValue,
     items: motivoItems,
     setItems: setMotivoItems,
-  } = useDropdown({ table: "asw.mla" });
+  } = useDropdown({ table: "asw.mla", storeKey: "llamadaMotivo" });
 
   const {
     value: colorValue,
     setValue: setColorValue,
     items: colorItems,
     setItems: setColorItems,
-  } = useDropdown({ initialItems: colors });
+  } = useDropdown({ initialItems: colors, storeKey: "llamadaColor" });
 
   const onPressSiguiente = () => {
     if (!motivoValue || !colorValue) {

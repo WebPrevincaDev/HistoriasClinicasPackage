@@ -16,7 +16,10 @@ export default function TipoHistoria() {
     value: tipoHistoriaValue,
     setValue: setTipoHistoriaValue,
     items: tipoHistoriaItems,
-  } = useDropdown({ initialItems: tipoHistoria });
+  } = useDropdown({
+    initialItems: tipoHistoria,
+    storeKey: "ubicacion_atencion",
+  });
 
   const onPressSiguiente = () => {
     if (!tipoHistoriaValue) {

@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { getAllByKey } from "../helpers/data";
 
-function useDropdown({ table, multiple, initialItems, itemKey = "nombre" }) {
+function useDropdown({ table, multiple, storeKey, initialItems, itemKey = "nombre" }) {
+  const initialValue = useSelector((state) => state.hcd.hcd[storeKey]);
+
   const [isLoading, setIsLoading] = useState(false);
 
-  const [value, setValue] = useState(multiple ? [] : null);
+  const [value, setValue] = useState(initialValue || (multiple ? [] : null));
   const [items, setItems] = useState(initialItems || []);
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import { Alert, StyleSheet, ScrollView } from "react-native";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
+import { useCustomForm } from "../../hooks/useCustomForm";
 import { useNavigation } from "@react-navigation/native";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import CustomButton from "../../components/CustomButton";
@@ -33,8 +33,22 @@ export default function Paciente() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const { navigateAndSetHcdScreen } = useHcdNavigation();
-  const { control, handleSubmit, getValues, setValue, watch } = useForm();
   const { ubicacion_atencion } = useSelector((state) => state.hcd.hcd);
+  const { control, handleSubmit, getValues, setValue, watch } = useCustomForm({
+    storeKeys: [
+      "pac_dni",
+      "pac_plan",
+      "pac_nro_socio",
+      "pac_apellido",
+      "pac_nombre",
+      "pac_edad",
+      "pac_calle",
+      "pac_interseccion",
+      "pac_nro",
+      "pac_piso",
+      "pac_dto",
+    ],
+  });
   const [requiredOptions, setRequiredOptions] = useState(
     initialRequiredOptions
   );
@@ -45,7 +59,7 @@ export default function Paciente() {
     setValue: setCoberturaValue,
     items: coberturaItems,
     setItems: setCoberturaItems,
-  } = useDropdown({ table: "asw.cobertura" });
+  } = useDropdown({ table: "asw.cobertura", storeKey: "pac_cobertura" });
 
   const {
     isLoading: isLocalidadLoading,
@@ -53,7 +67,7 @@ export default function Paciente() {
     setValue: setLocalidadValue,
     items: localidadItems,
     setItems: setLocalidadItems,
-  } = useDropdown({ table: "asw.localidad" });
+  } = useDropdown({ table: "asw.localidad", storeKey: "pac_localidad" });
 
   const isLoading = isCoberturaLoading || isLocalidadLoading;
 

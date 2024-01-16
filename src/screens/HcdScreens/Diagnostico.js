@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Alert } from "react-native";
 import { useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
+import { useCustomForm } from "../../hooks/useCustomForm";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
 import { useDropdown } from "../../hooks/useDropdown";
 import { updateHcd } from "../../store/slices/hcd";
@@ -15,7 +15,9 @@ import Loader from "../../components/Loader";
 export default function Diagnostico() {
   const dispatch = useDispatch();
   const { navigateAndSetHcdScreen } = useHcdNavigation();
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit } = useCustomForm({
+    storeKeys: ["procedimiento", "epicrisis"],
+  });
 
   const [selectedMeds, setSelectedMeds] = useState({});
 
@@ -24,7 +26,7 @@ export default function Diagnostico() {
     value: diagnosticoValue,
     setValue: setDiagnosticoValue,
     items: diagnosticoItems,
-  } = useDropdown({ table: "asw.diagnos" });
+  } = useDropdown({ table: "asw.diagnos", storeKey: "diagnostico" });
 
   const {
     isLoading: isMedicamentoLoading,

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, Alert, Image } from "react-native";
 import { useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
+import { useCustomForm } from "../../hooks/useCustomForm";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
 import { useCheckbox } from "../../hooks/useCheckbox";
 import { useDropdown } from "../../hooks/useDropdown";
@@ -18,7 +18,9 @@ import Form from "../../components/Form";
 export default function Desenlace() {
   const dispatch = useDispatch();
   const { navigateAndSetHcdScreen } = useHcdNavigation();
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit } = useCustomForm({
+    storeKeys: ["nombre_medico_derivante", "matricula_medico_derivante"],
+  });
   const [isInternationVisible, setIsInternationVisible] = useState(true);
   const [signature, setSignature] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,7 +52,7 @@ export default function Desenlace() {
     setValue: setInstitucionesValue,
     items: institucionesItems,
     setItems: setInstitucionesItems,
-  } = useDropdown({ table: "asw.institucion" });
+  } = useDropdown({ table: "asw.institucion", storeKey: "instituto" });
 
   const isLoading =
     isDesenlaceLoading ||
