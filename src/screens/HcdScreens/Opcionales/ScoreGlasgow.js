@@ -13,9 +13,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { obtener_hora } from "../../../helpers/common";
 import { addScoreGlasgowToHcd } from "../../../store/slices/hcd";
-import { colors } from "../../../constants";
 import CustomButton from "../../../components/CustomButton";
 import CustomInput from "../../../components/CustomInput";
+import Title from "../../../components/Title";
+import Form from "../../../components/Form";
 
 export default function ScoreGlasgow() {
   const dispatch = useDispatch();
@@ -57,7 +58,7 @@ export default function ScoreGlasgow() {
           data={medicionesScoreGlasgow}
           keyExtractor={(_, index) => index.toString()}
           renderItem={({ item }) => (
-            <View style={styles.card}>
+            <Form>
               <View style={{ flexDirection: "row" }}>
                 <Text style={{ flex: 1 }}>Hora: {item.hora}</Text>
                 <Text style={{ flex: 1 }}>Ocular: {item.ocular}</Text>
@@ -67,7 +68,7 @@ export default function ScoreGlasgow() {
                 <Text style={{ flex: 1 }}>Verbal: {item.verbal}</Text>
               </View>
               <Text style={{ fontWeight: "bold" }}>Total: {item.total}</Text>
-            </View>
+            </Form>
           )}
         />
       ) : (
@@ -114,7 +115,7 @@ export default function ScoreGlasgow() {
             control={control}
             keyboardType="number-pad"
           />
-          <Text style={styles.total}>Total: {total}</Text>
+          <Title>Total: {total}</Title>
           <CustomButton text="GUARDAR" onPress={handleSubmit(onPressGuardar)} />
           <CustomButton text="CANCELAR" onPress={closeModal} />
         </ScrollView>
@@ -127,24 +128,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-  },
-  card: {
-    shadowColor: colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 2,
-    backgroundColor: colors.white,
-    borderRadius: 8,
-    marginBottom: 16,
-    padding: 16,
-  },
-  total: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
   },
 });
