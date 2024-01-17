@@ -12,7 +12,7 @@ import { logout } from "../../store/slices/auth";
 import { colors } from "../../constants";
 
 // Assets
-import DrProfileIcon from "../../../assets/images/DoctorUserIcon.png";
+import icon from "../../../assets/images/doctor-icon.png";
 
 // Components
 import Container from "../../components/Container";
@@ -36,7 +36,7 @@ const Profile = () => {
   return (
     <Container>
       <Image
-        source={DrProfileIcon}
+        source={icon}
         style={[styles.logo, { height: height * 0.3, marginBottom: 16 }]}
         resizeMode="contain"
       />
