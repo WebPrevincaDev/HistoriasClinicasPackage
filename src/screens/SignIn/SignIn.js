@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Image,
   StyleSheet,
@@ -5,6 +6,7 @@ import {
   useWindowDimensions,
   Alert,
 } from "react-native";
+import { CheckBox } from "react-native-elements";
 import PlaceHolderLogo from "../../../assets/images/testLogo.jpg";
 import Container from "../../components/Container";
 import CustomInput from "../../components/CustomInput";
@@ -13,11 +15,13 @@ import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/slices/auth/thunks";
+import { colors } from "../../constants";
 
 const SignIn = () => {
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
 
   const { control, handleSubmit } = useForm();
 
@@ -31,11 +35,6 @@ const SignIn = () => {
       Alert.alert(error.message);
     }
   };
-
-  // const onForgotPasswordPressed = () => {
-  //   console.warn("Forgot Password");
-  //   navigation.navigate("ForgotPassword");
-  // };
 
   return (
     <Container scroll>
@@ -58,8 +57,18 @@ const SignIn = () => {
           name={'password'}
           placeholder={"Contraseña"}
           control={control}
-          secureTextEntry
+          secureTextEntry={!showPassword}
           rules={{required: 'Por favor ingrese una contraseña'}}
+        />
+
+        <CheckBox
+          title="Mostrar contraseña"
+          checked={showPassword}
+          onPress={() => setShowPassword(!showPassword)}
+          size={16}
+          checkedColor={colors.primary}
+          containerStyle={styles.checkbox}
+          textStyle={{ marginStart: 8, fontWeight: "normal" }}
         />
 
         <CustomButton
@@ -67,14 +76,6 @@ const SignIn = () => {
           disabled={isLoading}
           onPress={handleSubmit(onSignInPressed)}
         />
-
-        {/* <Button onPress={()=>navigation.navigate('Signature')} title="IR A SIGNATURE"/> */}
-
-        {/* <CustomButton
-          text={"Olvidé mi Contraseña"}
-          onPress={onForgotPasswordPressed}
-          type="TERTIARY"
-        /> */}
       </View>
     </Container>
   );
@@ -88,5 +89,14 @@ const styles = StyleSheet.create({
     maxWidth: 300,
     maxHeight: 200,
     alignSelf: "center",
+  },
+  checkbox: {
+    margin: 0,
+    marginEnd: 0,
+    marginStart: 0,
+    backgroundColor: "transparent",
+    borderColor: "transparent",
+    paddingHorizontal: 0,
+    paddingVertical: 8,
   },
 });
