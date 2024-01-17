@@ -10,6 +10,7 @@ import {
 import { Camera, CameraType } from "expo-camera";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImageManipulator from "expo-image-manipulator";
+import Container from "../Container";
 import CustomButton from "../CustomButton";
 import { colors } from "../../constants";
 
@@ -55,9 +56,9 @@ function CameraModal({ cameraRef, image, setImage, onSaveImage, onCancel }) {
 
   if (!hasPermission) {
     return (
-      <View style={styles.container}>
+      <Container>
         <Text>Para poder continuar debe otorgar permiso a la app</Text>
-      </View>
+      </Container>
     );
   }
 
@@ -79,7 +80,7 @@ function CameraModal({ cameraRef, image, setImage, onSaveImage, onCancel }) {
         onRequestClose={closeModal}
         animationType="fade"
       >
-        <View style={styles.container}>
+        <Container>
           {!image ? (
             <>
               {/* si usuario NO sacó foto => renderizo cámara */}
@@ -159,7 +160,7 @@ function CameraModal({ cameraRef, image, setImage, onSaveImage, onCancel }) {
               </View>
             </>
           )}
-        </View>
+        </Container>
       </Modal>
     </>
   );
@@ -168,10 +169,6 @@ function CameraModal({ cameraRef, image, setImage, onSaveImage, onCancel }) {
 export default CameraModal;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
   button: {
     flexDirection: "row",
     justifyContent: "space-between",

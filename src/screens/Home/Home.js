@@ -1,7 +1,8 @@
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { Alert, Text } from "react-native";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import Container from "../../components/Container";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import mobileOptions from "../../placeholder/mobiles.json";
 import CustomButton from "../../components/CustomButton";
@@ -78,7 +79,7 @@ const Home = () => {
   if (!user) return null;
 
   return (
-    <View style={styles.container}>
+    <Container>
       <Title>Datos</Title>
       <Text>Médico: {user.nombre}</Text>
       {isLoading ? (
@@ -116,15 +117,8 @@ const Home = () => {
           <CustomButton text="GUARDAR" onPress={guardarConfiguracion} />
         </>
       )}
-    </View>
+    </Container>
   );
 };
 
 export default Home;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

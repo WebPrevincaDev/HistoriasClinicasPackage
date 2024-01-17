@@ -1,8 +1,8 @@
-import { ScrollView, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { updateHcd } from "../../../store/slices/hcd";
 import { useCheckbox } from "../../../hooks/useCheckbox";
+import Container from "../../../components/Container";
 import CustomButton from "../../../components/CustomButton";
 import ListaCheckbox from "../../../components/ListaCheckbox";
 import Loader from "../../../components/Loader";
@@ -38,7 +38,7 @@ export default function PielMucosa() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <Container scroll>
       {isLoading ? (
         <Loader />
       ) : (
@@ -67,13 +67,6 @@ export default function PielMucosa() {
           />
         </>
       )}
-    </ScrollView>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

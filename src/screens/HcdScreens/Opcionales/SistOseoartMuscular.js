@@ -1,9 +1,9 @@
-import { ScrollView, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { updateHcd } from "../../../store/slices/hcd";
 import { useCheckbox } from "../../../hooks/useCheckbox";
+import Container from "../../../components/Container";
 import ListaCheckbox from "../../../components/ListaCheckbox";
 import CustomButton from "../../../components/CustomButton";
 import CustomInput from "../../../components/CustomInput";
@@ -29,7 +29,7 @@ export default function SistOseoartMuscular() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <Container scroll>
       <Form title="Sistema oseoart. y muscular">
         <ListaCheckbox
           items={sistemaItems}
@@ -50,13 +50,6 @@ export default function SistOseoartMuscular() {
         onPress={() => navigation.goBack()}
         type="SECONDARY"
       />
-    </ScrollView>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

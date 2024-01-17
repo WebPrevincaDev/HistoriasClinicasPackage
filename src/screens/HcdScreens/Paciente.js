@@ -1,8 +1,9 @@
-import { Alert, StyleSheet, ScrollView } from "react-native";
+import { Alert } from "react-native";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useCustomForm } from "../../hooks/useCustomForm";
 import { useNavigation } from "@react-navigation/native";
+import Container from "../../components/Container";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
@@ -175,7 +176,7 @@ export default function Paciente() {
   }, [ubicacion_atencion]);
 
   return (
-    <ScrollView style={styles.container}>
+    <Container scroll>
       {isLoading ? (
         <Loader />
       ) : (
@@ -288,13 +289,6 @@ export default function Paciente() {
           />
         </>
       )}
-    </ScrollView>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

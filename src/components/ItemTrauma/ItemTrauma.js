@@ -1,15 +1,9 @@
-import {
-  Modal,
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { Modal, View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addTraumaToHcd } from "../../store/slices/hcd";
 import { colors } from "../../constants";
+import Container from "../Container";
 import CustomButton from "../CustomButton";
 import ListaCheckbox from "../ListaCheckbox";
 
@@ -51,7 +45,7 @@ function ItemTrauma({
         onRequestClose={closeModal}
         animationType="fade"
       >
-        <ScrollView style={styles.container}>
+        <Container>
           <ListaCheckbox
             items={items}
             initialValues={checkboxValue}
@@ -60,7 +54,7 @@ function ItemTrauma({
           <CustomButton text="GUARDAR" onPress={saveTrauma} />
           <CustomButton text="SIN TRAUMA APARENTE" onPress={saveTrauma} />
           <CustomButton text="CANCELAR" onPress={closeModal} type="SECONDARY" />
-        </ScrollView>
+        </Container>
       </Modal>
     </View>
   );
@@ -69,10 +63,6 @@ function ItemTrauma({
 export default ItemTrauma;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
   item: {
     flexDirection: "row",
     textAlign: "center",

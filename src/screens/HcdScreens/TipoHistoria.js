@@ -1,9 +1,10 @@
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
 import { useDropdown } from "../../hooks/useDropdown";
 import { updateHcd } from "../../store/slices/hcd";
 import { invalidInput } from "../../constants";
+import Container from "../../components/Container";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import CustomButton from "../../components/CustomButton";
 import tipoHistoria from "../../placeholder/tipoHistoria.json";
@@ -32,7 +33,7 @@ export default function TipoHistoria() {
   };
 
   return (
-    <View style={styles.container}>
+    <Container>
       <CustomAutocomplete
         label="Tipo de historia"
         value={tipoHistoriaValue}
@@ -41,13 +42,6 @@ export default function TipoHistoria() {
         required
       />
       <CustomButton text="SIGUIENTE" onPress={onPressSiguiente} />
-    </View>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

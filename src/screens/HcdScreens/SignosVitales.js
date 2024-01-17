@@ -1,8 +1,8 @@
-import { ScrollView, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { addSignosVitalesToHcd } from "../../store/slices/hcd";
+import Container from "../../components/Container";
 import FormSignosVitales from "../../components/FormSignosVitales";
 import CustomButton from "../../components/CustomButton";
 
@@ -17,7 +17,7 @@ export default function SignosVitales() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <Container scroll>
       <FormSignosVitales control={control} />
 
       <CustomButton text="GUARDAR" onPress={handleSubmit(onPressSiguiente)} />
@@ -26,13 +26,6 @@ export default function SignosVitales() {
         onPress={navigation.goBack}
         type="SECONDARY"
       />
-    </ScrollView>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

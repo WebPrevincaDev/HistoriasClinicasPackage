@@ -1,5 +1,6 @@
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
+import Container from "../../components/Container";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import CustomButton from "../../components/CustomButton";
 import Loader from "../../components/Loader";
@@ -39,7 +40,7 @@ export default function MotivoDelLlamado() {
   };
 
   return (
-    <View style={styles.container}>
+    <Container>
       {isLoading ? (
         <Loader />
       ) : (
@@ -65,13 +66,6 @@ export default function MotivoDelLlamado() {
           <CustomButton text="SIGUIENTE" onPress={onPressSiguiente} />
         </>
       )}
-    </View>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

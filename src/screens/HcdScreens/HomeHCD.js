@@ -1,7 +1,8 @@
-import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
+import { Alert, FlatList, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { updateHcd } from "../../store/slices/hcd";
+import Container from "../../components/Container";
 import CustomButton from "../../components/CustomButton";
 import Title from "../../components/Title";
 
@@ -24,7 +25,7 @@ const HomeHCD = () => {
   if (!user) return null;
 
   return (
-    <View style={styles.container}>
+    <Container>
       <Title>Médico: {user.nombre}</Title>
       <CustomButton text="AGREGAR" onPress={addNewHistoriaClinica} />
 
@@ -38,15 +39,8 @@ const HomeHCD = () => {
         )}
         keyExtractor={(item) => item.key}
       />
-    </View>
+    </Container>
   );
 };
 
 export default HomeHCD;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

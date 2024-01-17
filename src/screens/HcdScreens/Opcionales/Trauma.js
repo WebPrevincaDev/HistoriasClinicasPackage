@@ -1,8 +1,9 @@
-import { View, StyleSheet, FlatList } from "react-native";
+import { FlatList } from "react-native";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { getTraumaLugares } from "../../../store/slices/hcd";
 import { useCheckbox } from "../../../hooks/useCheckbox";
+import Container from "../../../components/Container";
 import CustomButton from "../../../components/CustomButton";
 import ItemOpcional from "../../../components/ItemOpcional";
 import ItemTrauma from "../../../components/ItemTrauma/ItemTrauma";
@@ -20,7 +21,7 @@ export default function Trauma() {
   } = useCheckbox({ table: "asw.trauma_tipo", itemKey: "trauma_tipo_nombre" });
 
   return (
-    <View style={styles.container}>
+    <Container>
       {isLoading ? (
         <Loader />
       ) : (
@@ -43,13 +44,6 @@ export default function Trauma() {
           <CustomButton text="GUARDAR" onPress={() => navigation.goBack()} />
         </>
       )}
-    </View>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ScrollView, StyleSheet, Text, Alert, Image } from "react-native";
+import { Text, Alert, Image } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
@@ -11,6 +11,7 @@ import { useDropdown } from "../../hooks/useDropdown";
 import { setHcdScreen, updateHcd } from "../../store/slices/hcd";
 import { addHcd, agregarPaciente } from "../../store/slices/hcd/thunks";
 import { invalidInput } from "../../constants";
+import Container from "../../components/Container";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
@@ -97,7 +98,7 @@ export default function Finalizacion() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <Container scroll>
       <CustomAutocomplete
         label="¿Abona copago?"
         value={abonaCopagoValue}
@@ -142,13 +143,6 @@ export default function Finalizacion() {
       />
       <CustomButton text="IMPRIMIR" onPress={handleSubmit(onPressImprimir)} />
       <CustomButton text="FINALIZAR" onPress={handleSubmit(onPressFinalizar)} />
-    </ScrollView>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

@@ -1,18 +1,10 @@
 import { useEffect, useState } from "react";
-import {
-  Image,
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-  Modal,
-  Alert,
-  FlatList,
-} from "react-native";
+import { Image, View, Text, Modal, Alert, FlatList } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { obtener_hora } from "../../../helpers/common";
 import { addScoreGlasgowToHcd } from "../../../store/slices/hcd";
+import Container from "../../../components/Container";
 import CustomButton from "../../../components/CustomButton";
 import CustomInput from "../../../components/CustomInput";
 import Title from "../../../components/Title";
@@ -52,7 +44,7 @@ export default function ScoreGlasgow() {
   }, [ocular, verbal, motora]);
 
   return (
-    <View style={styles.container}>
+    <Container>
       {medicionesScoreGlasgow?.length ? (
         <FlatList
           data={medicionesScoreGlasgow}
@@ -81,7 +73,7 @@ export default function ScoreGlasgow() {
         onRequestClose={closeModal}
         animationType="fade"
       >
-        <ScrollView style={styles.container}>
+        <Container scroll>
           <Image
             resizeMode="contain"
             source={require("../../../../assets/images/glasgow.png")}
@@ -118,15 +110,8 @@ export default function ScoreGlasgow() {
           <Title>Total: {total}</Title>
           <CustomButton text="GUARDAR" onPress={handleSubmit(onPressGuardar)} />
           <CustomButton text="CANCELAR" onPress={closeModal} />
-        </ScrollView>
+        </Container>
       </Modal>
-    </View>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

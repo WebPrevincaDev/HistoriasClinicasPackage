@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, Alert, Image } from "react-native";
+import { Text, Alert, Image } from "react-native";
 import { useDispatch } from "react-redux";
 import { useCustomForm } from "../../hooks/useCustomForm";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
@@ -7,6 +7,7 @@ import { useCheckbox } from "../../hooks/useCheckbox";
 import { useDropdown } from "../../hooks/useDropdown";
 import { updateHcd } from "../../store/slices/hcd";
 import { invalidInput } from "../../constants";
+import Container from "../../components/Container";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
@@ -101,7 +102,7 @@ export default function Desenlace() {
   }, [desenlaceValue]);
 
   return (
-    <ScrollView style={styles.container}>
+    <Container scroll>
       {isLoading ? (
         <Loader />
       ) : (
@@ -181,13 +182,6 @@ export default function Desenlace() {
           />
         </>
       )}
-    </ScrollView>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { useCheckbox } from "../../../hooks/useCheckbox";
 import { updateHcd, addTraumaToHcd } from "../../../store/slices/hcd";
+import Container from "../../../components/Container";
 import ListaCheckbox from "../../../components/ListaCheckbox";
 import CustomButton from "../../../components/CustomButton";
 import CustomSlider from "../../../components/CustomSlider";
@@ -58,7 +59,7 @@ export default function Mecanismo() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <Container scroll>
       {isLoading ? (
         <Loader />
       ) : (
@@ -117,13 +118,6 @@ export default function Mecanismo() {
           />
         </>
       )}
-    </ScrollView>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

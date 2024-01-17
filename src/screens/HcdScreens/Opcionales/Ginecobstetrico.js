@@ -1,9 +1,9 @@
-import { ScrollView, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { updateHcd } from "../../../store/slices/hcd";
 import { useCheckbox } from "../../../hooks/useCheckbox";
+import Container from "../../../components/Container";
 import ListaCheckbox from "../../../components/ListaCheckbox";
 import CustomButton from "../../../components/CustomButton";
 import CustomInput from "../../../components/CustomInput";
@@ -30,7 +30,7 @@ export default function Ginecobstetrico() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <Container scroll>
       {isLoading ? (
         <Loader />
       ) : (
@@ -57,13 +57,6 @@ export default function Ginecobstetrico() {
           />
         </>
       )}
-    </ScrollView>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

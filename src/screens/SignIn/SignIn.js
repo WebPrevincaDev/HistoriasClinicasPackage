@@ -3,10 +3,10 @@ import {
   StyleSheet,
   View,
   useWindowDimensions,
-  ScrollView,
   Alert,
 } from "react-native";
 import PlaceHolderLogo from "../../../assets/images/testLogo.jpg";
+import Container from "../../components/Container";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
@@ -38,57 +38,51 @@ const SignIn = () => {
   // };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.root}>
-        <Image
-          source={PlaceHolderLogo}
-          style={[styles.logo, { height: height * 0.3 }]}
-          resizeMode="contain"
+    <Container scroll>
+      <Image
+        source={PlaceHolderLogo}
+        style={[styles.logo, { height: height * 0.3 }]}
+        resizeMode="contain"
+      />
+
+      <View style={{ marginTop: 16 }}>
+        <CustomInput
+          name={'matricula'}
+          placeholder={"Matrícula"}
+          control={control}
+          rules={{required: 'Se requiere la matrícula'}}
+          keyboardType="number-pad"
         />
 
-        <View style={{ marginTop: 16 }}>
-          <CustomInput
-            name={'matricula'}
-            placeholder={"Matrícula"}
-            control={control}
-            rules={{required: 'Se requiere la matrícula'}}
-            keyboardType="number-pad"
-          />
+        <CustomInput
+          name={'password'}
+          placeholder={"Contraseña"}
+          control={control}
+          secureTextEntry
+          rules={{required: 'Por favor ingrese una contraseña'}}
+        />
 
-          <CustomInput
-            name={'password'}
-            placeholder={"Contraseña"}
-            control={control}
-            secureTextEntry
-            rules={{required: 'Por favor ingrese una contraseña'}}
-          />
+        <CustomButton
+          text={isLoading ? "Cargando..." : "Ingresar"}
+          disabled={isLoading}
+          onPress={handleSubmit(onSignInPressed)}
+        />
 
-          <CustomButton
-            text={isLoading ? "Cargando..." : "Ingresar"}
-            disabled={isLoading}
-            onPress={handleSubmit(onSignInPressed)}
-          />
+        {/* <Button onPress={()=>navigation.navigate('Signature')} title="IR A SIGNATURE"/> */}
 
-          {/* <Button onPress={()=>navigation.navigate('Signature')} title="IR A SIGNATURE"/> */}
-
-          {/* <CustomButton
-            text={"Olvidé mi Contraseña"}
-            onPress={onForgotPasswordPressed}
-            type="TERTIARY"
-          /> */}
-        </View>
+        {/* <CustomButton
+          text={"Olvidé mi Contraseña"}
+          onPress={onForgotPasswordPressed}
+          type="TERTIARY"
+        /> */}
       </View>
-    </ScrollView>
+    </Container>
   );
 };
 
 export default SignIn;
 
 const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    padding: 16,
-  },
   logo: {
     width: "70%",
     maxWidth: 300,

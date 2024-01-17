@@ -15,6 +15,7 @@ import { colors } from "../../constants";
 import DrProfileIcon from "../../../assets/images/DoctorUserIcon.png";
 
 // Components
+import Container from "../../components/Container";
 import CustomButton from "../../components/CustomButton";
 import Form from "../../components/Form";
 
@@ -33,7 +34,7 @@ const Profile = () => {
   if (!user) return null;
 
   return (
-    <View style={styles.container}>
+    <Container>
       <Image
         source={DrProfileIcon}
         style={[styles.logo, { height: height * 0.3, marginBottom: 16 }]}
@@ -51,17 +52,13 @@ const Profile = () => {
       </Form>
 
       <CustomButton text="CERRAR SESIÓN" onPress={handleLogout} type="SIMPLE" />
-    </View>
+    </Container>
   );
 };
 
 export default Profile;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
   label: {
     color: colors.gray,
   },

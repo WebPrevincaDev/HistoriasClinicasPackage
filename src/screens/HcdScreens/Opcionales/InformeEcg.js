@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { useDropdown } from "../../../hooks/useDropdown";
 import { updateHcd } from "../../../store/slices/hcd";
+import Container from "../../../components/Container";
 import CustomButton from "../../../components/CustomButton";
 import CustomInput from "../../../components/CustomInput";
 import CameraModal from "../../../components/CameraModal";
@@ -68,7 +69,7 @@ export default function InformeEcg() {
   };
 
   return (
-    <View style={styles.container}>
+    <Container>
       <CustomAutocomplete
         label="Informe"
         value={informeEcgValue}
@@ -118,15 +119,11 @@ export default function InformeEcg() {
       />
 
       <CustomButton text="GUARDAR" onPress={handleSubmit(onPressGuardar)} />
-    </View>
+    </Container>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
   deleteButtonStyle: {
     position: "absolute",
     top: 0,

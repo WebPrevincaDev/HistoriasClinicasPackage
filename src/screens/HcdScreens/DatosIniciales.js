@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Modal, ScrollView, StyleSheet, Text, Alert } from "react-native";
+import { Modal, Text, Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import { useCustomForm } from "../../hooks/useCustomForm";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
+import Container from "../../components/Container";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import ListaCheckbox from "../../components/ListaCheckbox";
@@ -70,7 +71,7 @@ export default function DatosIniciales() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <Container scroll>
       <FormSignosVitales control={control} />
 
       <Form title="Antecedentes">
@@ -86,7 +87,7 @@ export default function DatosIniciales() {
             onRequestClose={closeModal}
             animationType="fade"
           >
-            <ScrollView style={styles.container}>
+            <Container>
               <Title>Lista de antecedentes</Title>
               <ListaCheckbox
                 items={antecedentesItems}
@@ -112,7 +113,7 @@ export default function DatosIniciales() {
                 control={control}
               />
               <CustomButton text="Confirmar" onPress={closeModal} />
-            </ScrollView>
+            </Container>
           </Modal>
         )}
       </Form>
@@ -145,13 +146,6 @@ export default function DatosIniciales() {
       </Form>
 
       <CustomButton text="SIGUIENTE" onPress={handleSubmit(onPressSiguiente)} />
-    </ScrollView>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});
