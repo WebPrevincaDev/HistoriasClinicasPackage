@@ -7,6 +7,7 @@ import Container from "../../components/Container";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
+import Divider from "../../components/Divider";
 import Loader from "../../components/Loader";
 import { getAllByKey } from "../../helpers/data";
 import { useDropdown } from "../../hooks/useDropdown";
@@ -235,6 +236,9 @@ export default function Paciente() {
             rules={{ required: requiredOptions.pac_edad }}
             keyboardType="number-pad"
           />
+
+          <Divider />
+
           <CustomAutocomplete
             label="Localidad"
             value={localidadValue}

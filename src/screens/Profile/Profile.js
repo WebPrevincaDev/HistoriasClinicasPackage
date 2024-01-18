@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  useWindowDimensions,
-} from "react-native";
+import { StyleSheet, Text, Image, useWindowDimensions } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { resetHcdStore } from "../../store/slices/hcd";
@@ -18,6 +12,7 @@ import icon from "../../../assets/images/doctor-icon.png";
 import Container from "../../components/Container";
 import CustomButton from "../../components/CustomButton";
 import Form from "../../components/Form";
+import Divider from "../../components/Divider";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -45,7 +40,7 @@ const Profile = () => {
         <Text style={styles.label}>Nombre</Text>
         <Text style={styles.data}>{user.nombre}</Text>
 
-        <View style={styles.divider} />
+        <Divider />
 
         <Text style={styles.label}>Matrícula</Text>
         <Text style={styles.data}>{user.matricula}</Text>
@@ -64,11 +59,6 @@ const styles = StyleSheet.create({
   },
   data: {
     fontSize: 24,
-  },
-  divider: {
-    height: 2,
-    backgroundColor: colors.grayLight,
-    marginVertical: 16,
   },
   logo: {
     width: "70%",
