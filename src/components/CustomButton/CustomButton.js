@@ -46,10 +46,9 @@ const styles = StyleSheet.create({
     color: colors.primary,
   },
   text_TERTIARY: {
-    color: "gray",
+    color: colors.grayDark,
   },
   text_SIMPLE: {
     color: colors.primaryDark,
-    fontSize: 20,
   },
 });
