@@ -46,7 +46,11 @@ const Profile = () => {
         <Text style={styles.data}>{user.matricula}</Text>
       </Form>
 
-      <CustomButton text="CERRAR SESIÓN" onPress={handleLogout} type="SIMPLE" />
+      <CustomButton
+        text="CERRAR SESIÓN"
+        onPress={handleLogout}
+        type="SECONDARY"
+      />
     </Container>
   );
 };
