@@ -51,11 +51,9 @@ export default function ScoreGlasgow() {
           keyExtractor={(_, index) => index.toString()}
           renderItem={({ item }) => (
             <Form>
+              <Text>Hora: {item.hora}</Text>
               <View style={{ flexDirection: "row" }}>
-                <Text style={{ flex: 1 }}>Hora: {item.hora}</Text>
                 <Text style={{ flex: 1 }}>Ocular: {item.ocular}</Text>
-              </View>
-              <View style={{ flexDirection: "row" }}>
                 <Text style={{ flex: 1 }}>Motora: {item.motora}</Text>
                 <Text style={{ flex: 1 }}>Verbal: {item.verbal}</Text>
               </View>
@@ -64,7 +62,7 @@ export default function ScoreGlasgow() {
           )}
         />
       ) : (
-        <Text>Presione el botón para agregar items</Text>
+        <Text>No hay registros. Presione el botón para agregar items.</Text>
       )}
       <CustomButton text="AGREGAR" onPress={openModal} />
 
@@ -77,7 +75,7 @@ export default function ScoreGlasgow() {
           <Image
             resizeMode="contain"
             source={require("../../../../assets/images/glasgow.png")}
-            style={{ width: "100%", height: 179 }}
+            style={{ width: "100%", height: 152 }}
           />
           <CustomInput
             name="hora"
@@ -109,7 +107,7 @@ export default function ScoreGlasgow() {
           />
           <Title>Total: {total}</Title>
           <CustomButton text="GUARDAR" onPress={handleSubmit(onPressGuardar)} />
-          <CustomButton text="CANCELAR" onPress={closeModal} />
+          <CustomButton text="CANCELAR" onPress={closeModal} type="SIMPLE" />
         </Container>
       </Modal>
     </Container>
