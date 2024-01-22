@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { Alert, Modal } from "react-native";
 import Signature from "react-native-signature-canvas";
+import { colors } from "../../constants";
 
 function ModalRegistrarFirma({ visible, onOK, onRequestClose }) {
   const ref = useRef();
@@ -25,13 +26,21 @@ function ModalRegistrarFirma({ visible, onOK, onRequestClose }) {
         onOK={onOK}
         onEmpty={handleEmpty}
         autoClear={true}
-        descriptionText={"Registrar Firma"}
+        descriptionText={"Registrar firma"}
         imageType={"image/png"}
         confirmText={"Guardar"}
         clearText="Limpiar"
+        webStyle={webStyle}
       />
     </Modal>
   );
 }
 
 export default ModalRegistrarFirma;
+
+const webStyle = `
+  .m-signature-pad--footer .button {
+    background-color: ${colors.primary};
+    color: ${colors.white};
+  }
+`;
