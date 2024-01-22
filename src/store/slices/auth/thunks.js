@@ -1,5 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { get_usuario, sincronizarAll } from "../../../helpers/data";
+import {
+  get_usuario,
+  sincronizarAll,
+  sincronizarUsuariosApp,
+} from "../../../helpers/data";
 
 const get_proximo_cierre = () => {
   let result = new Date();
@@ -28,9 +32,18 @@ const get_proximo_cierre = () => {
 };
 
 export const login = createAsyncThunk("auth/login", async (data) => {
-  await sincronizarAll();
+  // mientras el usuario inicia sesión voy fetcheando la data en 2do plano
+  sincronizarAll();
 
-  const user = await get_usuario(data.matricula);
+  // busca al usuario entre los que ya tiene guardados de forma local
+  let user;
+  user = await get_usuario(data.matricula);
+  if (!user) {
+    // si no lo encuentra => busca usuarios en la db
+    await sincronizarUsuariosApp();
+    user = await get_usuario(data.matricula);
+  }
+
   if (!user) throw new Error("Usuario no registrado");
 
   if (user.app_password !== data.password)
