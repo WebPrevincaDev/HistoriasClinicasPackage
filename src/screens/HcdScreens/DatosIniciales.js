@@ -33,7 +33,9 @@ export default function DatosIniciales() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
-  const closeModal = () => {
+  const closeModal = () => setIsModalOpen(false);
+
+  const saveAntecedentes = () => {
     // guardarValorMostrar
     let finalText = "";
     const antecedentes = antecedentesValue.join(", ");
@@ -48,7 +50,7 @@ export default function DatosIniciales() {
     if (alergia_medicamentosa)
       finalText += ` | ALERGIA MEDICAMENTOSA: ${alergia_medicamentosa}`;
     setResumenAntecedentes(finalText);
-    setIsModalOpen(false);
+    closeModal();
   };
 
   const onPressSiguiente = (inputData) => {
@@ -112,7 +114,12 @@ export default function DatosIniciales() {
                 placeholder="Medicación habitual"
                 control={control}
               />
-              <CustomButton text="Confirmar" onPress={closeModal} />
+              <CustomButton text="Confirmar" onPress={saveAntecedentes} />
+              <CustomButton
+                text="Cancelar"
+                onPress={closeModal}
+                type="SIMPLE"
+              />
             </Container>
           </Modal>
         )}
