@@ -114,7 +114,7 @@ export default function Mecanismo() {
           <CustomButton
             text="CANCELAR"
             onPress={navigation.goBack}
-            type="SECONDARY"
+            type="SIMPLE"
           />
         </>
       )}

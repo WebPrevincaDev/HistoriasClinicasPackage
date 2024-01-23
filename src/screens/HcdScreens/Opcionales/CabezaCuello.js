@@ -52,8 +52,8 @@ export default function CabezaCuello() {
           <CustomButton text="GUARDAR" onPress={handleSubmit(onPressGuardar)} />
           <CustomButton
             text="CANCELAR"
-            onPress={() => navigation.goBack()}
-            type="SECONDARY"
+            onPress={navigation.goBack}
+            type="SIMPLE"
           />
         </>
       )}

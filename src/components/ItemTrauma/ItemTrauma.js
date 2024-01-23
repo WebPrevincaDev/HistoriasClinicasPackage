@@ -52,8 +52,12 @@ function ItemTrauma({
             onItemSelect={setCheckboxValue}
           />
           <CustomButton text="GUARDAR" onPress={saveTrauma} />
-          <CustomButton text="SIN TRAUMA APARENTE" onPress={saveTrauma} />
-          <CustomButton text="CANCELAR" onPress={closeModal} type="SECONDARY" />
+          <CustomButton
+            text="SIN TRAUMA APARENTE"
+            onPress={saveTrauma}
+            type="SECONDARY"
+          />
+          <CustomButton text="CANCELAR" onPress={closeModal} type="SIMPLE" />
         </Container>
       </Modal>
     </View>

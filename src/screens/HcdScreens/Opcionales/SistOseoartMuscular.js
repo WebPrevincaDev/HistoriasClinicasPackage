@@ -45,11 +45,7 @@ export default function SistOseoartMuscular() {
       </Form>
 
       <CustomButton text="GUARDAR" onPress={handleSubmit(onPressGuardar)} />
-      <CustomButton
-        text="CANCELAR"
-        onPress={() => navigation.goBack()}
-        type="SECONDARY"
-      />
+      <CustomButton text="CANCELAR" onPress={navigation.goBack} type="SIMPLE" />
     </Container>
   );
 }

@@ -21,11 +21,7 @@ export default function SignosVitales() {
       <FormSignosVitales control={control} />
 
       <CustomButton text="GUARDAR" onPress={handleSubmit(onPressSiguiente)} />
-      <CustomButton
-        text="CANCELAR"
-        onPress={navigation.goBack}
-        type="SECONDARY"
-      />
+      <CustomButton text="CANCELAR" onPress={navigation.goBack} type="SIMPLE" />
     </Container>
   );
 }

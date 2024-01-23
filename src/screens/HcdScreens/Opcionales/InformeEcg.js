@@ -119,6 +119,7 @@ export default function InformeEcg() {
       />
 
       <CustomButton text="GUARDAR" onPress={handleSubmit(onPressGuardar)} />
+      <CustomButton text="CANCELAR" onPress={navigation.goBack} type="SIMPLE" />
     </Container>
   );
 }

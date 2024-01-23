@@ -62,8 +62,8 @@ export default function PielMucosa() {
           <CustomButton text="GUARDAR" onPress={onPressGuardar} />
           <CustomButton
             text="CANCELAR"
-            onPress={() => navigation.goBack()}
-            type="SECONDARY"
+            onPress={navigation.goBack}
+            type="SIMPLE"
           />
         </>
       )}
