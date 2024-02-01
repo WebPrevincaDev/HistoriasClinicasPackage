@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { addHcd } from "./thunks";
+import { diagnosisCodes as codes } from "../../../constants";
 
 // a medida que agregue propiedades a hcd las anoto acá para tenerlo de machete
 /* {
@@ -134,6 +135,7 @@ export const sharedSlice = createSlice({
 
 export const getOpcionales = (state) => {
   const hcd = state.hcd.hcd;
+  const diagnostico = state.hcd.hcd.diagnostico.toLowerCase();
 
   const getTextoPielMucosa = () => {
     const datos = [];
@@ -142,7 +144,10 @@ export const getOpcionales = (state) => {
     return datos.join(" / ");
   };
 
-  const ds = [
+  const isRequired = (keywords) =>
+    keywords.some((keyword) => diagnostico.includes(keyword.toLowerCase()));
+
+  const fields = [
     {
       label: "SCORE DE GLASGOW",
       name: "score_de_glasgow",
@@ -155,30 +160,35 @@ export const getOpcionales = (state) => {
       name: "piel_mucosa",
       screen: "PielMucosa",
       value: getTextoPielMucosa(),
+      required: isRequired(codes.piel_mucosa),
     },
     {
       label: "EXAMEN NEUROLÓGICO",
       name: "examen_neuro",
       screen: "ExamenNeurologico",
       value: hcd.examen_neuro,
+      required: isRequired(codes.examen_neuro),
     },
     {
       label: "AP. RESPIRATORIO",
       name: "ap_respiratorio",
       screen: "ApRespiratorio",
       value: hcd.ap_respiratorio,
+      required: isRequired(codes.ap_respiratorio),
     },
     {
       label: "CABEZA Y CUELLO",
       name: "cyc",
       screen: "CabezaCuello",
       value: hcd.cyc,
+      required: isRequired(codes.cyc),
     },
     {
       label: "APARATO CARDIOVASCULAR",
       name: "cardio",
       screen: "AparatoCardiovascular",
       value: hcd.cardio,
+      required: isRequired(codes.cardio),
     },
     {
       label: "INFORME ECG",
@@ -192,41 +202,51 @@ export const getOpcionales = (state) => {
       name: "sist_oseoart_muscular",
       screen: "SistOseoartMuscular",
       value: hcd.sist_oseoart_muscular,
+      required: isRequired(codes.sist_oseoart_muscular),
     },
     {
       label: "ABDOMEN",
       name: "abdomen",
       screen: "Abdomen",
       value: hcd.abdomen,
+      required: isRequired(codes.abdomen),
     },
     {
       label: "UROGENITAL",
       name: "urogen",
       screen: "Urogenital",
       value: hcd.urogen,
+      required: isRequired(codes.urogen),
     },
     {
       label: "GINECOBSTETRICO",
       name: "gco",
       screen: "Ginecobstetrico",
       value: hcd.gco,
+      required: isRequired(codes.gco),
     },
     {
       label: "PSIQUIATRICO",
       name: "psiquiatrico",
       screen: "Psiquiatrico",
       value: hcd.psiquiatrico,
+      required: isRequired(codes.psiquiatrico),
     },
     {
       label: "TRAUMA",
       name: "trauma",
       screen: "Trauma",
       value: hcd.trauma,
+      required: isRequired(codes.trauma),
       textoNormalBtn: "Sin Trauma Aparente",
     },
   ];
 
-  return ds;
+  const allRequiredFieldsComplete = fields.every((field) =>
+    field.required ? field.value : true
+  );
+
+  return { fields, allRequiredFieldsComplete };
 };
 
 export const getTraumaLugares = (state) => {

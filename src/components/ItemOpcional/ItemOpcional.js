@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { updateHcd } from "../../store/slices/hcd";
 import { colors } from "../../constants";
+import RequiredIndicator from "../RequiredIndicator";
 
 function ItemOpcional({
   label,
@@ -10,6 +11,7 @@ function ItemOpcional({
   value,
   textoNormalBtn,
   screen,
+  required = false,
   shouldRenderNormalBtn = true,
 }) {
   const dispatch = useDispatch();
@@ -30,7 +32,10 @@ function ItemOpcional({
           onPress={() => navigation.navigate(screen)}
         >
           <View style={{ alignItems: "center" }}>
-            <Text style={styles.label}>{label}</Text>
+            <Text style={styles.label}>
+              {label}
+              {required && <RequiredIndicator />}
+            </Text>
             {value && <Text style={styles.data}>{value}</Text>}
           </View>
         </TouchableOpacity>

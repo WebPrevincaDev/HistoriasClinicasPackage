@@ -56,14 +56,14 @@ const HcdStack = () => {
         options={{ title: "Datos Iniciales" }}
       />
       <HCDStack.Screen
-        name="Opcionales"
-        component={Opcionales}
-        options={{ title: "Opcionales" }}
-      />
-      <HCDStack.Screen
         name="Diagnostico"
         component={Diagnostico}
         options={{ title: "Diagnóstico" }}
+      />
+      <HCDStack.Screen
+        name="Opcionales"
+        component={Opcionales}
+        options={{ title: "Opcionales" }}
       />
       <HCDStack.Screen
         name="Desenlace"

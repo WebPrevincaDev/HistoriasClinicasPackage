@@ -55,7 +55,7 @@ export default function Diagnostico() {
       medicamentos: medicamentosStr,
     };
     dispatch(updateHcd(datos));
-    navigateAndSetHcdScreen("Desenlace");
+    navigateAndSetHcdScreen("Opcionales");
   };
 
   useEffect(() => {
