@@ -135,7 +135,7 @@ export const sharedSlice = createSlice({
 
 export const getOpcionales = (state) => {
   const hcd = state.hcd.hcd;
-  const diagnostico = state.hcd.hcd.diagnostico.toLowerCase();
+  const diagnostico = state.hcd.hcd.diagnostico?.toLowerCase() || "";
 
   const getTextoPielMucosa = () => {
     const datos = [];
