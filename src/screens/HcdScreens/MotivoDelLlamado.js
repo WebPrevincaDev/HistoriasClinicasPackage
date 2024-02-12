@@ -1,25 +1,33 @@
-import { ActivityIndicator, Alert, StyleSheet, View } from "react-native";
-import { useEffect, useState } from "react";
+import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
+import Container from "../../components/Container";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import CustomButton from "../../components/CustomButton";
-import { getAllByKey } from "../../helpers/data";
-import { getFormattedArray } from "../../helpers/CustomAutocomplete";
+import Loader from "../../components/Loader";
 import colors from "../../placeholder/colors.json";
 import { updateHcd } from "../../store/slices/hcd";
+import { useDropdown } from "../../hooks/useDropdown";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
 import { invalidInput } from "../../constants";
 
 export default function MotivoDelLlamado() {
   const dispatch = useDispatch();
   const { navigateAndSetHcdScreen } = useHcdNavigation();
-  const [isLoading, setIsLoading] = useState(false);
 
-  const [motivoValue, setMotivoValue] = useState(null);
-  const [motivoItems, setMotivoItems] = useState([]);
+  const {
+    isLoading,
+    value: motivoValue,
+    setValue: setMotivoValue,
+    items: motivoItems,
+    setItems: setMotivoItems,
+  } = useDropdown({ table: "asw.mla", storeKey: "llamadaMotivo" });
 
-  const [colorValue, setColorValue] = useState(null);
-  const [colorItems, setColorItems] = useState(colors);
+  const {
+    value: colorValue,
+    setValue: setColorValue,
+    items: colorItems,
+    setItems: setColorItems,
+  } = useDropdown({ initialItems: colors, storeKey: "llamadaColor" });
 
   const onPressSiguiente = () => {
     if (!motivoValue || !colorValue) {
@@ -31,23 +39,10 @@ export default function MotivoDelLlamado() {
     navigateAndSetHcdScreen("TipoHistoria");
   };
 
-  useEffect(() => {
-    const cargar_datos = async () => {
-      if (motivoItems.length) return;
-      setIsLoading(true);
-      // getMotivo_Llamada
-      const motivos = await getAllByKey("asw.mla");
-      const motivosFormatted = getFormattedArray(motivos, "nombre");
-      setMotivoItems(motivosFormatted);
-      setIsLoading(false);
-    };
-    cargar_datos();
-  }, []);
-
   return (
-    <View style={styles.container}>
+    <Container>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#000" />
+        <Loader />
       ) : (
         <>
           <CustomAutocomplete
@@ -71,13 +66,6 @@ export default function MotivoDelLlamado() {
           <CustomButton text="SIGUIENTE" onPress={onPressSiguiente} />
         </>
       )}
-    </View>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

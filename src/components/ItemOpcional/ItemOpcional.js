@@ -1,8 +1,9 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { updateHcd } from "../../store/slices/hcd";
-import CustomButton from "../../components/CustomButton";
+import { colors } from "../../constants";
+import RequiredIndicator from "../RequiredIndicator";
 
 function ItemOpcional({
   label,
@@ -10,6 +11,7 @@ function ItemOpcional({
   value,
   textoNormalBtn,
   screen,
+  required = false,
   shouldRenderNormalBtn = true,
 }) {
   const dispatch = useDispatch();
@@ -22,30 +24,28 @@ function ItemOpcional({
     dispatch(updateHcd(payload));
   };
 
-  const renderBtnText = () => (
-    <>
-      <Text>{label}</Text>
-      {value && <Text>{`\n${value}`}</Text>}
-    </>
-  );
-
   return (
     <View style={styles.item}>
-      <View style={styles.col1}>
-        <CustomButton
-          text={renderBtnText()}
+      <View style={{ width: "70%" }}>
+        <TouchableOpacity
+          style={styles.button}
           onPress={() => navigation.navigate(screen)}
-          type="SECONDARY"
-        />
+        >
+          <View style={{ alignItems: "center" }}>
+            <Text style={styles.label}>
+              {label}
+              {required && <RequiredIndicator />}
+            </Text>
+            {value && <Text style={styles.data}>{value}</Text>}
+          </View>
+        </TouchableOpacity>
       </View>
 
       {shouldRenderNormalBtn && (
-        <View style={styles.col2}>
-          <CustomButton
-            text={textoNormalBtn || "Normal"}
-            onPress={guardar_normal}
-            type="SECONDARY"
-          />
+        <View style={{ width: "30%" }}>
+          <TouchableOpacity style={styles.button} onPress={guardar_normal}>
+            <Text style={styles.label}>{textoNormalBtn || "Normal"}</Text>
+          </TouchableOpacity>
         </View>
       )}
     </View>
@@ -57,13 +57,28 @@ export default ItemOpcional;
 const styles = StyleSheet.create({
   item: {
     flexDirection: "row",
-    flexWrap: "wrap",
     textAlign: "center",
   },
-  col1: {
-    width: "70%",
+  button: {
+    flexGrow: 1,
+    minHeight: 48,
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 12,
+    backgroundColor: colors.white,
+    borderColor: colors.grayLight,
+    borderWidth: 1,
+    borderRadius: 6,
   },
-  col2: {
-    width: "30%",
+  label: {
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  data: {
+    marginTop: 4,
+    color: colors.grayDark,
   },
 });

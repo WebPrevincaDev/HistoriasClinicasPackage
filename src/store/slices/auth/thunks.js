@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   get_usuario,
-  saveAsyncStorage,
   sincronizarAll,
+  sincronizarUsuariosApp,
 } from "../../../helpers/data";
 
 const get_proximo_cierre = () => {
@@ -32,9 +32,18 @@ const get_proximo_cierre = () => {
 };
 
 export const login = createAsyncThunk("auth/login", async (data) => {
-  await sincronizarAll();
+  // mientras el usuario inicia sesión voy fetcheando la data en 2do plano
+  sincronizarAll();
 
-  const user = await get_usuario(data.matricula);
+  // busca al usuario entre los que ya tiene guardados de forma local
+  let user;
+  user = await get_usuario(data.matricula);
+  if (!user) {
+    // si no lo encuentra => busca usuarios en la db
+    await sincronizarUsuariosApp();
+    user = await get_usuario(data.matricula);
+  }
+
   if (!user) throw new Error("Usuario no registrado");
 
   if (user.app_password !== data.password)
@@ -42,15 +51,12 @@ export const login = createAsyncThunk("auth/login", async (data) => {
 
   console.log("login exitoso");
 
-  // login_exitoso => guardarSesion
-  const sesion = {
-    username: data.matricula,
-    password: data.password,
-    medico: user,
+  return {
+    matricula: user.app_matricula,
+    mail: user.app_mail,
+    nombre: user.app_nombre,
+    // password: user.app_password,
+    // id: user.id,
     cierre: get_proximo_cierre(),
   };
-  await saveAsyncStorage(sesion, "sesion");
-  console.log("sesion guardada");
-
-  return user;
 });

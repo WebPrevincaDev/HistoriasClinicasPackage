@@ -1,3 +1,4 @@
+import "react-native-get-random-values";
 import * as ExpoFileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 import { v5 as uuidv5 } from "uuid";
@@ -35,7 +36,7 @@ export class FilesManager {
     const infoPath = await ExpoFileSystem.getInfoAsync(path);
 
     if (!infoPath.exists) {
-      ExpoFileSystem.makeDirectoryAsync(path);
+      await ExpoFileSystem.makeDirectoryAsync(path);
     }
     console.log("Path", path);
   }
@@ -75,12 +76,12 @@ export class FilesManager {
   }
 
   async getItem(key) {
-    console.log("getItem:", key);
+    // console.log("getItem:", key);
     const path = this.getPathBase(key);
     const datos_archivo = await ExpoFileSystem.getInfoAsync(path);
     if (datos_archivo.exists) {
       try {
-        const file = ExpoFileSystem.readAsStringAsync(path);
+        const file = await ExpoFileSystem.readAsStringAsync(path);
         return file;
       } catch (error) {
         console.log(error);
@@ -120,7 +121,7 @@ export class FilesManager {
   }
 
   async readDirectory(directory) {
-    return ExpoFileSystem.readDirectoryAsync(directory);
+    return await ExpoFileSystem.readDirectoryAsync(directory);
   }
 
   getPathBase(fileName) {

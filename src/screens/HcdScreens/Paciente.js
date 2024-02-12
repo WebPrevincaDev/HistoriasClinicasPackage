@@ -1,13 +1,16 @@
-import { ActivityIndicator, Alert, StyleSheet, ScrollView } from "react-native";
+import { Alert } from "react-native";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
+import { useCustomForm } from "../../hooks/useCustomForm";
 import { useNavigation } from "@react-navigation/native";
+import Container from "../../components/Container";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
+import Divider from "../../components/Divider";
+import Loader from "../../components/Loader";
 import { getAllByKey } from "../../helpers/data";
-import { getFormattedArray } from "../../helpers/CustomAutocomplete";
+import { useDropdown } from "../../hooks/useDropdown";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
 import { invalidInput } from "../../constants";
 import { updateHcd, setHcdScreen } from "../../store/slices/hcd";
@@ -32,20 +35,43 @@ export default function Paciente() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const { navigateAndSetHcdScreen } = useHcdNavigation();
-  const { control, handleSubmit, getValues, setValue, watch } = useForm();
-
   const { ubicacion_atencion } = useSelector((state) => state.hcd.hcd);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [coberturaValue, setCoberturaValue] = useState(null);
-  const [coberturaItems, setCoberturaItems] = useState([]);
-
-  const [localidadValue, setLocalidadValue] = useState(null);
-  const [localidadItems, setLocalidadItems] = useState([]);
-
+  const { control, handleSubmit, getValues, setValue, watch } = useCustomForm({
+    storeKeys: [
+      "pac_dni",
+      "pac_plan",
+      "pac_nro_socio",
+      "pac_apellido",
+      "pac_nombre",
+      "pac_edad",
+      "pac_calle",
+      "pac_interseccion",
+      "pac_nro",
+      "pac_piso",
+      "pac_dto",
+    ],
+  });
   const [requiredOptions, setRequiredOptions] = useState(
     initialRequiredOptions
   );
+
+  const {
+    isLoading: isCoberturaLoading,
+    value: coberturaValue,
+    setValue: setCoberturaValue,
+    items: coberturaItems,
+    setItems: setCoberturaItems,
+  } = useDropdown({ table: "asw.cobertura", storeKey: "pac_cobertura" });
+
+  const {
+    isLoading: isLocalidadLoading,
+    value: localidadValue,
+    setValue: setLocalidadValue,
+    items: localidadItems,
+    setItems: setLocalidadItems,
+  } = useDropdown({ table: "asw.localidad", storeKey: "pac_localidad" });
+
+  const isLoading = isCoberturaLoading || isLocalidadLoading;
 
   const onPressSiguiente = (data) => {
     if (
@@ -89,25 +115,6 @@ export default function Paciente() {
       ]
     );
   };
-
-  // cargar_datos
-  useEffect(() => {
-    const cargar_datos = async () => {
-      if (coberturaItems.length && localidadItems.length) return;
-      setIsLoading(true);
-      // cargarCombos
-      // getCoberturas
-      const coberturas = await getAllByKey("asw.cobertura");
-      const coberturasFormatted = getFormattedArray(coberturas, "nombre");
-      setCoberturaItems(coberturasFormatted);
-      // getLocalidades
-      const localidades = await getAllByKey("asw.localidad");
-      const localidadesFormatted = getFormattedArray(localidades, "nombre");
-      setLocalidadItems(localidadesFormatted);
-      setIsLoading(false);
-    };
-    cargar_datos();
-  }, []);
 
   // onChangeForm
   const pac_dni_value = watch("pac_dni");
@@ -170,9 +177,9 @@ export default function Paciente() {
   }, [ubicacion_atencion]);
 
   return (
-    <ScrollView style={styles.container}>
+    <Container scroll>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#000" />
+        <Loader />
       ) : (
         <>
           <CustomInput
@@ -181,6 +188,7 @@ export default function Paciente() {
             placeholder="DNI"
             control={control}
             rules={{ required: requiredOptions.pac_dni }}
+            keyboardType="number-pad"
           />
           <CustomAutocomplete
             label="Cobertura"
@@ -204,6 +212,7 @@ export default function Paciente() {
             placeholder="Nro de Socio"
             control={control}
             rules={{ required: requiredOptions.pac_nro_socio }}
+            keyboardType="number-pad"
           />
           <CustomInput
             name="pac_apellido"
@@ -225,7 +234,11 @@ export default function Paciente() {
             placeholder="Edad"
             control={control}
             rules={{ required: requiredOptions.pac_edad }}
+            keyboardType="number-pad"
           />
+
+          <Divider />
+
           <CustomAutocomplete
             label="Localidad"
             value={localidadValue}
@@ -255,6 +268,7 @@ export default function Paciente() {
             placeholder="Nro"
             control={control}
             rules={{ required: requiredOptions.pac_nro }}
+            keyboardType="number-pad"
           />
           <CustomInput
             name="pac_piso"
@@ -262,6 +276,7 @@ export default function Paciente() {
             placeholder="Piso"
             control={control}
             rules={{ required: requiredOptions.pac_piso }}
+            keyboardType="number-pad"
           />
           <CustomInput
             name="pac_dto"
@@ -278,13 +293,6 @@ export default function Paciente() {
           />
         </>
       )}
-    </ScrollView>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

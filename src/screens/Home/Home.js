@@ -1,12 +1,15 @@
-import { ActivityIndicator, Alert, StyleSheet, Text, View } from "react-native";
+import { Alert, Text } from "react-native";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import Container from "../../components/Container";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import mobileOptions from "../../placeholder/mobiles.json";
 import CustomButton from "../../components/CustomButton";
+import Loader from "../../components/Loader";
+import Title from "../../components/Title";
 import { filterProfessionalsByGroup } from "../../helpers/data";
-import { setHcdConfig } from "../../store/slices/hcd/thunks";
+import { setHcdConfig } from "../../store/slices/hcd";
 import { getFormattedArray } from "../../helpers/CustomAutocomplete";
 
 const ninguno = { label: "Ninguno", value: "Ninguno" };
@@ -19,13 +22,13 @@ const Home = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [nurseValue, setNurseValue] = useState(null);
+  const [nurseValue, setNurseValue] = useState(hcdConfig?.enfermero || null);
   const [nurseItems, setNurseItems] = useState([]);
 
-  const [driverValue, setDriverValue] = useState(null);
+  const [driverValue, setDriverValue] = useState(hcdConfig?.chofer || null);
   const [driverItems, setDriverItems] = useState([]);
 
-  const [mobileValue, setMobileValue] = useState(null);
+  const [mobileValue, setMobileValue] = useState(hcdConfig?.movil || null);
   const [mobileItems, setMobileItems] = useState(mobileOptions);
 
   const guardarConfiguracion = async () => {
@@ -45,9 +48,9 @@ const Home = () => {
         movil: mobileValue,
         chofer: driverValue,
         enfermero: nurseValue,
-        medico: user.app_nombre,
+        medico: user.nombre,
       };
-      await dispatch(setHcdConfig(configData)).unwrap();
+      dispatch(setHcdConfig(configData));
       Alert.alert("Datos guardados con éxito");
       navigation.navigate("CrearHCD");
     } catch (error) {
@@ -73,20 +76,14 @@ const Home = () => {
     cargar_datos();
   }, []);
 
-  useEffect(() => {
-    if (hcdConfig) {
-      setNurseValue(hcdConfig.enfermero);
-      setDriverValue(hcdConfig.chofer);
-      setMobileValue(hcdConfig.movil);
-    }
-  }, [hcdConfig]);
+  if (!user) return null;
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Datos</Text>
-      <Text>Médico: {user.app_nombre}</Text>
+    <Container>
+      <Title>Datos</Title>
+      <Text>Médico: {user.nombre}</Text>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#000" />
+        <Loader />
       ) : (
         <>
           <CustomAutocomplete
@@ -120,20 +117,8 @@ const Home = () => {
           <CustomButton text="GUARDAR" onPress={guardarConfiguracion} />
         </>
       )}
-    </View>
+    </Container>
   );
 };
 
 export default Home;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
-  },
-});

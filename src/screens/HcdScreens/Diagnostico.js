@@ -1,31 +1,42 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, ScrollView, StyleSheet, Alert } from "react-native";
+import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
+import { useCustomForm } from "../../hooks/useCustomForm";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
+import { useDropdown } from "../../hooks/useDropdown";
 import { updateHcd } from "../../store/slices/hcd";
-import { getAllByKey } from "../../helpers/data";
-import { getFormattedArray } from "../../helpers/CustomAutocomplete";
 import { invalidInput } from "../../constants";
+import Container from "../../components/Container";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import MedicamentoItem from "../../components/MedicamentoItem";
+import Loader from "../../components/Loader";
 
 export default function Diagnostico() {
   const dispatch = useDispatch();
   const { navigateAndSetHcdScreen } = useHcdNavigation();
-  const { control, handleSubmit } = useForm();
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [diagnosticoValue, setDiagnosticoValue] = useState(null);
-  const [diagnosticoItems, setDiagnosticoItems] = useState([]);
-
-  const [medicamentoValue, setMedicamentoValue] = useState([]);
-  const [medicamentoItems, setMedicamentoItems] = useState([]);
+  const { control, handleSubmit } = useCustomForm({
+    storeKeys: ["procedimiento", "epicrisis"],
+  });
 
   const [selectedMeds, setSelectedMeds] = useState({});
+
+  const {
+    isLoading: isDiagnosticoLoading,
+    value: diagnosticoValue,
+    setValue: setDiagnosticoValue,
+    items: diagnosticoItems,
+  } = useDropdown({ table: "asw.diagnos", storeKey: "diagnostico" });
+
+  const {
+    isLoading: isMedicamentoLoading,
+    value: medicamentoValue,
+    setValue: setMedicamentoValue,
+    items: medicamentoItems,
+  } = useDropdown({ table: "asw.medicamentos", multiple: true });
+
+  const isLoading = isDiagnosticoLoading || isMedicamentoLoading;
 
   const onPressSiguiente = (data) => {
     if (!diagnosticoValue) {
@@ -44,26 +55,8 @@ export default function Diagnostico() {
       medicamentos: medicamentosStr,
     };
     dispatch(updateHcd(datos));
-    navigateAndSetHcdScreen("Desenlace");
+    navigateAndSetHcdScreen("Opcionales");
   };
-
-  // cargar_datos
-  useEffect(() => {
-    const cargar_datos = async () => {
-      if (diagnosticoItems.length) return;
-      setIsLoading(true);
-      // getDiagnosticos
-      const diagnostico = await getAllByKey("asw.diagnos");
-      const diagnosticoFormatted = getFormattedArray(diagnostico, "nombre");
-      setDiagnosticoItems(diagnosticoFormatted);
-      // getMedicamentos
-      const medicamentos = await getAllByKey("asw.medicamentos");
-      const medicamentosFormatted = getFormattedArray(medicamentos, "nombre");
-      setMedicamentoItems(medicamentosFormatted);
-      setIsLoading(false);
-    };
-    cargar_datos();
-  }, []);
 
   useEffect(() => {
     const newSelectedMeds = {};
@@ -75,9 +68,9 @@ export default function Diagnostico() {
   }, [medicamentoValue]);
 
   return (
-    <ScrollView style={styles.container}>
+    <Container scroll>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#000" />
+        <Loader />
       ) : (
         <>
           <CustomAutocomplete
@@ -128,13 +121,6 @@ export default function Diagnostico() {
           />
         </>
       )}
-    </ScrollView>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

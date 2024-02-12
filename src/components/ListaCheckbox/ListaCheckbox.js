@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { CheckBox } from "react-native-elements";
+import { colors } from "../../constants";
 
 function ListaCheckbox({ items, onItemSelect, initialValues = [] }) {
   const [selectedItems, setSelectedItems] = useState(initialValues);
@@ -22,7 +23,9 @@ function ListaCheckbox({ items, onItemSelect, initialValues = [] }) {
             title={item}
             checked={selectedItems.includes(item)}
             onPress={() => toggleItem(item)}
-            size={18}
+            size={16}
+            containerStyle={styles.checkbox}
+            checkedColor={colors.primary}
           />
         </View>
       ))}
@@ -37,6 +40,13 @@ const styles = StyleSheet.create({
   },
   checkboxContainer: {
     width: "50%",
+  },
+  checkbox: {
+    margin: 2,
+    marginEnd: 2,
+    marginStart: 2,
+    flexGrow: 1,
+    justifyContent: "center",
   },
 });
 

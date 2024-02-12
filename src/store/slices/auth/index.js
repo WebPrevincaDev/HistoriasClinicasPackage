@@ -1,6 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { login } from "./thunks";
 
+// user
+/* {
+  cierre
+  firma: { id: string id, uri: string base64 }
+  mail
+  matricula
+  nombre
+} */
+
 export const initialState = {
   isAuthenticated: false,
   isLoading: false,
@@ -11,7 +20,14 @@ export const initialState = {
 export const sharedSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    logout: () => {
+      return initialState;
+    },
+    updateUser: (state, action) => {
+      state.user = { ...state.user, ...action.payload };
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
@@ -31,5 +47,7 @@ export const sharedSlice = createSlice({
       });
   },
 });
+
+export const { logout, updateUser } = sharedSlice.actions;
 
 export default sharedSlice.reducer;

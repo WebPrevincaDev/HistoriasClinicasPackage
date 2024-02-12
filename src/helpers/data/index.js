@@ -4,6 +4,8 @@ import { getAllByKey } from "./getAllByKey";
 import { saveAsyncStorage } from "./saveAsyncStorage";
 import { sincronizar } from "./sincronizar";
 import { sincronizarAll } from "./sincronizarAll";
+import { sincronizarUsuariosApp } from "./sincronizarUsuariosApp";
+import { saveSignature } from "./saveSignature";
 
 export {
   filterProfessionalsByGroup,
@@ -12,4 +14,6 @@ export {
   saveAsyncStorage,
   sincronizar,
   sincronizarAll,
+  sincronizarUsuariosApp,
+  saveSignature,
 };
