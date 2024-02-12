@@ -18,7 +18,7 @@ const Stack = createNativeStackNavigator();
 const JoinAppStackScreens = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { hcdConfig, hcd } = useSelector((state) => state.hcd);
+  const { hcd } = useSelector((state) => state.hcd);
 
   // si sesión no es válida y no hay hcd en proceso => SignIn,
   // si no firmó => Signature,
@@ -27,7 +27,7 @@ const JoinAppStackScreens = () => {
   const initialRouteName =
     !isSessionValid(user) && !Object.keys(hcd).length
       ? "SignIn"
-      : !hcdConfig?.firma
+      : !user?.firma
       ? "Signature"
       : !Object.keys(hcd).length
       ? "HomeTab"

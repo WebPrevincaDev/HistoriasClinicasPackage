@@ -1,6 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { login } from "./thunks";
 
+// user
+/* {
+  cierre
+  firma: { id: string id, uri: string base64 }
+  mail
+  matricula
+  nombre
+} */
+
 export const initialState = {
   isAuthenticated: false,
   isLoading: false,
@@ -14,6 +23,9 @@ export const sharedSlice = createSlice({
   reducers: {
     logout: () => {
       return initialState;
+    },
+    updateUser: (state, action) => {
+      state.user = { ...state.user, ...action.payload };
     },
   },
   extraReducers: (builder) => {
@@ -36,6 +48,6 @@ export const sharedSlice = createSlice({
   },
 });
 
-export const { logout } = sharedSlice.actions;
+export const { logout, updateUser } = sharedSlice.actions;
 
 export default sharedSlice.reducer;

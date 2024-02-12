@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import "react-native-get-random-values";
-import { v4 as uuidv4 } from "uuid";
+import { v5 as uuidv5, v4 as uuidv4 } from "uuid";
 import * as Application from "expo-application";
 import * as Print from "expo-print";
 import { useDropdown } from "../../hooks/useDropdown";
 import { setHcdScreen, updateHcd } from "../../store/slices/hcd";
 import { addHcd, agregarPaciente } from "../../store/slices/hcd/thunks";
+import { saveSignature } from "../../helpers/data";
 import { invalidInput } from "../../constants";
 import Container from "../../components/Container";
 import CustomInput from "../../components/CustomInput";
@@ -27,8 +28,9 @@ export default function Finalizacion() {
   const { control, handleSubmit } = useForm();
   const { user } = useSelector((state) => state.auth);
   const { hcd, hcdConfig, arr_hcd } = useSelector((state) => state.hcd);
-  const [signature, setSignature] = useState(null);
+  const [signature, setSignature] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     value: abonaCopagoValue,
@@ -39,13 +41,14 @@ export default function Finalizacion() {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const handleOK = (signature) => {
-    setSignature(signature);
+  const handleOK = async (signatureUri) => {
+    const firmaId = await saveSignature(signatureUri);
+    setSignature({ id: firmaId, uri: signatureUri });
     closeModal();
   };
 
   const guardarDatos = (data) => {
-    if (!signature || abonaCopagoValue === null) {
+    if (!signature.id || abonaCopagoValue === null) {
       Alert.alert(invalidInput);
       return null;
     }
@@ -58,17 +61,22 @@ export default function Finalizacion() {
     return datos;
   };
 
-  const onPressFinalizar = (inputData) => {
+  const onPressFinalizar = async (inputData) => {
     const datos = guardarDatos(inputData);
     if (!datos) return;
+    setIsLoading(true);
     const finalHcd = {
       ...hcd,
       ...datos,
-      key: uuidv4(),
+      key: uuidv5("", uuidv5.DNS),
+      id_interno: uuidv4(),
       version_app: Application.nativeBuildVersion,
     };
     dispatch(agregarPaciente(finalHcd));
-    dispatch(addHcd({ newHcd: finalHcd, arr_hcd }));
+    await dispatch(
+      addHcd({ new_arr_hcd: [...arr_hcd, finalHcd], hcdConfig, user })
+    ).unwrap();
+    setIsLoading(false);
     dispatch(setHcdScreen(""));
     navigation.navigate("HomeTab");
   };
@@ -112,7 +120,7 @@ export default function Finalizacion() {
       <Text>Firma del paciente/acompañante</Text>
       <Image
         style={{ width: "100%", height: 250 }}
-        source={{ uri: signature }}
+        source={{ uri: signature.uri }}
       />
       <Text>Para modificar la firma registrela nuevamente por favor.</Text>
       <CustomButton text="Registrar firma" onPress={openModal} />
@@ -140,9 +148,18 @@ export default function Finalizacion() {
       <CustomButton
         text="PREVISUALIZAR"
         onPress={handleSubmit(onPressPrevisualizar)}
+        disabled={isLoading}
       />
-      <CustomButton text="IMPRIMIR" onPress={handleSubmit(onPressImprimir)} />
-      <CustomButton text="FINALIZAR" onPress={handleSubmit(onPressFinalizar)} />
+      <CustomButton
+        text="IMPRIMIR"
+        onPress={handleSubmit(onPressImprimir)}
+        disabled={isLoading}
+      />
+      <CustomButton
+        text={isLoading ? "FINALIZANDO..." : "FINALIZAR"}
+        onPress={handleSubmit(onPressFinalizar)}
+        disabled={isLoading}
+      />
     </Container>
   );
 }

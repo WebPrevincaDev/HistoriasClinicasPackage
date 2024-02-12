@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+import "react-native-get-random-values";
+import { useState, useRef, useEffect } from "react";
 import {
   Image,
   FlatList,
@@ -29,9 +30,12 @@ export default function InformeEcg() {
   const navigation = useNavigation();
   const cameraRef = useRef(null);
   const [image, setImage] = useState(null);
+  const [localImages, setLocalImages] = useState([]);
   const { control, handleSubmit } = useForm();
   // como inicialmente es undef le asigno = [] x default
-  const { imagenesEcg = [] } = useSelector((state) => state.hcd.hcd);
+  const { imagenesEcg: imagenesStore = [] } = useSelector(
+    (state) => state.hcd.hcd
+  );
 
   const {
     value: informeEcgValue,
@@ -39,12 +43,32 @@ export default function InformeEcg() {
     items: informeEcgItems,
   } = useDropdown({ initialItems: informeEcg });
 
+  const checkUUID = (str) => {
+    const shortStr = str.slice(0, str.length - 5);
+    if (shortStr.length !== 36) return str.slice(0, str.length - 4);
+    return shortStr;
+  };
+
+  const parseImagenesToSave = () => {
+    const listUpdated = localImages.map((uriImage) => {
+      const splitUri = uriImage.src.split("/");
+      const nameImage = splitUri[splitUri.length - 1];
+      const newString = checkUUID(nameImage);
+      return {
+        name: newString,
+      };
+    });
+    return listUpdated;
+  };
+
   const onPressGuardar = (formData) => {
     const datos = [];
     if (informeEcgValue) datos.push(informeEcgValue);
     if (formData.informe) datos.push(formData.informe);
     const finalText = datos.join(" - ");
-    dispatch(updateHcd({ ecg_desc: finalText }));
+    dispatch(
+      updateHcd({ ecg_desc: finalText, imagenesEcg: parseImagenesToSave() })
+    );
     navigation.goBack();
   };
 
@@ -53,7 +77,7 @@ export default function InformeEcg() {
       try {
         const savedImagePath = await filesImgManager.save_imagenesEcg(image);
         const newImg = { id: uuidv4(), src: savedImagePath };
-        dispatch(updateHcd({ imagenesEcg: [...imagenesEcg, newImg] }));
+        setLocalImages((prevImgs) => [...prevImgs, newImg]);
         setImage(null);
       } catch (error) {
         console.error(error);
@@ -62,11 +86,25 @@ export default function InformeEcg() {
   };
 
   const deleteImage = (image) => {
-    const imagenesEcgFiltered = imagenesEcg.filter(
+    const imagenesEcgFiltered = localImages.filter(
       (img) => img.id !== image.id
     );
-    dispatch(updateHcd({ imagenesEcg: imagenesEcgFiltered }));
+    setLocalImages(imagenesEcgFiltered);
   };
+
+  useEffect(() => {
+    (async () => {
+      const parseImgStore = imagenesStore.map((img) => img.name);
+      const imagenes = await filesImgManager.get_path_imagenesEcg(
+        parseImgStore
+      );
+      const finalImagenesEcg = imagenes.map((img) => ({
+        id: uuidv4(),
+        src: img,
+      }));
+      setLocalImages(finalImagenesEcg);
+    })();
+  }, []);
 
   return (
     <Container>
@@ -94,7 +132,7 @@ export default function InformeEcg() {
       />
 
       <FlatList
-        data={imagenesEcg}
+        data={localImages}
         numColumns={3}
         renderItem={({ item }) => (
           <View style={{ flex: 1, marginVertical: 8 }}>

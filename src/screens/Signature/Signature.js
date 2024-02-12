@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { setHcdConfig } from "../../store/slices/hcd";
+import { saveSignature } from "../../helpers/data";
+import { updateUser } from "../../store/slices/auth";
 import ModalRegistrarFirma from "../../components/ModalRegistrarFirma";
 
 const Signature = () => {
@@ -9,8 +10,9 @@ const Signature = () => {
   const navigation = useNavigation();
   const [isModalOpen, setIsModalOpen] = useState(true);
 
-  const handleOK = (firma) => {
-    dispatch(setHcdConfig({ firma }));
+  const handleOK = async (firmaUri) => {
+    const firmaId = await saveSignature(firmaUri);
+    dispatch(updateUser({ firma: { id: firmaId, uri: firmaUri } }));
     setIsModalOpen(false);
     navigation.navigate("HomeTab");
   };

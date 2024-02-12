@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import DropDownPicker from "react-native-dropdown-picker";
 import Navigation from "./src/navigation";
 import { colors } from "./src/constants";
+import "./src/helpers/firebase/firebaseconfig";
 
 //Redux
 import { store } from "./src/store";

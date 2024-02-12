@@ -22,12 +22,12 @@ export default class CreatePdfService {
               <br /> Mat: ${hcd.matricula_medico_derivante}
               <br/>`
             )}
-            ${this.imgFirma(hcd.firma_med_derivante)}`
+            ${this.imgFirma(hcd.firma_med_derivante.uri)}`
           : ""
       }
       ${this.campo(
         "FIRMA PACIENTE O ACOMPAÑANTE",
-        `${this.imgFirma(hcd.firma_pac_acompanante)}`
+        `${this.imgFirma(hcd.firma_pac_acompanante.uri)}`
       )}
       ${this.campo("ACLARACIÓN", hcd.aclaracion_pac_acompanante)}
       ${this.campo("DNI: ", hcd.dni_pac_acompanante)}
@@ -214,7 +214,7 @@ export default class CreatePdfService {
         ${this.campo("CHOFER", hcdConfig.chofer)}
         ${this.campo("ENFERMERO", hcdConfig.enfermero)}
         ${this.campo("MÉDICO", `${user.nombre}<br /> Mat: ${user.matricula}`)}
-        ${this.imgFirma(user.firma)}            
+        ${this.imgFirma(user.firma.uri)}            
       </table>`;
   }
 

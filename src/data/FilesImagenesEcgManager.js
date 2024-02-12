@@ -66,9 +66,10 @@ export class FilesImagenesEcgManager extends FilesManager {
       const imagenes = await this.listar_imagenes();
       const path_base = await this.get_path_guardado();
 
-      imagenes.forEach(async (element) => {
-        if (element === "sincronizados") return;
-        console.log("Por sincrinizar elemento", element);
+      for (let i = 0; i < imagenes.length; i++) {
+        const element = imagenes[i];
+        if (element === "sincronizados") continue;
+        console.log("Por sincronizar elemento", element);
 
         const path_img = await this.createPath([path_base, element]);
         const result = await this.ffManager.save_firestore(
@@ -79,7 +80,7 @@ export class FilesImagenesEcgManager extends FilesManager {
         if (result) {
           await this.mover_sincronizado(element, path_img);
         }
-      });
+      }
     } catch (error) {
       console.log(error);
     }

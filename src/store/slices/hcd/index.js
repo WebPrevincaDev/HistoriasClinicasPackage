@@ -4,6 +4,8 @@ import { diagnosisCodes as codes } from "../../../constants";
 
 // a medida que agregue propiedades a hcd las anoto acá para tenerlo de machete
 /* {
+  // HomeHCD (inicio)
+  fecha: new Date().toISOString() ("2024-01-12T19:43:38.983Z")
   // Motivo del llamado
   llamadaMotivo: string
   llamadaColor: string
@@ -54,14 +56,14 @@ import { diagnosisCodes as codes } from "../../../constants";
   desenlace
   evolucion
   instituto
-  firma_med_derivante
+  firma_med_derivante: { id: string id, uri: string (base64) }
   matricula_medico_derivante
   nombre_medico_derivante
   // Finalizacion
   abona_copago: boolean
   aclaracion_pac_acompanante
   dni_pac_acompanante
-  firma_pac_acompanante
+  firma_pac_acompanante: { id: string id, uri: string (base64) }
   // ScoreGlasgow
   medicionesScoreGlasgow: [{ hora, ocular, verbal, motora, total }]
   // Trauma
@@ -74,7 +76,6 @@ import { diagnosisCodes as codes } from "../../../constants";
 // hcdConfig
 /* {
   medico (user logueado)
-  firma
   movil
   chofer
   enfermero
@@ -129,6 +130,9 @@ export const sharedSlice = createSlice({
       .addCase(addHcd.fulfilled, (state, action) => {
         state.arr_hcd = action.payload;
         state.hcd = {};
+      })
+      .addCase(addHcd.rejected, (state, action) => {
+        console.error("addHcd rejected:", action.error);
       });
   },
 });

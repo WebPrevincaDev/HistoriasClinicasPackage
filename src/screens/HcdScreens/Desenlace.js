@@ -7,6 +7,7 @@ import { useCheckbox } from "../../hooks/useCheckbox";
 import { useDropdown } from "../../hooks/useDropdown";
 import { updateHcd } from "../../store/slices/hcd";
 import { invalidInput } from "../../constants";
+import { saveSignature } from "../../helpers/data";
 import Container from "../../components/Container";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
@@ -23,7 +24,7 @@ export default function Desenlace() {
     storeKeys: ["nombre_medico_derivante", "matricula_medico_derivante"],
   });
   const [isInternationVisible, setIsInternationVisible] = useState(true);
-  const [signature, setSignature] = useState(null);
+  const [signature, setSignature] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
@@ -64,8 +65,9 @@ export default function Desenlace() {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const handleOK = (signature) => {
-    setSignature(signature);
+  const handleOK = async (signatureUri) => {
+    const firmaId = await saveSignature(signatureUri);
+    setSignature({ id: firmaId, uri: signatureUri });
     closeModal();
   };
 
@@ -74,7 +76,7 @@ export default function Desenlace() {
       !desenlaceValue.length ||
       !evolucionValue.length ||
       !alLlegarValue.length ||
-      (isInternationVisible && (!signature || !institucionesValue))
+      (isInternationVisible && (!signature.id || !institucionesValue))
     ) {
       Alert.alert(invalidInput);
       return;
@@ -136,7 +138,7 @@ export default function Desenlace() {
               <Text>Firma del médico derivante</Text>
               <Image
                 style={{ width: "100%", height: 250 }}
-                source={{ uri: signature }}
+                source={{ uri: signature.uri }}
               />
               <Text>
                 Para modificar la firma registrela nuevamente por favor.
