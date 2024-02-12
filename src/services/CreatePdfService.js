@@ -94,6 +94,8 @@ export default class CreatePdfService {
   }
 
   traumas(titulo, mediciones) {
+    if (!mediciones) return "";
+
     let result = `<span style='margin:5px'><b>${titulo}</b></span><br>`;
 
     if (mediciones.ABDOMEN) {
