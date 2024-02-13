@@ -85,6 +85,8 @@ export const addHcd = createAsyncThunk(
           id_interno: enviar.id_interno,
           key: enviar.key,
           version_app: enviar.version_app,
+          // Motivo cancelación
+          motivo_cancelacion: enviar.motivo_cancelacion,
           // Motivo del llamado
           historia_motivo_llamada_motivo: enviar.llamadaMotivo,
           historia_motivo_llamada_color: enviar.llamadaColor,
