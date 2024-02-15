@@ -2,7 +2,7 @@ import { Alert } from "react-native";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useCustomForm } from "../../hooks/useCustomForm";
-import { useNavigation } from "@react-navigation/native";
+import { useFinishHcd } from "../../hooks/useFinishHcd";
 import Container from "../../components/Container";
 import CustomAutocomplete from "../../components/CustomAutocomplete";
 import CustomButton from "../../components/CustomButton";
@@ -13,7 +13,7 @@ import { getAllByKey } from "../../helpers/data";
 import { useDropdown } from "../../hooks/useDropdown";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
 import { invalidInput } from "../../constants";
-import { updateHcd, setHcdScreen } from "../../store/slices/hcd";
+import { updateHcd } from "../../store/slices/hcd";
 
 const initialRequiredOptions = {
   pac_dni: false,
@@ -33,10 +33,10 @@ const initialRequiredOptions = {
 
 export default function Paciente() {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const { isLoading: isHcdLoading, finishHcd } = useFinishHcd();
   const { navigateAndSetHcdScreen } = useHcdNavigation();
   const { ubicacion_atencion } = useSelector((state) => state.hcd.hcd);
-  const { control, handleSubmit, getValues, setValue, watch } = useCustomForm({
+  const { control, handleSubmit, setValue, watch } = useCustomForm({
     storeKeys: [
       "pac_dni",
       "pac_plan",
@@ -90,27 +90,23 @@ export default function Paciente() {
     navigateAndSetHcdScreen("DatosIniciales");
   };
 
-  const paciente_ausente = () => {
+  const paciente_ausente = (formData) => {
     Alert.alert(
-      "Paciente Ausente",
+      "Paciente ausente",
       "¿Desea terminar la Historia Clínica Digital?",
       [
         {
+          text: "NO",
+        },
+        {
           text: "SÍ, TERMINAR",
-          onPress: () => {
-            const datos = {
-              ...getValues(),
+          onPress: () =>
+            finishHcd({
+              ...formData,
               pac_cobertura: coberturaValue,
               pac_localidad: localidadValue,
               paciente_ausente: true,
-            };
-            dispatch(updateHcd(datos));
-            dispatch(setHcdScreen(""));
-            navigation.navigate("HomeHCD");
-          },
-        },
-        {
-          text: "NO",
+            }),
         },
       ]
     );
@@ -286,10 +282,16 @@ export default function Paciente() {
             rules={{ required: requiredOptions.pac_dto }}
           />
 
-          <CustomButton text="PACIENTE AUSENTE" onPress={paciente_ausente} />
           <CustomButton
             text="CONFIRMAR"
             onPress={handleSubmit(onPressSiguiente)}
+            disabled={isHcdLoading}
+          />
+          <CustomButton
+            text="PACIENTE AUSENTE"
+            onPress={handleSubmit(paciente_ausente)}
+            disabled={isHcdLoading}
+            type="SECONDARY"
           />
         </>
       )}
