@@ -129,19 +129,21 @@ export default function Finalizacion() {
       />
 
       <CustomButton
-        text="PREVISUALIZAR"
-        onPress={handleSubmit(onPressPrevisualizar)}
+        text={isLoading ? "FINALIZANDO..." : "FINALIZAR"}
+        onPress={handleSubmit(onPressFinalizar)}
         disabled={isLoading}
       />
       <CustomButton
         text="IMPRIMIR"
         onPress={handleSubmit(onPressImprimir)}
         disabled={isLoading}
+        type="SECONDARY"
       />
       <CustomButton
-        text={isLoading ? "FINALIZANDO..." : "FINALIZAR"}
-        onPress={handleSubmit(onPressFinalizar)}
+        text="PREVISUALIZAR"
+        onPress={handleSubmit(onPressPrevisualizar)}
         disabled={isLoading}
+        type="SECONDARY"
       />
     </Container>
   );
