@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useCustomForm } from "../../hooks/useCustomForm";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
 import { useDropdown } from "../../hooks/useDropdown";
-import { updateHcd } from "../../store/slices/hcd";
+import { getOpcionales, updateHcd } from "../../store/slices/hcd";
 import { invalidInput } from "../../constants";
 import Container from "../../components/Container";
 import CustomInput from "../../components/CustomInput";
@@ -15,6 +15,7 @@ import Loader from "../../components/Loader";
 
 export default function Diagnostico() {
   const dispatch = useDispatch();
+  const { allRequiredFieldsComplete } = useSelector(getOpcionales);
   const { navigateAndSetHcdScreen } = useHcdNavigation();
   const { control, handleSubmit } = useCustomForm({
     storeKeys: ["procedimiento", "epicrisis"],
@@ -55,8 +56,24 @@ export default function Diagnostico() {
       medicamentos: medicamentosStr,
     };
     dispatch(updateHcd(datos));
-    navigateAndSetHcdScreen("Opcionales");
+    navigateAndSetHcdScreen("Desenlace");
   };
+
+  useEffect(() => {
+    if (!allRequiredFieldsComplete) {
+      Alert.alert(
+        invalidInput,
+        "Debe completar el examen por aparato correspondiente al diagnóstico seleccionado.",
+        [
+          {
+            text: "Completar ahora",
+            onPress: () => navigateAndSetHcdScreen("Opcionales"),
+          },
+        ]
+      );
+    }
+  }, [allRequiredFieldsComplete]);
+
 
   useEffect(() => {
     const newSelectedMeds = {};

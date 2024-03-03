@@ -16,7 +16,7 @@ export default function Opcionales() {
       Alert.alert(invalidInput);
       return;
     }
-    navigateAndSetHcdScreen("Desenlace");
+    navigateAndSetHcdScreen("Diagnostico");
   };
 
   return (

@@ -69,7 +69,7 @@ export default function DatosIniciales() {
     const { signosVitales, ...otherData } = datos;
     dispatch(updateHcd(otherData));
     dispatch(addSignosVitalesToHcd(signosVitales));
-    navigateAndSetHcdScreen("Diagnostico");
+    navigateAndSetHcdScreen("Opcionales");
   };
 
   return (
