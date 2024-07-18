@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login } from "./thunks";
+import { login, signUp } from "./thunks";
 
 // user
 /* {
@@ -30,6 +30,21 @@ export const sharedSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(signUp.pending, (state) => {
+        state.isAuthenticated = false;
+        state.isLoading = true;
+        state.error = "";
+        state.user = null;
+      })
+      .addCase(signUp.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(signUp.fulfilled, (state, action) => {
+        state.isAuthenticated = true;
+        state.isLoading = false;
+        state.user = action.payload;
+      })
       .addCase(login.pending, (state) => {
         state.isAuthenticated = false;
         state.isLoading = true;

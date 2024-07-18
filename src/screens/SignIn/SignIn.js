@@ -32,6 +32,10 @@ const SignIn = () => {
       await dispatch(login(data)).unwrap();
       navigation.navigate("Signature");
     } catch (error) {
+      if (error.message === "Usuario no registrado") {
+        navigation.navigate("SignUp", { matricula: data.matricula });
+        return;
+      }
       Alert.alert(error.message);
     }
   };

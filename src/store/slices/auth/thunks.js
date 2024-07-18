@@ -1,7 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
+  createProfessional,
   get_usuario,
+  registerUserInFirebase,
+  searchUserInServer,
   sincronizarAll,
+  sincronizarProfesionales,
   sincronizarUsuariosApp,
 } from "../../../helpers/data";
 
@@ -50,6 +54,38 @@ export const login = createAsyncThunk("auth/login", async (data) => {
     throw new Error("Contraseña incorrecta");
 
   console.log("login exitoso");
+
+  return {
+    matricula: user.app_matricula,
+    mail: user.app_mail,
+    nombre: user.app_nombre,
+    // password: user.app_password,
+    // id: user.id,
+    cierre: get_proximo_cierre(),
+  };
+});
+
+export const signUp = createAsyncThunk("auth/signUp", async (data) => {
+  // Nota: no hace falta sincronizarAll() pq ya se ejecuta al apretar el login button
+
+  // let usuario_app = await ProfesionalManager.Existe
+  let user = await searchUserInServer(data.matricula);
+  console.log("thunk searchUserInServer user", user);
+
+  if (!user) {
+    console.log("usuario NO encontrado en odoo. lo creo");
+    user = await createProfessional(data);
+    console.log("respuesta de creacion:", user);
+  }
+
+  console.log("user final:", user);
+
+  if (!user.id) throw new Error("Ocurrió un error al conectarse al sevidor");
+
+  await registerUserInFirebase(data.email, data.password);
+  sincronizarProfesionales();
+
+  console.log("register (y login) exitoso");
 
   return {
     matricula: user.app_matricula,

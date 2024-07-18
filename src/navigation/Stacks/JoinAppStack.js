@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // Screens
 import SignIn from "../../screens/SignIn";
+import SignUp from "../../screens/SignUp/SignUp";
 import Signature from "../../screens/Signature";
 import HomeTabs from "../Tabs/HomeTabs";
 import HcdStack from "./HcdStack";
@@ -47,6 +48,7 @@ const JoinAppStackScreens = () => {
       initialRouteName={initialRouteName}
     >
       <Stack.Screen name="SignIn" component={SignIn} />
+      <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="Signature" component={Signature} />
       <Stack.Screen name="HomeTab" component={HomeTabs} />
       <Stack.Screen name="HcdStack" component={HcdStack} />
