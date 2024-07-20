@@ -14,6 +14,9 @@ import { getFormattedArray } from "../../helpers/CustomAutocomplete";
 
 const ninguno = { label: "Ninguno", value: "Ninguno" };
 
+const mobilesWithRequiredEnfermero = ["MOVIL 1", "MOVIL 2"];
+const mobilesWithoutRequiredChofer = ["MOVIL 9", "MOVIL 10", "MOVIL 11"];
+
 const Home = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -36,12 +39,17 @@ const Home = () => {
       if (!nurseValue || !driverValue || !mobileValue) {
         throw new Error("Complete todos los campos necesarios");
       }
-      if (mobileValue.includes("1") || mobileValue.includes("2")) {
-        if (nurseValue === ninguno.value) {
-          throw new Error(
-            "Los móviles 1 y 2 deben tener un enfermero asignado"
-          );
-        }
+      if (
+        mobilesWithRequiredEnfermero.includes(mobileValue) &&
+        nurseValue === ninguno.value
+      ) {
+        throw new Error("Los móviles 1 y 2 deben tener un enfermero asignado");
+      }
+      if (
+        !mobilesWithoutRequiredChofer.includes(mobileValue) &&
+        driverValue === ninguno.value
+      ) {
+        throw new Error("Este móvil debe tener un chofer asignado");
       }
       // setData
       const configData = {
@@ -70,7 +78,7 @@ const Home = () => {
       const choferes = await filterProfessionalsByGroup("CHOF");
       const choferesFormatted = getFormattedArray(choferes, "name");
       // Los choferes pueden ser enfermeros en algunos casos
-      setDriverItems([...choferesFormatted, ...enfermerosFormatted]);
+      setDriverItems([ninguno, ...choferesFormatted, ...enfermerosFormatted]);
       setIsLoading(false);
     };
     cargar_datos();
