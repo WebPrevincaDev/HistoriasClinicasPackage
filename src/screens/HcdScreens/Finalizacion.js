@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import * as Print from "expo-print";
+import * as MailComposer from "expo-mail-composer";
 import { useDropdown } from "../../hooks/useDropdown";
 import { useFinishHcd } from "../../hooks/useFinishHcd";
 import { updateHcd } from "../../store/slices/hcd";
@@ -88,6 +89,32 @@ export default function Finalizacion() {
     });
   };
 
+  const onPressSendMail = async (inputData) => {
+    const datos = guardarDatos(inputData);
+    if (!datos) return;
+
+    const html = cPdf.create_pdf({
+      hcd: { ...hcd, ...datos },
+      user,
+      hcdConfig,
+    });
+
+    // crear y guardar pdf
+    const { uri } = await Print.printToFileAsync({
+      html,
+      width: 612,
+      height: 792,
+      base64: true,
+    });
+
+    // enviar mail con pdf
+    await MailComposer.composeAsync({
+      subject: "Historia clínica",
+      body: "Adjunto encontrará la historia clínica en formato PDF.",
+      attachments: [uri],
+    });
+  };
+
   return (
     <Container scroll>
       <CustomAutocomplete
@@ -142,6 +169,12 @@ export default function Finalizacion() {
       <CustomButton
         text="PREVISUALIZAR"
         onPress={handleSubmit(onPressPrevisualizar)}
+        disabled={isLoading}
+        type="SECONDARY"
+      />
+      <CustomButton
+        text="ENVIAR HISTORIA CLÍNICA POR MAIL"
+        onPress={handleSubmit(onPressSendMail)}
         disabled={isLoading}
         type="SECONDARY"
       />
