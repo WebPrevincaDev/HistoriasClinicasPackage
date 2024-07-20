@@ -6,17 +6,21 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  Alert,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
+import { useDropdown } from "../../../hooks/useDropdown";
 import { updateHcd } from "../../../store/slices/hcd";
 import Container from "../../../components/Container";
 import CustomButton from "../../../components/CustomButton";
 import CustomInput from "../../../components/CustomInput";
 import CameraModal from "../../../components/CameraModal";
+import CustomAutocomplete from "../../../components/CustomAutocomplete";
+import informeEcg from "../../../placeholder/informeEcg.json";
 import { FilesImagenesEcgManager } from "../../../data/FilesImagenesEcgManager";
 import { colors } from "../../../constants";
 
@@ -30,9 +34,16 @@ export default function InformeEcg() {
   const [localImages, setLocalImages] = useState([]);
   const { control, handleSubmit } = useForm();
   // como inicialmente es undef le asigno = [] x default
-  const { imagenesEcg: imagenesStore = [] } = useSelector(
+  const { imagenesEcg: imagenesStore = [], cardio } = useSelector(
     (state) => state.hcd.hcd
   );
+  const isRequired = !cardio.includes("Normal");
+
+  const {
+    value: informeEcgValue,
+    setValue: setInformeEcgValue,
+    items: informeEcgItems,
+  } = useDropdown({ initialItems: informeEcg });
 
   const checkUUID = (str) => {
     const shortStr = str.slice(0, str.length - 5);
@@ -53,8 +64,11 @@ export default function InformeEcg() {
   };
 
   const onPressGuardar = (formData) => {
+    if (isRequired && !localImages.length) {
+      return Alert.alert("Debe subir las imágenes");
+    }
     const datos = [];
-    datos.push(localImages.length ? "Sí" : "No");
+    if (informeEcgValue) datos.push(informeEcgValue);
     if (formData.informe) datos.push(formData.informe);
     const finalText = datos.join(" - ");
     dispatch(
@@ -99,6 +113,14 @@ export default function InformeEcg() {
 
   return (
     <Container>
+      <CustomAutocomplete
+        label="Informe"
+        value={informeEcgValue}
+        items={informeEcgItems}
+        setValue={setInformeEcgValue}
+        listMode="SCROLLVIEW"
+        searchable={false}
+      />
       <CustomInput
         name="informe"
         label="Informe"
