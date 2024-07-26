@@ -6,6 +6,7 @@ import TipoHistoria from "../../screens/HcdScreens/TipoHistoria";
 import Paciente from "../../screens/HcdScreens/Paciente";
 import DatosIniciales from "../../screens/HcdScreens/DatosIniciales";
 import Opcionales from "../../screens/HcdScreens/Opcionales";
+import DatosAcompañante from "../../screens/HcdScreens/DatosAcompañante";
 import Diagnostico from "../../screens/HcdScreens/Diagnostico";
 import Desenlace from "../../screens/HcdScreens/Desenlace";
 import Finalizacion from "../../screens/HcdScreens/Finalizacion";
@@ -59,6 +60,11 @@ const HcdStack = () => {
         name="Opcionales"
         component={Opcionales}
         options={{ title: "Opcionales" }}
+      />
+      <HCDStack.Screen
+        name="DatosAcompañante"
+        component={DatosAcompañante}
+        options={{ title: "Datos acompañante" }}
       />
       <HCDStack.Screen
         name="Diagnostico"
