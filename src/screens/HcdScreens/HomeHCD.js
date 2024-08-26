@@ -19,7 +19,10 @@ const HomeHCD = () => {
       return;
     }
     dispatch(updateHcd({ fecha: new Date().toISOString() }));
-    navigation.navigate("HcdStack");
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "HcdStack" }],
+    });
   };
 
   if (!user) return null;

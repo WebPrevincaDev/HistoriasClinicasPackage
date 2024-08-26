@@ -28,7 +28,10 @@ export const useFinishHcd = () => {
       addHcd({ new_arr_hcd: [...arr_hcd, finalHcd], hcdConfig, user })
     ).unwrap();
     dispatch(setHcdScreen(""));
-    navigation.navigate("HomeTab");
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "HomeTab" }],
+    });
     setIsLoading(false);
   };
 
