@@ -200,7 +200,7 @@ export const getOpcionales = (state) => {
       screen: "InformeEcg",
       value: hcd.ecg_desc,
       shouldRenderNormalBtn: false,
-      required: !hcd.cardio.includes("Normal"),
+      required: (hcd.cardio && !hcd.cardio.includes("Normal")),
     },
     {
       label: "SIST. OSEOARTC. Y MUSCULAR",
