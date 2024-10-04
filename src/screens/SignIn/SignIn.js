@@ -7,7 +7,7 @@ import {
   Alert,
 } from "react-native";
 import { CheckBox } from "react-native-elements";
-import PlaceHolderLogo from "../../../assets/images/testLogo.jpg";
+import logo from "../../../assets/amce-siempre.jpg";
 import Container from "../../components/Container";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
@@ -43,7 +43,7 @@ const SignIn = () => {
   return (
     <Container scroll>
       <Image
-        source={PlaceHolderLogo}
+        source={logo}
         style={[styles.logo, { height: height * 0.3 }]}
         resizeMode="contain"
       />
