@@ -1,11 +1,10 @@
-import firebase from "firebase";
+import { auth } from "../firebase/firebaseconfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export const registerUserInFirebase = async (email, password) => {
   console.log("registerUserInFirebase profesional a guardar:", { email, password });
   try {
-    let result = await firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password);
+    let result = await createUserWithEmailAndPassword(auth, email, password);
     console.log("registerUserInFirebase result", result);
     return "";
   } catch (error) {

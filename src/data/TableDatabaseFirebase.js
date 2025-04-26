@@ -1,4 +1,5 @@
-import firebase from "firebase";
+import { db } from "../helpers/firebase/firebaseconfig";
+import { ref, onValue, push } from "firebase/database";
 
 export default class TableDatabaseFirebase {
   get_tabla() {
@@ -7,28 +8,26 @@ export default class TableDatabaseFirebase {
 
   consultar_datos() {
     const table = this.get_tabla();
-    firebase
-      .database()
-      .ref(table)
-      .on("value", function (snap) {
-        console.log("datos recibidos", table, snap);
-        const datos = this.to_array(snap);
-        console.log(datos);
-        this.saveAsyncStorage(datos, table);
-      });
+    const tableRef = ref(db, table);
+
+    onValue(tableRef, (snap) => {
+      console.log("datos recibidos", table, snap);
+      const datos = this.to_array(snap);
+      console.log(datos);
+      this.saveAsyncStorage(datos, table);
+    });
   }
 
   async addRegistro(registro) {
     console.log("=== addRegistro ===");
-    const table = firebase.database().ref(this.get_tabla());
-    console.log("table", table);
+    const tableRef = ref(db, this.get_tabla());
+    console.log("tableRef", tableRef);
     try {
-      const newHcd = await table.push(registro);
-      console.log("newHcd", newHcd);
-      return newHcd.key;
+      const newHcdRef = await push(tableRef, registro);
+      console.log("newHcdRef", newHcdRef);
+      return newHcdRef.key;
     } catch (error) {
-      console.log("Error addRegistro");
-      console.error(error);
+      console.error("Error addRegistro", error);
     }
 
     return null;
