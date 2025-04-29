@@ -1,45 +1,43 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import React from "react";
 import { Controller } from "react-hook-form";
+import { colors } from "../../constants";
+import RequiredIndicator from "../RequiredIndicator";
 
 const CustomInput = ({
-  placeholder,
+  label,
   name,
-  secureTextEntry,
   control,
+  defaultValue = "",
   rules = {},
+  ...inputProps
 }) => {
   return (
     <Controller
       control={control}
       name={name}
       rules={rules}
+      defaultValue={defaultValue}
       render={({
         field: { value, onChange, onBlur },
         fieldState: { error },
       }) => (
-        <>
-          <View
-            style={[
-              styles.container,
-              { borderColor: error ? "red" : "#e8e8e8" },
-            ]}
-          >
-            <TextInput
-              placeholder={placeholder}
-              value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              secureTextEntry={secureTextEntry}
-              style={styles.input}
-            />
-          </View>
-          {error && (
-            <Text style={{ color: "red", alignSelf: "stretch" }}>
-              {error.message || 'XXXXXX'}
+        <View style={styles.container}>
+          {label && (
+            <Text>
+              {label}
+              {rules.required && <RequiredIndicator />}
             </Text>
           )}
-        </>
+          <TextInput
+            value={value}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            style={styles.input(error)}
+            placeholderTextColor={colors.gray}
+            {...inputProps}
+          />
+          {error?.message && <Text style={styles.error}>{error.message}</Text>}
+        </View>
       )}
     />
   );
@@ -49,15 +47,20 @@ export default CustomInput;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
     width: "100%",
-
-    borderColor: "#e8e8e8",
-    borderWidth: 1,
-    borderRadius: 5,
-
-    paddingHorizontal: 10,
-    marginVertical: 5,
+    marginVertical: 4,
   },
-  input: {},
+  input: (error) => ({
+    backgroundColor: colors.white,
+    borderColor: error ? colors.red : colors.grayLight,
+    borderWidth: 1,
+    borderRadius: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    minHeight: 40,
+  }),
+  error: {
+    color: colors.red,
+    alignSelf: "stretch",
+  },
 });

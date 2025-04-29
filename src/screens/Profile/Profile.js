@@ -1,90 +1,73 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  useWindowDimensions,
-} from "react-native";
-import React from "react";
+import { StyleSheet, Text, Image, useWindowDimensions } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import { resetHcdStore } from "../../store/slices/hcd";
+import { logout } from "../../store/slices/auth";
+import { colors } from "../../constants";
 
 // Assets
-import DrProfileIcon from "../../../assets/images/DoctorUserIcon.png";
+import icon from "../../../assets/images/doctor-icon.png";
 
 // Components
+import Container from "../../components/Container";
 import CustomButton from "../../components/CustomButton";
+import Form from "../../components/Form";
+import Divider from "../../components/Divider";
 
 const Profile = () => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
   const { height } = useWindowDimensions();
+  const { user } = useSelector((state) => state.auth);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(resetHcdStore());
+    navigation.navigate("SignIn");
+  };
+
+  if (!user) return null;
+
   return (
-    <View style={styles.container}>
+    <Container>
       <Image
-        source={DrProfileIcon}
-        style={[styles.logo, { height: height * 0.3 }]}
+        source={icon}
+        style={[styles.logo, { height: height * 0.3, marginBottom: 16 }]}
         resizeMode="contain"
       />
-      <View style={styles.infoContainer}>
-        <Text style={styles.title}>Email</Text>
-        <Text style={styles.data}>EMAIL DEL USUARIO</Text>
-      </View>
+
+      <Form>
+        <Text style={styles.label}>Nombre</Text>
+        <Text style={styles.data}>{user.nombre}</Text>
+
+        <Divider />
+
+        <Text style={styles.label}>Matrícula</Text>
+        <Text style={styles.data}>{user.matricula}</Text>
+      </Form>
 
       <CustomButton
-        onPress={() => console.warn("SE QUIERE CAMBIAR LA PASS")}
-        text="CAMBIAR CONTRASEÑA"
-        type="SIMPLE"
-      />
-
-      <CustomButton
-        onPress={() => console.warn("SE ESTÁ CERRANDO LA SESIÓN")}
         text="CERRAR SESIÓN"
-        type="SIMPLE"
+        onPress={handleLogout}
+        type="SECONDARY"
       />
-    </View>
+    </Container>
   );
 };
 
 export default Profile;
 
-// Plantearse crear un componente "infoComponent"
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
+  label: {
+    color: colors.gray,
   },
-
-  infoContainer: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 8,
-    margin: 16,
-    elevation: 4,
-    padding: 8,
-    shadowOffset: {
-      width: 4,
-      height: 4,
-    },
-    shadowOpacity: 5,
-    shadowRadius: 5,
-  },
-
-  title: {
-    fontSize: 20,
-    color: "#AAAAAA",
-    fontWeight: "400",
-  },
-
   data: {
     fontSize: 24,
   },
-
-  space: {
-    height: 0,
-    borderTopWidth: 2,
-    borderColor: "#EEEEEE",
-    marginVertical: 8,
-  },
-
   logo: {
     width: "70%",
     maxWidth: 300,
     maxHeight: 200,
+    alignSelf: "center",
   },
-
 });

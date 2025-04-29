@@ -1,6 +1,9 @@
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import DropDownPicker from "react-native-dropdown-picker";
 import Navigation from "./src/navigation";
+import { colors } from "./src/constants";
+import "./src/helpers/firebase/firebaseconfig";
 
 //Redux
 import { store } from "./src/store";
@@ -9,6 +12,9 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 
 let persistor = persistStore(store);
+
+DropDownPicker.setListMode("MODAL");
+DropDownPicker.setLanguage("ES");
 
 export default function App() {
   return (
@@ -25,6 +31,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9FBFC",
+    backgroundColor: colors.white,
   },
 });

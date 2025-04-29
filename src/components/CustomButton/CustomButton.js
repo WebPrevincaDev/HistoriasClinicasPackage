@@ -1,63 +1,54 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, Pressable } from "react-native";
+import { colors } from "../../constants";
 
-const CustomButton = ({ onPress, text, type = "PRIMARY" }) => {
+const CustomButton = ({ onPress, text, disabled, type = "PRIMARY" }) => {
   return (
-    <Pressable onPress={onPress} style={[styles.container, styles[`container_${type}`]]}>
+    <Pressable
+      disabled={disabled}
+      onPress={onPress}
+      style={[styles.container(disabled), styles[`container_${type}`]]}
+    >
       <Text style={[styles.text, styles[`text_${type}`]]}>{text}</Text>
     </Pressable>
-  )
-}
+  );
+};
 
-export default CustomButton
+export default CustomButton;
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-
-    padding: 15,
+  container: (disabled) => ({
+    width: "100%",
+    padding: 16,
     marginVertical: 5,
-
-    alignItems: 'center',
-    borderRadius: 5,
-  },
-
+    alignItems: "center",
+    borderRadius: 6,
+    opacity: disabled ? 0.6 : 1,
+  }),
   container_PRIMARY: {
-    backgroundColor: '#3B71F3',
+    backgroundColor: colors.primary,
   },
-
   container_SECONDARY: {
-    borderColor: '#3B71F3',
+    borderColor: colors.primary,
     borderWidth: 2,
   },
-
-  container_TERTIARY: {
-
-  },
-
+  container_TERTIARY: {},
   container_SIMPLE: {
-    margin: 16,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
   },
 
   text: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
-
   text_PRIMARY: {
-    color: 'white',
+    color: colors.white,
   },
-
   text_SECONDARY: {
-    color: '#3B71F3',
+    color: colors.primary,
   },
-
   text_TERTIARY: {
-    color: 'gray',
+    color: colors.grayDark,
   },
-
   text_SIMPLE: {
-    color: '#004dff',
-    fontSize: 20,
+    color: colors.primaryDark,
   },
-})
+});
