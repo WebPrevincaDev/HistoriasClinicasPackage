@@ -1,47 +1,41 @@
-import { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  Alert,
-} from "react-native";
+import { useState } from "react";
+import { Modal, Text, Alert } from "react-native";
 import { useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
+import { useCustomForm } from "../../hooks/useCustomForm";
 import { useHcdNavigation } from "../../hooks/useHcdNavigation";
+import Container from "../../components/Container";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import ListaCheckbox from "../../components/ListaCheckbox";
-import { getAllByKey } from "../../helpers/data";
-import { updateHcd } from "../../store/slices/hcd";
-
-const obtener_hora = () => {
-  const fecha = new Date();
-  const hora = fecha.getHours();
-  const minutos = fecha.getMinutes();
-  let relleno_min = "";
-  if (minutos <= 9) relleno_min = "0";
-  const horaFinal = hora + ":" + relleno_min + minutos;
-  return horaFinal;
-};
+import Loader from "../../components/Loader";
+import Title from "../../components/Title";
+import Form from "../../components/Form";
+import FormSignosVitales from "../../components/FormSignosVitales";
+import { useCheckbox } from "../../hooks/useCheckbox";
+import { updateHcd, addSignosVitalesToHcd } from "../../store/slices/hcd";
 
 export default function DatosIniciales() {
   const dispatch = useDispatch();
   const { navigateAndSetHcdScreen } = useHcdNavigation();
-  const { control, handleSubmit, getValues } = useForm();
+  const { control, handleSubmit, getValues } = useCustomForm({
+    storeKeys: ["dias", "horas", "minutos"],
+  });
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [antecedentesValue, setAntecedentesValue] = useState([]);
-  const [antecedentesItems, setAntecedentesItems] = useState([]);
+  const {
+    isLoading,
+    value: antecedentesValue,
+    setValue: setAntecedentesValue,
+    items: antecedentesItems,
+  } = useCheckbox({ table: "asw.antecedente", itemKey: "antecedente_nombre" });
 
   const [resumenAntecedentes, setResumenAntecedentes] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
-  const closeModal = () => {
+  const closeModal = () => setIsModalOpen(false);
+
+  const saveAntecedentes = () => {
     // guardarValorMostrar
     let finalText = "";
     const antecedentes = antecedentesValue.join(", ");
@@ -56,10 +50,10 @@ export default function DatosIniciales() {
     if (alergia_medicamentosa)
       finalText += ` | ALERGIA MEDICAMENTOSA: ${alergia_medicamentosa}`;
     setResumenAntecedentes(finalText);
-    setIsModalOpen(false);
+    closeModal();
   };
 
-  const onPressSiguiente = (data) => {
+  const onPressSiguiente = (inputData) => {
     const [dias, horas, minutos] = getValues(["dias", "horas", "minutos"]);
     if (!dias && !horas && !minutos) {
       Alert.alert(
@@ -68,114 +62,35 @@ export default function DatosIniciales() {
       return;
     }
     const datos = {
-      ...data,
+      ...inputData,
       // piso la propiedad antecedentes. antes era un obj, ahora un string
       antecedentes: resumenAntecedentes,
     };
-    dispatch(updateHcd(datos));
+    const { signosVitales, ...otherData } = datos;
+    dispatch(updateHcd(otherData));
+    dispatch(addSignosVitalesToHcd(signosVitales));
     navigateAndSetHcdScreen("Opcionales");
   };
 
-  // cargar_datos
-  useEffect(() => {
-    const cargar_datos = async () => {
-      if (antecedentesItems.length) return;
-      setIsLoading(true);
-      // getAntecedentes_Llamada
-      const antecedentes = await getAllByKey("asw.antecedente");
-      const antecedentesFormatted = antecedentes.map(
-        (antecedente) => antecedente.nombre
-      );
-      setAntecedentesItems(antecedentesFormatted);
-      setIsLoading(false);
-    };
-    cargar_datos();
-  }, []);
-
   return (
-    <ScrollView style={styles.container}>
-      {/* form Signos vitales */}
-      <View style={styles.form}>
-        <Text style={styles.title}>Signos vitales</Text>
-        <CustomInput
-          name="hora"
-          label="Hora"
-          placeholder="Hora"
-          control={control}
-          defaultValue={obtener_hora()}
-        />
-        <CustomInput
-          name="tas"
-          label="TAS"
-          placeholder="TAS"
-          control={control}
-          rules={{ required: true }}
-        />
-        <CustomInput
-          name="tad"
-          label="TAD"
-          placeholder="TAD"
-          control={control}
-          rules={{ required: true }}
-        />
-        <CustomInput
-          name="temperatura"
-          label="Temperatura"
-          placeholder="Temperatura"
-          control={control}
-          rules={{ required: true }}
-        />
-        <CustomInput
-          name="frres"
-          label="FR. RES"
-          placeholder="FR. RES"
-          control={control}
-          rules={{ required: true }}
-        />
-        <CustomInput
-          name="fc"
-          label="FC"
-          placeholder="FC"
-          control={control}
-          rules={{ required: true }}
-        />
-        <CustomInput
-          name="llcap"
-          label="LL. CAP"
-          placeholder="LL. CAP"
-          control={control}
-        />
-        <CustomInput
-          name="glucemia"
-          label="Glucemia"
-          placeholder="Glucemia"
-          control={control}
-        />
-        <CustomInput
-          name="sat_oxigeno"
-          label="Sat. Oxígeno"
-          placeholder="Sat. Oxígeno"
-          control={control}
-        />
-      </View>
+    <Container scroll>
+      <FormSignosVitales control={control} />
 
-      {/* form Antecedentes */}
-      <View style={styles.form}>
-        <Text style={styles.title}>Antecedentes</Text>
+      <Form title="Antecedentes">
         <Text>
           {resumenAntecedentes || "Presione el botón para agregar antecedentes"}
         </Text>
         <CustomButton text="Modificar antecedentes" onPress={openModal} />
         {isLoading ? (
-          <ActivityIndicator size="large" color="#000" />
+          <Loader />
         ) : (
           <Modal
             visible={isModalOpen}
             onRequestClose={closeModal}
             animationType="fade"
           >
-            <ScrollView style={styles.modalView}>
-              <Text style={styles.title}>Lista de antecedentes</Text>
+            <Container>
+              <Title>Lista de antecedentes</Title>
               <ListaCheckbox
                 items={antecedentesItems}
                 initialValues={antecedentesValue}
@@ -199,68 +114,45 @@ export default function DatosIniciales() {
                 placeholder="Medicación habitual"
                 control={control}
               />
-              <CustomButton text="Confirmar" onPress={closeModal} />
-            </ScrollView>
+              <CustomButton text="Confirmar" onPress={saveAntecedentes} />
+              <CustomButton
+                text="Cancelar"
+                onPress={closeModal}
+                type="SIMPLE"
+              />
+            </Container>
           </Modal>
         )}
-      </View>
+      </Form>
 
-      {/* form Tiempo de evolución de los síntomas */}
-      <View style={styles.form}>
-        <Text style={styles.title}>Tiempo de evolución de los síntomas</Text>
+      <Form title="Tiempo de evolución de los síntomas">
         <CustomInput
           name="dias"
           label="Días"
           placeholder="Días"
           control={control}
+          keyboardType="number-pad"
         />
         <CustomInput
           name="horas"
           label="Horas"
           placeholder="Horas"
           control={control}
+          keyboardType="number-pad"
         />
         <CustomInput
           name="minutos"
           label="Minutos"
           placeholder="Minutos"
           control={control}
+          keyboardType="number-pad"
         />
         <Text>
           Se debe completar alguno de los campos, con uno solo es suficiente
         </Text>
-      </View>
+      </Form>
 
       <CustomButton text="SIGUIENTE" onPress={handleSubmit(onPressSiguiente)} />
-    </ScrollView>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  form: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 2,
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    marginBottom: 16,
-    padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
-  },
-  modalView: {
-    padding: 16,
-  },
-});

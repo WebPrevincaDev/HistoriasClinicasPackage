@@ -1,13 +1,16 @@
-import { Alert, StyleSheet, Text, View } from "react-native";
-import { useSelector } from "react-redux";
+import { Alert, FlatList, Text, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import { updateHcd } from "../../store/slices/hcd";
+import Container from "../../components/Container";
 import CustomButton from "../../components/CustomButton";
-import HcdStack from "../../navigation/Stacks/HcdStack";
+import Title from "../../components/Title";
 
 const HomeHCD = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const { user } = useSelector((state) => state.auth);
-  const { hcdConfig } = useSelector((state) => state.hcd);
+  const { hcdConfig, arr_hcd } = useSelector((state) => state.hcd);
 
   const addNewHistoriaClinica = () => {
     if (!hcdConfig) {
@@ -15,27 +18,32 @@ const HomeHCD = () => {
       navigation.navigate("Home");
       return;
     }
-    navigation.navigate("HcdStack");
+    dispatch(updateHcd({ fecha: new Date().toISOString() }));
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "HcdStack" }],
+    });
   };
 
+  if (!user) return null;
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Médico: {user.app_nombre}</Text>
+    <Container>
+      <Title>Médico: {user.nombre}</Title>
       <CustomButton text="AGREGAR" onPress={addNewHistoriaClinica} />
-    </View>
+
+      <FlatList
+        data={arr_hcd}
+        renderItem={({ item }) => (
+          <View>
+            <Text>Paciente: {item.pac_apellido}</Text>
+            <Text>Tipo: {item.ubicacion_atencion}</Text>
+          </View>
+        )}
+        keyExtractor={(item) => item.key}
+      />
+    </Container>
   );
 };
 
 export default HomeHCD;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
-  },
-});

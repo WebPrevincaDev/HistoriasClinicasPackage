@@ -1,14 +1,6 @@
 import { sincronizar } from "./sincronizar";
-
-const profesionales = {
-  tabla: "asw.profesionales",
-  campos: ["name", "pro_grupo", "pro_matricula", "pro_password", "email"],
-};
-
-const usuariosApp = {
-  tabla: "asw.usuario_app",
-  campos: ["app_nombre", "app_matricula", "app_mail", "app_password"],
-};
+import { sincronizarProfesionales } from "./sincronizarProfesionales";
+import { sincronizarUsuariosApp } from "./sincronizarUsuariosApp";
 
 const info = [
   {
@@ -135,8 +127,8 @@ const info = [
 
 export const sincronizarAll = async () => {
   console.log("arranco sincronizarAll");
-  await sincronizar(profesionales);
-  await sincronizar(usuariosApp);
+  await sincronizarProfesionales();
+  await sincronizarUsuariosApp();
   for (let i = 0; i < info.length; i++) await sincronizar(info[i]);
   console.log("termino sincronizarAll");
 };

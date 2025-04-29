@@ -4,6 +4,12 @@ import { getAllByKey } from "./getAllByKey";
 import { saveAsyncStorage } from "./saveAsyncStorage";
 import { sincronizar } from "./sincronizar";
 import { sincronizarAll } from "./sincronizarAll";
+import { sincronizarProfesionales } from "./sincronizarProfesionales";
+import { sincronizarUsuariosApp } from "./sincronizarUsuariosApp";
+import { saveSignature } from "./saveSignature";
+import { searchUserInServer } from "./searchUserInServer";
+import { createProfessional } from "./createProfessional";
+import { registerUserInFirebase } from "./registerUserInFirebase";
 
 export {
   filterProfessionalsByGroup,
@@ -12,4 +18,10 @@ export {
   saveAsyncStorage,
   sincronizar,
   sincronizarAll,
+  sincronizarProfesionales,
+  sincronizarUsuariosApp,
+  saveSignature,
+  searchUserInServer,
+  createProfessional,
+  registerUserInFirebase,
 };

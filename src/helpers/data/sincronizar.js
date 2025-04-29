@@ -11,7 +11,6 @@ export const sincronizar = async (payload) => {
       console.log("Error al conectarse", tabla, datos);
       return;
     }
-    console.log("Guardando DATOS " + tabla);
 
     if (campos.length > 0) {
       datos.forEach((element) => {

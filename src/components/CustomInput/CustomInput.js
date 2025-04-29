@@ -1,17 +1,15 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import React from "react";
 import { Controller } from "react-hook-form";
+import { colors } from "../../constants";
+import RequiredIndicator from "../RequiredIndicator";
 
 const CustomInput = ({
   label,
-  placeholder,
   name,
-  secureTextEntry,
   control,
   defaultValue = "",
   rules = {},
-  multiline,
-  numberOfLines,
+  ...inputProps
 }) => {
   return (
     <Controller
@@ -27,18 +25,16 @@ const CustomInput = ({
           {label && (
             <Text>
               {label}
-              {rules.required && <Text style={styles.required}> *</Text>}
+              {rules.required && <RequiredIndicator />}
             </Text>
           )}
           <TextInput
-            placeholder={placeholder}
             value={value}
             onChangeText={onChange}
             onBlur={onBlur}
-            secureTextEntry={secureTextEntry}
-            multiline={multiline}
-            numberOfLines={numberOfLines}
             style={styles.input(error)}
+            placeholderTextColor={colors.gray}
+            {...inputProps}
           />
           {error?.message && <Text style={styles.error}>{error.message}</Text>}
         </View>
@@ -54,19 +50,17 @@ const styles = StyleSheet.create({
     width: "100%",
     marginVertical: 4,
   },
-  required: {
-    color: "red",
-    fontWeight: "bold",
-  },
   input: (error) => ({
-    backgroundColor: "white",
-    borderColor: error ? "red" : "#e8e8e8",
+    backgroundColor: colors.white,
+    borderColor: error ? colors.red : colors.grayLight,
     borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
+    borderRadius: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    minHeight: 40,
   }),
   error: {
-    color: "red",
+    color: colors.red,
     alignSelf: "stretch",
   },
 });

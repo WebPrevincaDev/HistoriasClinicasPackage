@@ -1,68 +1,78 @@
+import { useState } from "react";
 import {
   Image,
   StyleSheet,
-  Text,
   View,
   useWindowDimensions,
-  ScrollView,
-  TextInput,
   Alert,
-  Button,
 } from "react-native";
-import PlaceHolderLogo from "../../../assets/images/testLogo.jpg";
+import { CheckBox } from "react-native-elements";
+import logo from "../../../assets/amce-siempre.jpg";
+import Container from "../../components/Container";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/slices/auth/thunks";
+import { colors } from "../../constants";
 
 const SignIn = () => {
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
 
-  const { control, handleSubmit, formState: {errors} } = useForm();
+  const { control, handleSubmit } = useForm();
 
   const { isLoading } = useSelector((state) => state.auth);
 
   const onSignInPressed = async (data) => {
     try {
       await dispatch(login(data)).unwrap();
-      navigation.navigate("HomeTab");
+      navigation.navigate("Signature");
     } catch (error) {
+      if (error.message === "Usuario no registrado") {
+        navigation.navigate("SignUp", { matricula: data.matricula });
+        return;
+      }
       Alert.alert(error.message);
     }
   };
 
-  const onForgotPasswordPressed = () => {
-    console.warn("Forgot Password");
-
-    navigation.navigate("ForgotPassword");
-  };
-
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.root}>
-        <Image
-          source={PlaceHolderLogo}
-          style={[styles.logo, { height: height * 0.3 }]}
-          resizeMode="contain"
-        />
+    <Container scroll>
+      <Image
+        source={logo}
+        style={[styles.logo, { height: height * 0.3 }]}
+        resizeMode="contain"
+      />
 
+      <View style={{ marginTop: 16 }}>
         <CustomInput
           name={'matricula'}
           placeholder={"Matrícula"}
           control={control}
           rules={{required: 'Se requiere la matrícula'}}
+          keyboardType="number-pad"
         />
 
         <CustomInput
           name={'password'}
           placeholder={"Contraseña"}
           control={control}
-          secureTextEntry
+          secureTextEntry={!showPassword}
           rules={{required: 'Por favor ingrese una contraseña'}}
+        />
+
+        <CheckBox
+          title="Mostrar contraseña"
+          checked={showPassword}
+          onPress={() => setShowPassword(!showPassword)}
+          size={16}
+          checkedColor={colors.primary}
+          containerStyle={styles.checkbox}
+          textStyle={{ marginStart: 8, fontWeight: "normal" }}
         />
 
         <CustomButton
@@ -70,29 +80,27 @@ const SignIn = () => {
           disabled={isLoading}
           onPress={handleSubmit(onSignInPressed)}
         />
-      <Button onPress={()=>navigation.navigate('Signature')} title="IR A SIGNATURE"/>
-
-        {/* <CustomButton
-          text={"Olvidé mi Contraseña"}
-          onPress={onForgotPasswordPressed}
-          type="TERTIARY"
-        /> */}
-
       </View>
-    </ScrollView>
+    </Container>
   );
 };
 
 export default SignIn;
 
 const styles = StyleSheet.create({
-  root: {
-    alignItems: "center",
-    padding: 20,
-  },
   logo: {
     width: "70%",
     maxWidth: 300,
     maxHeight: 200,
+    alignSelf: "center",
+  },
+  checkbox: {
+    margin: 0,
+    marginEnd: 0,
+    marginStart: 0,
+    backgroundColor: "transparent",
+    borderColor: "transparent",
+    paddingHorizontal: 0,
+    paddingVertical: 8,
   },
 });
