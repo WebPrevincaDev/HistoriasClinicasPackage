@@ -15,7 +15,7 @@ import { persistStore } from "redux-persist";
 import * as Sentry from "@sentry/react-native";
 
 Sentry.init({
-  dsn: "https://a80eb9d4e68064aacd055e6aac14dc8b@o393307.ingest.us.sentry.io/4509214201544704",
+  dsn: "https://31650cb3e5dffcacf6aeba342a92b51b@o4509205334982656.ingest.us.sentry.io/4509205338062848",
   // Adds more context data to events (IP address, cookies, user, etc.)
   // For more information, visit: https://docs.sentry.io/platforms/react-native/data-management/data-collected/
   sendDefaultPii: true,
