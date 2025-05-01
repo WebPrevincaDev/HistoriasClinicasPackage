@@ -1,5 +1,6 @@
 import OdooServer from "../../data/OdooServer";
 import { saveAsyncStorage } from "./saveAsyncStorage";
+import * as Sentry from "@sentry/react-native";
 
 export const sincronizar = async (payload) => {
   try {
@@ -30,6 +31,7 @@ export const sincronizar = async (payload) => {
 
     await saveAsyncStorage(datos, tabla);
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error al conectarse: ", error);
   }
 };
