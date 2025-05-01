@@ -34,6 +34,7 @@ export default class OdooDataManager {
       port: 80 /* Defaults to 80 if not specified */,
       username: _username /* Optional  if using a stored session_id */,
       password: _password /* Optional if using a stored session_id */,
+      protocol: "http" /* Defaults to http */,
     });
   }
 

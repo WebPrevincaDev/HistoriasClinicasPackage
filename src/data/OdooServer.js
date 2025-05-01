@@ -1,4 +1,5 @@
 import OdooDataManager from "./OdooDataManager";
+import * as Sentry from "@sentry/react-native";
 
 const connectionErrMsg =
   "Error de Conexión.\nEn estos momentos no podemos conectarnos con el servidor, por favor vuelva a intentarlo más tarde.\nDisculpe las molestias.";
@@ -29,6 +30,7 @@ export default class OdooServer {
         return registro.data;
       } else {
         console.log("Error al hacer un search:", response.error);
+        Sentry.captureException(new Error("Error al hacer un search:", response.error));
         if (response.error != null) {
           throw new Error(connectionErrMsg);
         } else {
@@ -36,6 +38,7 @@ export default class OdooServer {
         }
       }
     } catch (e) {
+      Sentry.captureException(e)
       throw new Error(connectionRejectedErrMsg);
     }
   }
@@ -48,6 +51,7 @@ export default class OdooServer {
         let registro = await odoo.rpc_call(endpoint, params);
         return registro.data;
       } else {
+        Sentry.captureException("Error al hacer un rpc_call:", response.error);
         if (response.error != null) {
           throw new Error(connectionErrMsg);
         } else {
@@ -55,6 +59,7 @@ export default class OdooServer {
         }
       }
     } catch (e) {
+      Sentry.captureException(e)
       throw new Error(connectionRejectedErrMsg);
     }
   }
@@ -68,6 +73,7 @@ export default class OdooServer {
         console.log(registro);
         return registro.data;
       } else {
+        Sentry.captureException("Error al hacer un create:", response.error);
         if (response.error != null) {
           throw new Error(connectionErrMsg);
         } else {
@@ -75,6 +81,7 @@ export default class OdooServer {
         }
       }
     } catch (e) {
+      Sentry.captureException(e)
       throw new Error(connectionRejectedErrMsg);
     }
   }
@@ -87,6 +94,7 @@ export default class OdooServer {
         response = await odoo.update(modelo, [id], _datos, {});
         return response.success;
       } else {
+        Sentry.captureException("Error al hacer un update:", response.error);
         if (response.error != null) {
           throw new Error(connectionErrMsg);
         } else {
@@ -94,6 +102,7 @@ export default class OdooServer {
         }
       }
     } catch (e) {
+      Sentry.captureException(e)
       throw new Error(connectionRejectedErrMsg);
     }
   }
@@ -106,6 +115,7 @@ export default class OdooServer {
         response = await odoo.delete(modelo, [id], {});
         return response.success;
       } else {
+        Sentry.captureException("Error al hacer un delete:", response.error);
         if (response.error != null) {
           throw new Error(connectionErrMsg);
         } else {
@@ -113,6 +123,7 @@ export default class OdooServer {
         }
       }
     } catch (e) {
+      Sentry.captureException(e)
       throw new Error(connectionRejectedErrMsg);
     }
   }
