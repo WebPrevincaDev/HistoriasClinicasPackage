@@ -37,7 +37,7 @@ export default function InformeEcg() {
   const { imagenesEcg: imagenesStore = [], cardio } = useSelector(
     (state) => state.hcd.hcd
   );
-  const isRequired = !cardio.includes("Normal");
+  const isRequired = cardio && !cardio.includes("Normal");
 
   const {
     value: informeEcgValue,

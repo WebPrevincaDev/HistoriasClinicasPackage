@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "AMCE HCD",
-    "slug": "historiasClinicasPackage",
+    "slug": "amce_hcd",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,14 +25,15 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.solch4.historiasClinicasPackage"
+      "package": "com.amce.AmceAppHCD",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/icon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "61be6b47-22f2-41f9-93a9-5988240ccd0e"
+        "projectId": "69e11860-de45-11e9-9e24-19ca5169f827"
       }
     },
     "plugins": [

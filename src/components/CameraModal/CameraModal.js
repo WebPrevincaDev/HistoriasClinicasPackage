@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Camera, CameraType } from "expo-camera";
+import { Camera, CameraView } from "expo-camera";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImageManipulator from "expo-image-manipulator";
 import Container from "../Container";
@@ -15,7 +15,7 @@ import CustomButton from "../CustomButton";
 import { colors } from "../../constants";
 
 function CameraModal({ cameraRef, image, setImage, onSaveImage, onCancel }) {
-  const [type, setType] = useState(CameraType.back);
+  const [type, setType] = useState('back');
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
@@ -25,7 +25,7 @@ function CameraModal({ cameraRef, image, setImage, onSaveImage, onCancel }) {
 
   const toggleCameraType = () => {
     setType((current) =>
-      current === CameraType.back ? CameraType.front : CameraType.back
+      current === 'back' ? "front" : 'back'
     );
   };
 
@@ -84,7 +84,7 @@ function CameraModal({ cameraRef, image, setImage, onSaveImage, onCancel }) {
           {!image ? (
             <>
               {/* si usuario NO sacó foto => renderizo cámara */}
-              <Camera style={styles.camera} type={type} ref={cameraRef}>
+              <CameraView style={styles.camera} facing={type} ref={cameraRef}>
                 <View style={styles.buttonContainer}>
                   <CustomButton
                     text={
@@ -113,7 +113,7 @@ function CameraModal({ cameraRef, image, setImage, onSaveImage, onCancel }) {
                     type="SIMPLE"
                   />
                 </View>
-              </Camera>
+              </CameraView>
               <CustomButton
                 text={
                   <MaterialCommunityIcons
