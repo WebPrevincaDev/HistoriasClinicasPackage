@@ -1,5 +1,4 @@
 import "react-native-get-random-values";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { v5 as uuidv5, v4 as uuidv4 } from "uuid";
@@ -10,12 +9,10 @@ import { setHcdScreen } from "../store/slices/hcd";
 export const useFinishHcd = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const [isLoading, setIsLoading] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const { hcd, hcdConfig, arr_hcd } = useSelector((state) => state.hcd);
 
-  const finishHcd = async (datos) => {
-    setIsLoading(true);
+  const finishHcd = (datos) => {
     const finalHcd = {
       ...hcd,
       ...datos,
@@ -24,16 +21,13 @@ export const useFinishHcd = () => {
       version_app: Application.nativeBuildVersion,
     };
     dispatch(agregarPaciente(finalHcd));
-    await dispatch(
-      addHcd({ new_arr_hcd: [...arr_hcd, finalHcd], hcdConfig, user })
-    ).unwrap();
+    dispatch(addHcd({ new_arr_hcd: [...arr_hcd, finalHcd], hcdConfig, user }));
     dispatch(setHcdScreen(""));
     navigation.reset({
       index: 0,
       routes: [{ name: "HomeTab" }],
     });
-    setIsLoading(false);
   };
 
-  return { finishHcd, isLoading };
+  return { finishHcd };
 };

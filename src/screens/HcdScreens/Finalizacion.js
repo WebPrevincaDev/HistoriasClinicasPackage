@@ -20,7 +20,7 @@ export default function Finalizacion() {
   const navigation = useNavigation();
   const { user } = useSelector((state) => state.auth);
   const { hcd, hcdConfig } = useSelector((state) => state.hcd);
-  const { finishHcd, isLoading } = useFinishHcd();
+  const { finishHcd } = useFinishHcd();
 
   const {
     value: abonaCopagoValue,
@@ -38,10 +38,10 @@ export default function Finalizacion() {
     return datos;
   };
 
-  const onPressFinalizar = async () => {
+  const onPressFinalizar = () => {
     const datos = guardarDatos();
     if (!datos) return;
-    await finishHcd(datos);
+    finishHcd(datos);
   };
 
   const onPressPrevisualizar = () => {
@@ -106,27 +106,20 @@ export default function Finalizacion() {
         required
       />
 
-      <CustomButton
-        text={isLoading ? "FINALIZANDO..." : "FINALIZAR"}
-        onPress={onPressFinalizar}
-        disabled={isLoading}
-      />
+      <CustomButton text="FINALIZAR" onPress={onPressFinalizar} />
       <CustomButton
         text="IMPRIMIR"
         onPress={onPressImprimir}
-        disabled={isLoading}
         type="SECONDARY"
       />
       <CustomButton
         text="PREVISUALIZAR"
         onPress={onPressPrevisualizar}
-        disabled={isLoading}
         type="SECONDARY"
       />
       <CustomButton
         text="ENVIAR HISTORIA CLÍNICA POR MAIL"
         onPress={onPressSendMail}
-        disabled={isLoading}
         type="SECONDARY"
       />
     </Container>
