@@ -34,10 +34,11 @@ const HomeHCD = () => {
 
       <FlatList
         data={arr_hcd}
+        style={{ width: '100%', marginTop: 16 }}
         renderItem={({ item }) => (
-          <View>
-            <Text>Paciente: {item.pac_apellido}</Text>
-            <Text>Tipo: {item.ubicacion_atencion}</Text>
+          <View style={{ padding: 16, borderBottomWidth: 1, borderColor: '#ccc', backgroundColor: '#f9f9f9', marginBottom: 8 }}>
+            <Text>Paciente: {item.pac_apellido || 'Sin Paciente'}</Text>
+            <Text>{ item.motivo_cancelacion ? <>CANCELADA: {item.motivo_cancelacion} </> : <> Tipo: {item.ubicacion_atencion} </>} </Text>
           </View>
         )}
         keyExtractor={(item) => item.key}
