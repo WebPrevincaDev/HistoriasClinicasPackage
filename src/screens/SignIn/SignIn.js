@@ -63,6 +63,7 @@ const SignIn = () => {
           control={control}
           secureTextEntry={!showPassword}
           rules={{required: 'Por favor ingrese una contraseña'}}
+          autoCapitalize="none"
         />
 
         <CheckBox
