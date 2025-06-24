@@ -14,7 +14,12 @@ const Signature = () => {
     const firmaId = await saveSignature(firmaUri);
     dispatch(updateUser({ firma: { id: firmaId, uri: firmaUri } }));
     setIsModalOpen(false);
-    navigation.navigate("HomeTab");
+
+    // Navegar sin historial
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "HomeTab" }],
+    });
   };
 
   return <ModalRegistrarFirma visible={isModalOpen} onOK={handleOK} />;
