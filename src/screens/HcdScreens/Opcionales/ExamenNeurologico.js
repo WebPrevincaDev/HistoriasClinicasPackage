@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { updateHcd } from "../../../store/slices/hcd";
 import { useCheckbox } from "../../../hooks/useCheckbox";
@@ -7,10 +7,12 @@ import CustomButton from "../../../components/CustomButton";
 import ListaCheckbox from "../../../components/ListaCheckbox";
 import Loader from "../../../components/Loader";
 import Form from "../../../components/Form";
+import { useEffect } from "react";
 
 export default function ExamenNeurologico() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const { hcd } = useSelector((state) => state.hcd);
 
   const {
     isLoading: isExamenNeuroLoading,
@@ -34,6 +36,15 @@ export default function ExamenNeurologico() {
     dispatch(updateHcd({ examen_neuro }));
     navigation.goBack();
   };
+
+  useEffect(() => {
+    // Reset values when the component mounts
+    const { examen_neuro } = hcd;
+    examen = examen_neuro.split(" - ")
+    console.log(examen);
+    setExamenNeuroValue(examen[0] ? examen[0].split(", ").map(item => item.toUpperCase()) : []);
+    setEstadoMentalValue(examen.length == 2 ? examen[1].split(", ") : []);    
+  }, [setExamenNeuroValue, setEstadoMentalValue ]);
 
   return (
     <Container scroll>

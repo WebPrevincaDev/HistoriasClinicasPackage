@@ -1,6 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { addHcd } from "./thunks";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { addHcd, syncHcd } from "./thunks";
 import { diagnosisCodes as codes } from "../../../constants";
+import { getAsyncStorage } from "../../../helpers/data";
 
 // a medida que agregue propiedades a hcd las anoto acá para tenerlo de machete
 /* {
@@ -81,6 +82,18 @@ import { diagnosisCodes as codes } from "../../../constants";
   enfermero
 } */
 
+export const loadInitialData = createAsyncThunk(
+  'hcd/loadInitialData',
+  async () => {
+    try {
+      const data = await getAsyncStorage('Historias_sin_sincronizar');
+      return data ? JSON.parse(data) : null;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
 export const initialState = {
   isLoading: false,
   error: "",
@@ -133,7 +146,34 @@ export const sharedSlice = createSlice({
       })
       .addCase(addHcd.rejected, (state, action) => {
         console.error("addHcd rejected:", action.error);
-      });
+      })
+      .addCase(loadInitialData.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(loadInitialData.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.arr_hcd = action.payload;
+      })
+      .addCase(loadInitialData.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(syncHcd.pending, (state) => {
+        state.error = ""
+        state.isLoading = true;
+      })
+      .addCase(syncHcd.fulfilled, (state, action) => {                
+        state.arr_hcd = action.payload;
+        state.isLoading = false;
+        if (state.arr_hcd.length > 0) {
+          state.error = "Algunos registros no pudieron sincronizarse correctamente"
+        }
+      })
+      .addCase(syncHcd.rejected, (state, action) => {
+        state.isLoading = false;
+        console.error("addHcd rejected:", action.error);
+        state.error = action.error.message;
+      })
   },
 });
 
