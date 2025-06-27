@@ -87,7 +87,7 @@ export const loadInitialData = createAsyncThunk(
   async () => {
     try {
       const data = await getAsyncStorage('Historias_sin_sincronizar');
-      return data ? JSON.parse(data) : null;
+      return data ? JSON.parse(data) : [];
     } catch (error) {
       throw error;
     }
