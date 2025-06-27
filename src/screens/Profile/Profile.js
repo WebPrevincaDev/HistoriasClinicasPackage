@@ -1,4 +1,5 @@
 import { StyleSheet, Text, Image, useWindowDimensions } from "react-native";
+import Constants from 'expo-constants';
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { resetHcdStore } from "../../store/slices/hcd";
@@ -26,6 +27,9 @@ const Profile = () => {
     navigation.navigate("SignIn");
   };
 
+  const version = Constants.expoConfig?.version || 
+                Constants.manifest2?.extra?.expoClient?.version;
+
   if (!user) return null;
 
   return (
@@ -45,6 +49,8 @@ const Profile = () => {
         <Text style={styles.label}>Matrícula</Text>
         <Text style={styles.data}>{user.matricula}</Text>
       </Form>
+
+      <Text>App Version: { version }</Text>
 
       <CustomButton
         text="CERRAR SESIÓN"
