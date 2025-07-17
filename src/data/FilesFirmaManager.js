@@ -1,5 +1,6 @@
 import * as FileSystem from "expo-file-system";
 import { FilesManager } from "./FilesManager";
+import * as Sentry from "@sentry/react-native";
 
 export class FilesFirmaManager extends FilesManager {
   constructor() {
@@ -41,6 +42,7 @@ export class FilesFirmaManager extends FilesManager {
 
       return result;
     } catch (error) {
+      Sentry.captureException(error)
       console.log("Catcheando error de get_base64_path_firma");
 
       const splitStr = path.split("/");
@@ -116,6 +118,7 @@ export class FilesFirmaManager extends FilesManager {
     } catch (error) {
       console.log("Error al sincronizar una firma");
       console.log(error);
+      Sentry.captureException(e)
     }
 
     this.esta_sincronizando = false;

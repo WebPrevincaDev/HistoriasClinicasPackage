@@ -1,4 +1,5 @@
 import { FilesManager } from "./FilesManager";
+import * as Sentry from "@sentry/react-native";
 
 export class FilesImagenesEcgManager extends FilesManager {
   constructor() {
@@ -82,6 +83,7 @@ export class FilesImagenesEcgManager extends FilesManager {
         }
       }
     } catch (error) {
+      Sentry.captureException(error)
       console.log(error);
     }
 

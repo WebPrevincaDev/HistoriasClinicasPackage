@@ -1,5 +1,6 @@
 import { auth } from "../firebase/firebaseconfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import * as Sentry from "@sentry/react-native";
 
 export const registerUserInFirebase = async (email, password) => {
   console.log("registerUserInFirebase profesional a guardar:", { email, password });
@@ -8,6 +9,7 @@ export const registerUserInFirebase = async (email, password) => {
     console.log("registerUserInFirebase result", result);
     return "";
   } catch (error) {
+    Sentry.captureException(error)
     console.error("Error registerUserInFirebase:", error);
     let result_error = "";
     var errorCode = error.code;

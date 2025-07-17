@@ -4,6 +4,7 @@ import OdooServer from "../../../data/OdooServer";
 import { FilesFirmaManager } from "../../../data/FilesFirmaManager";
 import { FilesImagenesEcgManager } from "../../../data/FilesImagenesEcgManager";
 import { TableHCD } from "../../../data/TableHCD";
+import * as Sentry from "@sentry/react-native";
 
 export const agregarPaciente = createAsyncThunk(
   "hcd/agregarPaciente",
@@ -161,6 +162,7 @@ export const syncHcd = createAsyncThunk(
         sincronizadas.push(enviar);
         sincronizado = true;
       } catch (error) {
+        Sentry.captureException(error)
         console.error("Error al sincronizar con Odoo", error, sincronizado);    
       }      
       narr.push({...enviar, sincronizado});

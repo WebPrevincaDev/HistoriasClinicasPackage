@@ -3,6 +3,7 @@ import * as ExpoFileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 import { v5 as uuidv5 } from "uuid";
 import { FirebaseFilesManager } from "./FirebaseFilesManager";
+import * as Sentry from "@sentry/react-native";
 
 export class FilesManager {
   constructor() {
@@ -64,6 +65,7 @@ export class FilesManager {
       await ExpoFileSystem.writeAsStringAsync(path, data);
     } catch (error) {
       console.log(error);
+      Sentry.captureException(error)
     }
   }
 
@@ -72,6 +74,7 @@ export class FilesManager {
       await ExpoFileSystem.deleteAsync(key);
     } catch (error) {
       console.log(error);
+      Sentry.captureException(error)
     }
   }
 
@@ -85,6 +88,7 @@ export class FilesManager {
         return file;
       } catch (error) {
         console.log(error);
+        Sentry.captureException(error)
       }
     }
 
@@ -164,6 +168,7 @@ export class FilesManager {
       await ExpoFileSystem.moveAsync(options);
     } catch (error) {
       console.log(error);
+      Sentry.captureException(error)
     }
   }
 
@@ -179,6 +184,7 @@ export class FilesManager {
         console.log("se eliminó el elemento", element);
       } catch (error) {
         console.log(error);
+        Sentry.captureException(error)
       }
     });
   }

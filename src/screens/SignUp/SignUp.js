@@ -7,6 +7,7 @@ import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 import Container from "../../components/Container";
 import Title from "../../components/Title";
+import Constants from 'expo-constants';
 
 const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
@@ -25,6 +26,9 @@ const SignUp = ({ route }) => {
       Alert.alert(error.message);
     }
   };
+
+  const version = Constants.expoConfig?.version || 
+                Constants.manifest2?.extra?.expoClient?.version;
 
   return (
     <Container scroll>
@@ -72,6 +76,7 @@ const SignUp = ({ route }) => {
         disabled={isLoading}
         onPress={handleSubmit(onRegisterPressed)}
       />
+      <Text>App Version: { version }</Text>
     </Container>
   );
 };

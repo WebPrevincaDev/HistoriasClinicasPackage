@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { addHcd, syncHcd } from "./thunks";
 import { diagnosisCodes as codes } from "../../../constants";
 import { getAsyncStorage } from "../../../helpers/data";
+import * as Sentry from "@sentry/react-native";
 
 // a medida que agregue propiedades a hcd las anoto acá para tenerlo de machete
 /* {
@@ -89,6 +90,7 @@ export const loadInitialData = createAsyncThunk(
       const data = await getAsyncStorage('Historias_sin_sincronizar');
       return data ? JSON.parse(data) : [];
     } catch (error) {
+      Sentry.captureException(error)
       throw error;
     }
   }

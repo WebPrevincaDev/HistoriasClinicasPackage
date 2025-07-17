@@ -11,6 +11,7 @@ import Title from "../../components/Title";
 import { filterProfessionalsByGroup } from "../../helpers/data";
 import { setHcdConfig } from "../../store/slices/hcd";
 import { getFormattedArray } from "../../helpers/CustomAutocomplete";
+import * as Sentry from "@sentry/react-native";
 
 const ninguno = { label: "Ninguno", value: "Ninguno" };
 
@@ -62,6 +63,7 @@ const Home = () => {
       Alert.alert("Datos guardados con éxito");
       navigation.navigate("CrearHCD");
     } catch (error) {
+      Sentry.captureException(error)
       Alert.alert(error.message);
     }
   };

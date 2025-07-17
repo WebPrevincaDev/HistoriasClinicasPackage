@@ -1,5 +1,6 @@
 import { db } from "../helpers/firebase/firebaseconfig";
 import { ref, onValue, push } from "firebase/database";
+import * as Sentry from "@sentry/react-native";
 
 export default class TableDatabaseFirebase {
   get_tabla() {
@@ -28,6 +29,7 @@ export default class TableDatabaseFirebase {
       return newHcdRef.key;
     } catch (error) {
       console.error("Error addRegistro", error);
+      Sentry.captureException(error)
     }
 
     return null;

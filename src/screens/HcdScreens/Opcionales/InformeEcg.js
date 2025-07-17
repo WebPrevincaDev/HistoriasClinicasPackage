@@ -23,6 +23,7 @@ import CustomAutocomplete from "../../../components/CustomAutocomplete";
 import informeEcg from "../../../placeholder/informeEcg.json";
 import { FilesImagenesEcgManager } from "../../../data/FilesImagenesEcgManager";
 import { colors } from "../../../constants";
+import * as Sentry from "@sentry/react-native";
 
 const filesImgManager = new FilesImagenesEcgManager();
 
@@ -85,6 +86,7 @@ export default function InformeEcg() {
         setLocalImages((prevImgs) => [...prevImgs, newImg]);
         setImage(null);
       } catch (error) {
+        Sentry.captureException(error)
         console.error(error);
       }
     }
