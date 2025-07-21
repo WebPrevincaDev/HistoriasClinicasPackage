@@ -91,7 +91,7 @@ export class FilesFirmaManager extends FilesManager {
       const firmas = await this.listar_firmas();
       const path_base = await this.get_path_guardado();
 
-      console.log("Cnt Firmas", firmas.length);
+      console.log("Cnt Firmas", firmas.length, firmas);
 
       for (let i = 0; i < firmas.length; i++) {
         const element = firmas[i];

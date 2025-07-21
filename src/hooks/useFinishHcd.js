@@ -22,9 +22,9 @@ export const useFinishHcd = () => {
       historia_enfermero: hcdConfig.enfermero,
       historia_movil_id: hcdConfig.movil,
       firma: user.firma.id,
+      historia_archivo_firma_pac_acompanante: hcd.firma_pac_acompanante.id,
       // firmas de hcd pueden ser undefined
-      firma_pac_acompanante: hcd.firma_pac_acompanante?.id || "",
-      firma_med_derivante: hcd.firma_med_derivante?.id || "",
+      historia_archivo_firma_med_derivante: hcd.firma_med_derivante?.id || "",
       // Signature
       archivo_firma: user.firma.id,
       key: uuidv5("", uuidv5.DNS),

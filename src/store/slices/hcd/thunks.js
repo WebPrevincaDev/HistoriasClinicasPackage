@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getAllByKey, saveAsyncStorage } from "../../../helpers/data";
+import { getAllByKey, saveAsyncStorage,getAsyncStorage, getAsyncAllStorage } from "../../../helpers/data";
 import OdooServer from "../../../data/OdooServer";
 import { FilesFirmaManager } from "../../../data/FilesFirmaManager";
 import { FilesImagenesEcgManager } from "../../../data/FilesImagenesEcgManager";
@@ -193,3 +193,64 @@ export const addHcd = createAsyncThunk(
     return new_arr_hcd;
   }
 );
+
+// Sincronizar firmas perdidas
+export const syncFirmas = createAsyncThunk(
+  "hcd/syncFirmas",
+  async () => {
+    console.log("---------- sincronizarFirmas perdidas ----------");
+    const archivos_sincronizados = await getAsyncAllStorage("Historias_sincronizadas");
+    if (!archivos_sincronizados) return;
+
+    console.log("Archivos Sincronizadas", archivos_sincronizados.length);
+
+    const historias_clinicas_checkear = []
+    const hcd_dict = {}
+    for (const archivo of archivos_sincronizados) {
+      console.log("Checkeando archivo:", archivo);
+      try {
+        const historias = await getAllByKey(archivo);      
+        if (!historias || historias.length === 0) {
+          console.log("No hay historias en el archivo:", archivo);
+          continue;
+        }
+        
+        for(const historia of historias) {
+          if (historia.firma_pac_acompanante) {
+            historias_clinicas_checkear.push(historia);
+            hcd_dict[historia.id_interno] = historia;
+          }
+        }
+      }
+      catch (error) {
+        console.error("Error al obtener historias:", error);
+      }
+    }
+
+    console.log("Historias a checkear:", historias_clinicas_checkear);
+    const response = await OdooServer.search([["id_interno", "in", Object.keys(hcd_dict)], ["historia_archivo_firma_pac_acompanante", "=", false]],
+      ['id', 'id_interno', 'historia_archivo_firma_pac_acompanante', 'historia_archivo_firma_med_derivante'],
+      "asw.historia");
+    console.log("OdooServer.search response:", response);
+    if (response && response.length > 0) {
+      for (const record of response) {
+        try {
+          const update_data = {
+            "historia_archivo_firma_pac_acompanante": hcd_dict[record.id_interno].firma_pac_acompanante,
+            "historia_archivo_firma_med_derivante": hcd_dict[record.id_interno].firma_med_derivante
+          }
+          console.log("Actualizando historia:", record.id, update_data);
+          const res_update = await OdooServer.update(
+            update_data,
+            record.id,
+            "asw.historia");
+          console.log("OdooServer.update response:", res_update);
+        } catch (error) {
+          console.error("Error al actualizar historia:", error);
+        }      
+      }
+    }
+  }
+);
+
+

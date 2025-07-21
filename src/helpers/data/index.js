@@ -10,7 +10,7 @@ import { saveSignature } from "./saveSignature";
 import { searchUserInServer } from "./searchUserInServer";
 import { createProfessional } from "./createProfessional";
 import { registerUserInFirebase } from "./registerUserInFirebase";
-import { getAsyncStorage } from "./getAsyncStorage"
+import { getAsyncStorage, getAsyncAllStorage } from "./getAsyncStorage"
 
 export {
   filterProfessionalsByGroup,
@@ -25,5 +25,6 @@ export {
   searchUserInServer,
   createProfessional,
   registerUserInFirebase,
-  getAsyncStorage
+  getAsyncStorage,
+  getAsyncAllStorage
 };

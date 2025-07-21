@@ -79,7 +79,7 @@ export class FilesManager {
   }
 
   async getItem(key) {
-    // console.log("getItem:", key);
+    console.log("getItem:", key);
     const path = this.getPathBase(key);
     const datos_archivo = await ExpoFileSystem.getInfoAsync(path);
     if (datos_archivo.exists) {
@@ -110,7 +110,7 @@ export class FilesManager {
     console.log("Guardando archivo:", key);
 
     // const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    console.log("Permisos:", status);
+    // console.log("Permisos:", status);
     // if (status === "granted") {
     const uri = this.getPathBase(key);
     const fileUri = uri + ".txt";
@@ -152,9 +152,9 @@ export class FilesManager {
     // return
     await this.createIfnoExist(path_sincronizado);
     const firmas_sincronizadas = await this.readDirectory(path_sincronizado);
-    // console.log("Firmas Sincronizadas", firmas_sincronizadas.length);
+    console.log("Firmas Sincronizadas", firmas_sincronizadas.length);
 
-    // console.log("Path de sincronizado", path_sincronizado);
+    console.log("Path de sincronizado", path_sincronizado);
 
     const nuevo_path = await this.createPath([path_sincronizado, element]);
     const options = {
@@ -162,7 +162,7 @@ export class FilesManager {
       to: nuevo_path,
     };
 
-    // console.log("Mover archivos", options);
+    console.log("Mover archivos", options);
 
     try {
       await ExpoFileSystem.moveAsync(options);
@@ -187,5 +187,17 @@ export class FilesManager {
         Sentry.captureException(error)
       }
     });
+  }
+
+  async getAllByKey(key) {
+    console.log("getAllByKey key:", key);
+    const path = await this.get_path_guardado();
+    const archivos = await this.readDirectory(path);
+
+    const archivos_sincronizados = archivos.filter((element) => {
+      return element.includes(key);
+    });
+    
+    return archivos_sincronizados
   }
 }

@@ -92,6 +92,7 @@ export default class OdooServer {
       var response = await odoo.connect();
       if (response.success && response.data["uid"] != false) {
         response = await odoo.update(modelo, [id], _datos, {});
+        console.info("Response update:", response);
         return response.success;
       } else {
         Sentry.captureException("Error al hacer un update:", response.error);

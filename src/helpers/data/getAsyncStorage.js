@@ -10,3 +10,14 @@ export const getAsyncStorage = async (key) => {
     Sentry.captureException(error)
   }
 };
+
+export const getAsyncAllStorage = async (key) => {
+  console.log("getAsyncAllStorage key:", key);
+  try {
+    const data = await fileManagerInstance.getAllByKey(key);
+    return data;
+  } catch (error) {
+    console.error("Error al ejecutar getAllByKey: ", error);
+    Sentry.captureException(error);
+  }
+}

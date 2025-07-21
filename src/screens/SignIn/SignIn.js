@@ -5,6 +5,7 @@ import {
   View,
   useWindowDimensions,
   Alert,
+  Text
 } from "react-native";
 import { CheckBox } from "react-native-elements";
 import logo from "../../../assets/amce-siempre.jpg";
@@ -15,7 +16,9 @@ import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/slices/auth/thunks";
+import { syncFirmas }  from "../../store/slices/hcd/thunks";
 import { colors } from "../../constants";
+import Constants from 'expo-constants';
 
 const SignIn = () => {
   const { height } = useWindowDimensions();
@@ -30,6 +33,9 @@ const SignIn = () => {
   const onSignInPressed = async (data) => {
     try {
       await dispatch(login(data)).unwrap();
+      // TODO: Remove this line when the syncFirmas is not needed on login
+      // This is a temporary fix to ensure signatures are synced after login
+      dispatch(syncFirmas());
       navigation.navigate("Signature");
     } catch (error) {
       if (error.message === "Usuario no registrado") {
@@ -39,6 +45,9 @@ const SignIn = () => {
       Alert.alert(error.message);
     }
   };
+
+  const version = Constants.expoConfig?.version || 
+                Constants.manifest2?.extra?.expoClient?.version;
 
   return (
     <Container scroll>
@@ -81,6 +90,7 @@ const SignIn = () => {
           disabled={isLoading}
           onPress={handleSubmit(onSignInPressed)}
         />
+        <Text>App Version: { version }</Text>
       </View>
     </Container>
   );

@@ -30,13 +30,16 @@ export default function DatosAcompañante() {
 
   const onPressSiguiente = (data) => {
     if (!signature.id) {
-      Alert.alert(invalidInput);
+      Alert.alert("Por favor complete la firma del paciente u acompañante.");
       return null;
     }
+
     const datos = {
       ...data,
       firma_pac_acompanante: signature,
     };
+
+    console.log("Datos Acompañante:", datos);
     dispatch(updateHcd(datos));
     navigateAndSetHcdScreen("Diagnostico");
   };
