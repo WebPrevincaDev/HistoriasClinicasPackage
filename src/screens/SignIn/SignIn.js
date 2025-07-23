@@ -35,7 +35,7 @@ const SignIn = () => {
       await dispatch(login(data)).unwrap();
       // TODO: Remove this line when the syncFirmas is not needed on login
       // This is a temporary fix to ensure signatures are synced after login
-      dispatch(syncFirmas());
+      // dispatch(syncFirmas());
       navigation.navigate("Signature");
     } catch (error) {
       if (error.message === "Usuario no registrado") {
