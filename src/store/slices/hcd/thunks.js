@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getAllByKey, saveAsyncStorage,getAsyncStorage, getAsyncAllStorage } from "../../../helpers/data";
+import { getAllByKey, saveAsyncStorage, getAsyncStorage, getAsyncAllStorage } from "../../../helpers/data";
 import OdooServer from "../../../data/OdooServer";
 import { FilesFirmaManager } from "../../../data/FilesFirmaManager";
 import { FilesImagenesEcgManager } from "../../../data/FilesImagenesEcgManager";
@@ -41,7 +41,7 @@ export const agregarPaciente = createAsyncThunk(
 
 export const syncHcd = createAsyncThunk(
   "hcd/syncHcd",
-  async ({ new_arr_hcd }) => {    
+  async ({ new_arr_hcd }) => {
     /* todo: falta lógica si conexion !== "ONLINE" */
     console.log("---------- sincronizarFirmas ----------");
     await new FilesFirmaManager().sincronizarFirmas();
@@ -51,6 +51,7 @@ export const syncHcd = createAsyncThunk(
     console.log("---------- sicronizar_firebase ----------");
     const pendientes = new_arr_hcd;
     console.log("Total de HCD", pendientes.length);
+
     // for (let shc in pendientes) {
     //   const enviar = pendientes[shc];
     //   const params = {
@@ -154,8 +155,8 @@ export const syncHcd = createAsyncThunk(
         // Signature
         archivo_firma: enviar.archivo_firma,
       };
-      console.log("Odoo params =", params);  
-      let sincronizado = false    
+      console.log("Odoo params =", params);
+      let sincronizado = false
       try {
         const response = await OdooServer.create("asw.historia", params, {});
         console.log("OdooServer.create response", response);
@@ -163,27 +164,27 @@ export const syncHcd = createAsyncThunk(
         sincronizado = true;
       } catch (error) {
         Sentry.captureException(error)
-        console.error("Error al sincronizar con Odoo", error, sincronizado);    
-      }      
-      narr.push({...enviar, sincronizado});
+        console.error("Error al sincronizar con Odoo", error, sincronizado);
+      }
+      narr.push({ ...enviar, sincronizado });
     }
 
     const sin_enviar = narr.filter((item) => !item.sincronizado);
 
     console.log("Antes", new_arr_hcd.length);
     console.log("Despues", sin_enviar.length);
-   
+
     const fecha = new Date();
     const file_sinchro = "Historias_sincronizadas" + fecha.getTime();
 
     await saveAsyncStorage(sin_enviar, "Historias_sin_sincronizar");
 
-    if(sincronizadas.length > 0) await saveAsyncStorage(sincronizadas, file_sinchro);
+    if (sincronizadas.length > 0) await saveAsyncStorage(sincronizadas, file_sinchro);
 
     console.log("fin sincronizar");
 
     return sin_enviar
-})
+  })
 
 // agregarHCD
 export const addHcd = createAsyncThunk(
@@ -209,13 +210,13 @@ export const syncFirmas = createAsyncThunk(
     for (const archivo of archivos_sincronizados) {
       console.log("Checkeando archivo:", archivo);
       try {
-        const historias = await getAllByKey(archivo);      
+        const historias = await getAllByKey(archivo);
         if (!historias || historias.length === 0) {
           console.log("No hay historias en el archivo:", archivo);
           continue;
         }
-        
-        for(const historia of historias) {
+
+        for (const historia of historias) {
           if (historia.firma_pac_acompanante) {
             historias_clinicas_checkear.push(historia);
             hcd_dict[historia.id_interno] = historia;
@@ -247,7 +248,7 @@ export const syncFirmas = createAsyncThunk(
           console.log("OdooServer.update response:", res_update);
         } catch (error) {
           console.error("Error al actualizar historia:", error);
-        }      
+        }
       }
     }
   }

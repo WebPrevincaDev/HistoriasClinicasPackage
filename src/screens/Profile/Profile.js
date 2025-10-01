@@ -1,6 +1,7 @@
 import { StyleSheet, Text, Image, useWindowDimensions } from "react-native";
 import Constants from 'expo-constants';
 import { useSelector, useDispatch } from "react-redux";
+import * as MailComposer from "expo-mail-composer";
 import { useNavigation } from "@react-navigation/native";
 import { resetHcdStore } from "../../store/slices/hcd";
 import { logout } from "../../store/slices/auth";
@@ -14,6 +15,7 @@ import Container from "../../components/Container";
 import CustomButton from "../../components/CustomButton";
 import Form from "../../components/Form";
 import Divider from "../../components/Divider";
+import fileManagerInstance from "../../data/fileManagerInstance";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -27,10 +29,20 @@ const Profile = () => {
     navigation.navigate("SignIn");
   };
 
-  const version = Constants.expoConfig?.version || 
-                Constants.manifest2?.extra?.expoClient?.version;
+  const version = Constants.expoConfig?.version ||
+    Constants.manifest2?.extra?.expoClient?.version;
 
   if (!user) return null;
+
+  const backupFiles = async () => {
+    try {
+      console.log("Iniciando backup de archivos... --------------------------------");
+      const allKeys = await fileManagerInstance.getAllInDirectory();
+      await fileManagerInstance.save_download_directory(allKeys);
+    } catch (error) {
+      console.error("Error al crear el backup:", error);
+    }
+  }
 
   return (
     <Container>
@@ -50,12 +62,18 @@ const Profile = () => {
         <Text style={styles.data}>{user.matricula}</Text>
       </Form>
 
-      <Text>App Version: { version }</Text>
+      <Text>App Version: {version}</Text>
+
+      <CustomButton
+        text="Crear Backup"
+        onPress={backupFiles}
+        type="SECONDARY"
+      />
 
       <CustomButton
         text="CERRAR SESIÓN"
         onPress={handleLogout}
-        type="SECONDARY"
+        type="PRIMARY"
       />
     </Container>
   );

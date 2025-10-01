@@ -105,27 +105,54 @@ export class FilesManager {
     console.log("Restaurado con Exito");
   }
 
-  //TODO: Test this method
-  async save_download_directory(key) {
-    console.log("Guardando archivo:", key);
+  async save_download_directory(keys) {
+    console.log("Guardando archivo:", keys);
 
-    // const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    // console.log("Permisos:", status);
-    // if (status === "granted") {
-    const uri = this.getPathBase(key);
-    const fileUri = uri + ".txt";
-    const data = await this.getItem(key);
-    console.log("Guardando archivo en direccion:", fileUri);
-    await ExpoFileSystem.writeAsStringAsync(fileUri, data || "");
-    console.log("Guardando archivo desde direccion:", fileUri);
-    const asset = await MediaLibrary.createAssetAsync(fileUri);
-    await MediaLibrary.createAlbumAsync("AMCE BACKUP", asset, false);
-    console.log("Guardando Terminado");
-    // }
+    const permissions = await ExpoFileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
+
+    if (!permissions.granted) {
+      alert('Permission to save files was denied');
+      return null;
+    }
+
+    // Gets SAF URI from response
+    const uri = permissions.directoryUri;
+    console.log("URI", uri);
+
+    for (const key of keys) {
+      console.log("Guardando archivo:", key);
+      const path = this.getPathBase(key);
+      const data = await this.getItem(key);
+      console.log("Guardando archivo en direccion:", path);
+
+      await ExpoFileSystem.writeAsStringAsync(path, data || "");
+      console.log("Guardando archivo desde direccion:", path);
+
+      try {
+        const newUri = await ExpoFileSystem.StorageAccessFramework.createFileAsync(
+          uri,
+          key,
+          "text/plain"
+        );
+        console.log("New URI", newUri);
+
+        await ExpoFileSystem.writeAsStringAsync(newUri, data || "");
+        console.log("Guardado Terminado");
+      } catch (error) {
+        console.log("Error creando el archivo:", error);
+        Sentry.captureException(error)
+      }
+    }
   }
 
   async readDirectory(directory) {
     return await ExpoFileSystem.readDirectoryAsync(directory);
+  }
+
+  async getAllInDirectory() {
+    const path = await this.get_path_guardado();
+    const archivos = await this.readDirectory(path);
+    return archivos.filter((file) => file.startsWith('Historias_'));
   }
 
   getPathBase(fileName) {
@@ -197,7 +224,7 @@ export class FilesManager {
     const archivos_sincronizados = archivos.filter((element) => {
       return element.includes(key);
     });
-    
+
     return archivos_sincronizados
   }
 }

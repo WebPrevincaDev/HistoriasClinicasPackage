@@ -2,7 +2,7 @@
   "expo": {
     "name": "AMCE HCD",
     "slug": "amce_hcd",
-    "version": "1.25.07.23.1",
+    "version": "1.25.10.01",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -14,9 +14,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -52,7 +50,9 @@
             "usesCleartextTraffic": true
           }
         }
-      ]
+      ],
+      "expo-asset",
+      "expo-font"
     ]
   }
 }
