@@ -15,13 +15,14 @@ import Container from "../../components/Container";
 import CustomButton from "../../components/CustomButton";
 import Form from "../../components/Form";
 import Divider from "../../components/Divider";
+import Loader from "../../components/Loader";
 import fileManagerInstance from "../../data/fileManagerInstance";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const { height } = useWindowDimensions();
-  const { user } = useSelector((state) => state.auth);
+  const { user, isLoading } = useSelector((state) => state.auth);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -32,7 +33,13 @@ const Profile = () => {
   const version = Constants.expoConfig?.version ||
     Constants.manifest2?.extra?.expoClient?.version;
 
-  if (!user) return null;
+  if (isLoading) {
+    return (
+      <Container>
+        <Loader />
+      </Container>
+    );
+  }
 
   const backupFiles = async () => {
     try {
